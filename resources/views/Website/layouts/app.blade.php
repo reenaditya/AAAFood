@@ -1,0 +1,7 @@
+@include('Website.layouts.header-links')
+@stack('styles')
+@include('Website.layouts.header')
+@yield("content")
+@include('Website.layouts.footer')
+@include('Website.layouts.footer-links')
+@stack('scripts')
