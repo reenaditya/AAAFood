@@ -21,7 +21,7 @@
 				
 					<li class="sidebar-item {{Request::routeIs('admin.dashboard.*')?'active':''}}">
 						<a data-bs-target="#dashboard" class="sidebar-link {{Request::routeIs('admin.dashboardd.*')?'':'collapsed'}}" href="{{ route('admin.dashboard.index') }}">
-              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+              			<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Dashboard</span>
               	
             			</a>
 					</li>
@@ -33,7 +33,7 @@
 					</li>
 					<li class="sidebar-item {{Request::routeIs('admin.restaurant.*')?'active':''}}">
 						<a data-bs-target="#restaurant" class="sidebar-link {{Request::routeIs('admin.restaurant.*')?'':'collapsed'}}" href="{{ route('admin.restaurant.index') }}">
-              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Restaurant</span>
+              			<i class="align-middle" data-feather="archive"></i> <span class="align-middle">Restaurant</span>
               	
             			</a>
 					</li>

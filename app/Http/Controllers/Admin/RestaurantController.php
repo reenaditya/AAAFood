@@ -96,7 +96,7 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-    	$this->validation($request);
+        $this->validation($request);
 
         DB::beginTransaction();
     	try {
@@ -126,6 +126,9 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
+        if ($restaurant->participate_file) {
+            
+        }
         $restaurant->delete();
         return back()->withSuccess('Restaurant removed from database');
     }
@@ -133,15 +136,20 @@ class RestaurantController extends Controller
     {
     	$request->validate([
         	'name' => ["required","min:2","max:100"],
-        	'address' => ['required','min:2','max:255'],
-        	'description' => ['required','min:2','max:500'],
-        	'city' => ['required','min:2','max:100'],
-        	'zipcode' => ['required'],
-        	'email' => ['required','email'],
-        	'phone_number' => ['required'],
-        	'image' => ["nullable","image"],
+            'location' => ['required','min:2'],
+            'address' => ['required','min:2','max:255'],
+        	'address2' => ['required','min:2','max:255'],
+            'city' => ['required','min:2','max:100'],
+            'state' => ['required','min:2','max:100'],
+            'country' => ['required','min:2','max:100'],
+            'sale_tax' => ['required'],
+            'seating_capacity_indoor' => ['required'],
+            'seating_capacity_outdoor' => ['required'],
+            'mf_from' => ['required'],
         	'status' => ["sometimes","boolean"],
-        	'serve' => ["sometimes","boolean"],
+        	'image' => ["nullable","image"],
+            'description' => ['required','min:2','max:500'],
+        	//'serve' => ["sometimes","boolean"],
         ]);
         return $this;
     }
@@ -149,15 +157,45 @@ class RestaurantController extends Controller
     {
     	$this->restaurant->name = $request->name;
     	if ($request->hasFile('image')) {
-    	
-        	$this->restaurant->image = $request->image->store('upload/restaurant','public');
+    		$this->restaurant->image = $request->image->store('upload/restaurant','public');
     	}
-    	$this->restaurant->address = $request->address;
-    	$this->restaurant->description = $request->description;
+        $this->restaurant->location = $request->location;
+        $this->restaurant->address = $request->address;
+        $this->restaurant->address2 = $request->address2;
     	$this->restaurant->city = $request->city;
-    	$this->restaurant->zipcode = $request->zipcode;
-    	$this->restaurant->email = $request->email;
-    	$this->restaurant->phone_number = $request->phone_number;
+        $this->restaurant->state = $request->state;
+        $this->restaurant->country = $request->country;
+    	$this->restaurant->zipcode= $request->zipcode;
+    	$this->restaurant->website = $request->website;
+        $this->restaurant->sale_tax = $request->sale_tax;
+        $this->restaurant->dine_in = $request->dine_in;
+        $this->restaurant->seating_capacity_indoor = $request->seating_capacity_indoor;
+        $this->restaurant->seating_capacity_outdoor = $request->seating_capacity_outdoor;
+        $this->restaurant->reservations = $request->reservations;
+        $this->restaurant->reservation_system = $request->reservation_system;
+        $this->restaurant->takeout = $request->takeout;
+        $this->restaurant->own_delivery = $request->own_delivery;
+        $this->restaurant->delivery_fee = $request->delivery_fee;
+        $this->restaurant->minimum_delivery_amount = $request->minimum_delivery_amount;
+        $this->restaurant->free_delivery_amount = $request->free_delivery_amount;
+        $this->restaurant->delivery_radius = $request->delivery_radius;
+        $this->restaurant->delivery_zip_codes = $request->delivery_zip_codes;
+        $this->restaurant->order_lead_time = $request->order_lead_time;
+        $this->restaurant->delivery_extra_time = $request->delivery_extra_time;
+        $this->restaurant->delivery_service = $request->delivery_service;
+        if ($request->hasFile('participate_file')) {        
+            $this->restaurant->participate_file = $request->participate_file->store('upload/restaurant','public');
+        }
+        
+        $this->restaurant->aaadining_club = $request->aaadining_club;
+        $this->restaurant->birthday_club = $request->birthday_club;
+        $this->restaurant->mf_from = $request->mf_from;
+        $this->restaurant->mf_to = $request->mf_to;
+        $this->restaurant->sat_from = $request->sat_from;
+        $this->restaurant->sat_to = $request->sat_to;
+        $this->restaurant->sun_from = $request->sun_from;
+        $this->restaurant->sun_to = $request->sun_to;
+        $this->restaurant->description = $request->description;
     	$this->restaurant->serve = $request->serve?true:false;
         $this->restaurant->status = $request->status?true:false;
         return $this;

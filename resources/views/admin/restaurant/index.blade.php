@@ -11,23 +11,23 @@
 								
 								<div class="card-body">
 									<div class="row">
-													<div class="col-md-10"></div>
-													
-													<div class="col-md-2">
-														<a href="{{ route('admin.restaurant.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add Restaurant</a>
+										<div class="col-md-10"></div>
+										
+										<div class="col-md-2">
+											<a href="{{ route('admin.restaurant.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add Restaurant</a>
 
-													</div>
+										</div>
 
-												</div>			
-												<br>
+									</div>			
+									<br>
 									
 									<table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
 										<thead>
 											<tr>
 												<th width="2%">S.No</th>
 												<th>Name</th>
-												<th>Email</th>
-												<th>Phone</th>
+												{{-- <th>Email</th>
+												<th>Phone</th> --}}
 												<th>City</th>
 												<th>Zipcode</th>
 												<th>Status</th>
@@ -39,8 +39,8 @@
 												<tr>
 													<td>{{ ++$key }} </td>
 													<td>{{$restaurant->name ?? ''}} </td>
-													<td>{{$restaurant->email ?? ''}} </td>
-													<td>{{ $restaurant->phone_number ?? ''}} </td>
+													{{-- <td>{{$restaurant->email ?? ''}} </td>
+													<td>{{ $restaurant->phone_number ?? ''}} </td> --}}
 													<td>{{ $restaurant->city ?? ''}} </td>
 													<td>{{$restaurant->zipcode ?? ''}} </td>
 													<td><button class="btn btn-{{$restaurant->status?'success':'danger'}} ">
@@ -62,8 +62,8 @@
 											<tr>
 												<th></th>
 												<th>Name</th>
-												<th>Email</th>
-												<th>Phone</th>
+												{{-- <th>Email</th>
+												<th>Phone</th> --}}
 												<th>City</th>
 												<th>Zipcode</th>
 												
