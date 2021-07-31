@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2021 at 04:09 PM
+-- Generation Time: Jul 31, 2021 at 10:19 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.25
 
@@ -29,19 +29,53 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cuisines` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `cuisines`
 --
 
 INSERT INTO `cuisines` (`id`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'Indian', 'upload/cuisines/m1cMvzfx6yUvxFfDmB1FBDvAEFUtUe3Q0JW3xDvj.jpg', 1, '2021-07-19 20:38:46', '2021-07-28 03:56:35');
+(2, 'Indian', 'upload/cuisines/fxQVCVgJjjE1LimGCEWBeeSzPXks9Z061RDzaaUC.jpg', 1, '2021-07-30 22:18:47', '2021-07-30 22:18:47'),
+(3, 'Itelian', 'upload/cuisines/mmFsqwtCyI9gKNA8MywztTFZ2XYGjVHqkdu8T2CQ.jpg', 1, '2021-07-30 22:19:08', '2021-07-30 22:19:08'),
+(4, 'Chinese', 'upload/cuisines/9Jl8cLfDzujCvlZpBb1mDEPcunKDqTSAgJc7LYT9.jpg', 1, '2021-07-30 22:19:49', '2021-07-30 22:19:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cuisine_restaurants`
+--
+
+CREATE TABLE `cuisine_restaurants` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cuisine_id` bigint(20) UNSIGNED NOT NULL,
+  `restaurant_id` bigint(20) UNSIGNED NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cuisine_restaurants`
+--
+
+INSERT INTO `cuisine_restaurants` (`id`, `cuisine_id`, `restaurant_id`, `status`, `created_at`, `updated_at`) VALUES
+(26, 2, 1, 1, '2021-07-31 11:02:00', NULL),
+(27, 3, 1, 1, '2021-07-31 11:02:00', NULL),
+(28, 2, 2, 1, '2021-07-31 11:03:00', NULL),
+(29, 2, 3, 1, '2021-07-31 11:03:00', NULL),
+(30, 3, 3, 1, '2021-07-31 11:03:00', NULL),
+(31, 2, 4, 1, '2021-07-31 11:04:00', NULL),
+(32, 4, 4, 1, '2021-07-31 11:04:00', NULL),
+(33, 4, 6, 1, '2021-07-31 11:04:00', NULL),
+(34, 2, 7, 1, '2021-07-31 11:04:00', NULL),
+(35, 3, 7, 1, '2021-07-31 11:04:00', NULL),
+(36, 4, 7, 1, '2021-07-31 11:04:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -58,6 +92,110 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_groups`
+--
+
+CREATE TABLE `menu_groups` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `restaurant_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_groups`
+--
+
+INSERT INTO `menu_groups` (`id`, `restaurant_id`, `user_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Biryanis', 1, '2021-07-30 02:55:41', '2021-07-31 13:49:24'),
+(2, 2, 1, 'Egg', 1, '2021-07-30 05:16:30', '2021-07-30 21:29:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_items`
+--
+
+CREATE TABLE `menu_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `restaurant_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `menu_group_id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estimated_time` int(11) DEFAULT NULL,
+  `discount` int(11) NOT NULL,
+  `discount_type` tinyint(4) NOT NULL COMMENT '1=Price, 2=Percent',
+  `desc` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_items`
+--
+
+INSERT INTO `menu_items` (`id`, `restaurant_id`, `user_id`, `menu_group_id`, `image`, `name`, `estimated_time`, `discount`, `discount_type`, `desc`, `status`, `created_at`, `updated_at`) VALUES
+(2, 2, 1, 1, 'upload/menu_item/RvKM987eux4oPKEqeGoLbFoSYGcbjH5A9F9dE2qX.jpg', 'Non Veg Biryani', 30, 20, 1, NULL, 1, '2021-07-30 07:24:10', '2021-07-31 13:31:14'),
+(3, 2, 1, 1, 'upload/menu_item/xVzPJMKN5hts94p3O0glo65P3XTgsOMRMaLrQVdH.jpg', 'Veg Biryani', 20, 21, 1, NULL, 1, '2021-07-30 12:25:46', '2021-07-31 13:05:50'),
+(4, 1, 1, 1, 'upload/menu_item/GMoo2ZK1E5lKp3X51RskOvF4iNNkd8QPHguTRL4v.jpg', 'Roast Biryani', 20, 20, 1, NULL, 1, '2021-07-31 13:24:43', '2021-07-31 13:24:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_items_price_quantities`
+--
+
+CREATE TABLE `menu_items_price_quantities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `menu_quantity_group_id` bigint(20) UNSIGNED NOT NULL,
+  `menu_item_id` bigint(20) UNSIGNED NOT NULL,
+  `price` double(12,2) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_items_price_quantities`
+--
+
+INSERT INTO `menu_items_price_quantities` (`id`, `menu_quantity_group_id`, `menu_item_id`, `price`, `status`, `created_at`, `updated_at`) VALUES
+(3, 2, 2, 125.00, 1, '2021-07-30 21:26:38', '2021-07-30 21:26:38'),
+(4, 2, 3, 200.00, 1, '2021-07-31 13:25:45', '2021-07-31 13:25:45'),
+(5, 2, 4, 240.00, 1, '2021-07-31 13:25:58', '2021-07-31 13:25:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_quantity_groups`
+--
+
+CREATE TABLE `menu_quantity_groups` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `restaurant_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `menu_group_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_quantity_groups`
+--
+
+INSERT INTO `menu_quantity_groups` (`id`, `restaurant_id`, `user_id`, `menu_group_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, 1, 'per plate', 1, '2021-07-30 20:46:40', '2021-07-31 13:16:52');
 
 -- --------------------------------------------------------
 
@@ -81,7 +219,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2014_10_12_200000_add_two_factor_columns_to_users_table', 2),
 (5, '2019_12_14_000001_create_personal_access_tokens_table', 2),
-(6, '2021_07_15_184807_create_sessions_table', 2);
+(6, '2021_07_15_184807_create_sessions_table', 2),
+(7, '2021_07_15_184810_create_cuisines_table', 3),
+(8, '2021_07_15_184810_create_restaurants_table', 4),
+(9, '2021_07_29_170221_create_menu_groups_table', 4),
+(10, '2021_07_29_173029_create_menu_items_table', 4),
+(11, '2021_07_30_015633_create_menu_quantity_groups_table', 4),
+(12, '2021_07_30_020124_create_menu_items_price_quantities_table', 4),
+(13, '2021_07_31_061054_create_cuisine_restaurants_table', 5);
 
 -- --------------------------------------------------------
 
@@ -121,47 +266,61 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `restaurants` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `location` varchar(250) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `address2` varchar(250) DEFAULT NULL,
-  `city` varchar(100) DEFAULT NULL,
-  `state` varchar(100) DEFAULT NULL,
-  `country` varchar(100) DEFAULT NULL,
-  `zipcode` varchar(250) DEFAULT NULL,
-  `website` text DEFAULT NULL,
-  `sale_tax` varchar(50) DEFAULT NULL,
-  `dine_in` tinyint(4) DEFAULT NULL,
-  `seating_capacity_indoor` varchar(100) DEFAULT NULL,
-  `seating_capacity_outdoor` varchar(100) DEFAULT NULL,
-  `reservations` tinyint(4) NOT NULL DEFAULT 0,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cuisines` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zipcode` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sale_tax` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dine_in` tinyint(4) DEFAULT NULL COMMENT '1=Yes, 0=No',
+  `seating_capacity_indoor` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seating_capacity_outdoor` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reservations` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=Yes, 0=No',
   `reservation_system` tinyint(4) NOT NULL DEFAULT 4,
-  `takeout` tinyint(4) NOT NULL DEFAULT 0,
-  `own_delivery` tinyint(4) NOT NULL DEFAULT 0,
+  `takeout` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=Yes, 0=No',
+  `own_delivery` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=Yes, 0=No',
   `delivery_fee` double(12,2) DEFAULT NULL,
   `minimum_delivery_amount` double(12,2) DEFAULT NULL,
   `free_delivery_amount` double(12,2) DEFAULT NULL,
-  `delivery_radius` varchar(100) DEFAULT NULL,
-  `delivery_zip_codes` varchar(200) DEFAULT NULL,
+  `delivery_radius` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_zip_codes` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order_lead_time` int(11) DEFAULT NULL,
   `delivery_extra_time` int(11) DEFAULT NULL,
-  `delivery_service` tinyint(4) NOT NULL DEFAULT 0,
-  `participate_file` varchar(255) DEFAULT NULL,
-  `aaadining_club` tinyint(4) NOT NULL DEFAULT 0,
-  `birthday_club` tinyint(4) NOT NULL DEFAULT 0,
+  `delivery_service` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=Yes, 0=No',
+  `participate_file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aaadining_club` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=Yes, 0=No',
+  `birthday_club` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=Yes, 0=No',
   `mf_from` time DEFAULT NULL,
   `mf_to` time DEFAULT NULL,
   `sat_from` time DEFAULT NULL,
   `sat_to` time DEFAULT NULL,
   `sun_from` time DEFAULT NULL,
   `sun_to` time DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL,
-  `serve` tinyint(1) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serve` tinyint(4) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `restaurants`
+--
+
+INSERT INTO `restaurants` (`id`, `name`, `slug`, `location`, `cuisines`, `address`, `address2`, `city`, `state`, `country`, `zipcode`, `website`, `sale_tax`, `dine_in`, `seating_capacity_indoor`, `seating_capacity_outdoor`, `reservations`, `reservation_system`, `takeout`, `own_delivery`, `delivery_fee`, `minimum_delivery_amount`, `free_delivery_amount`, `delivery_radius`, `delivery_zip_codes`, `order_lead_time`, `delivery_extra_time`, `delivery_service`, `participate_file`, `aaadining_club`, `birthday_club`, `mf_from`, `mf_to`, `sat_from`, `sat_to`, `sun_from`, `sun_to`, `description`, `image`, `serve`, `status`, `created_at`, `updated_at`) VALUES
+(1, '1 Point 5 Street', '1-point-5-street', 'Florida', '2,3', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'ow.com', '2', 1, '22', '22', 0, 2, 1, 0, 20.00, 100.00, 200.00, '20', '333011', 12, 23, 0, 'upload/restaurant/lLRRa2CCOpWCVnVjWMReVESCDOFvyDGAyqP0VVDz.jpg', 0, 0, '09:55:00', '20:55:00', '09:55:00', '13:55:00', '13:55:00', '20:55:00', 'New restoro', 'upload/restaurant/NQR8qBQsYIkDvfRvc7Y3TYnHAhCAtTAr6bIg105K.jpg', 0, 1, '2021-07-29 20:50:17', '2021-07-31 11:02:41'),
+(2, 'Nirman Veg & Non Veg Restroo', 'nirman-veg-non-veg-restroo', 'India', '2', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '30', '50', 0, 2, 0, 0, 10.00, 20.00, 400.00, '20', '333998,98979,89789,9879879,', 30, 10, 0, 'upload/restaurant/VWeII8EYEHlpVsPlqDQzN6GgDZ4cFfyuz392xZru.jpg', 0, 0, '09:20:00', '22:20:00', '09:20:00', '14:20:00', NULL, NULL, 'best food  and best test guarantee', 'upload/restaurant/hXUQmpCTm7m5bQFz4HiFMmxjx0DelP2UMpJ3kRYG.jpg', 0, 1, '2021-07-30 21:17:14', '2021-07-31 11:03:15'),
+(3, 'Wrapstick', 'wrapstick', 'India', '2,3', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '21', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '223344,223341', 20, 10, 1, 'upload/restaurant/JgsIOc1HVOyW1unBwHVICnXyUuE2vOuUuBrF7Mko.jpg', 1, 1, '13:10:00', '17:14:00', NULL, NULL, NULL, NULL, 'Sat sun will be off', 'upload/restaurant/PPrNG5OmJ3RkvonUjt3mb4S2X3IIyzEL844fKkiY.jpg', 0, 1, '2021-07-31 00:16:46', '2021-07-31 11:03:50'),
+(4, 'Khana Khajan restoo', 'khana-khajan-restoo', 'Jhunjhunu', '2,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '88786,23424', 20, 20, 1, 'upload/restaurant/k6Uvqze2NkQ6mzOcnySrbs21oEziZG6RofbaKUqq.jpg', 1, 1, '11:59:00', '17:05:00', '12:00:00', '23:00:00', NULL, NULL, 'try new dishs New', 'upload/restaurant/w9y4zAr0jREbjlB8onyG7fHPQUTHDhiAVwgyc0Xz.jpg', 0, 1, '2021-07-31 01:00:31', '2021-07-31 11:04:11'),
+(6, 'Kuresh non veg hotel', 'kuresh-non-veg-hotel', 'Jhunjhunu', '4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '11', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 22, 10, 1, 'upload/restaurant/ezJgCxg4ekqidIEfK8ZFaxsGvSmg08Lg7VJAcKDu.jpg', 1, 1, '14:07:00', '16:05:00', NULL, NULL, NULL, NULL, 'smndfg sdfg dfg', 'upload/restaurant/CRzLySWHfSd6561ZSbmPa3NIj7lBP8DNYTDwipWp.jpg', 0, 1, '2021-07-31 01:05:38', '2021-07-31 11:04:30'),
+(7, 'Hamara Rajasthn Restaurant', 'hamara-rajasthn-restaurant', 'Rajsathan', '2,3,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '11', '22', 1, 3, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 12, 23, 1, NULL, 1, 1, '10:00:00', '20:00:00', NULL, NULL, NULL, NULL, 'notydf sfdsfsd fd sfsd f', 'upload/restaurant/A0OuergYyqmBZPN5UDW9WELKuXIC4SAt1eKBzUL5.jpg', 0, 1, '2021-07-31 01:23:45', '2021-07-31 11:04:49');
 
 -- --------------------------------------------------------
 
@@ -183,11 +342,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('92B10SN6ABmvbb8e3KYgsyfZW1tok3qShBGiNOYu', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoicFFlSEpuUGlvMEhLWlZ2OUlKeG1HVWNlSjVIT24zM2xiRWN1NFU1cyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ1OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcmVzdGF1cmFudC9jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkMUFIOG5OMlhML2ZIZUlzVVMya2lzZVd3cmxDTHgybTEwdWg2aW40U3BzN01rYVlxeUpLR0MiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJDFBSDhuTjJYTC9mSGVJc1VTMmtpc2VXd3JsQ0x4Mm0xMHVoNmluNFNwczdNa2FZcXlKS0dDIjt9', 1627450529),
-('aBikc3DNsmfaZQbLQrziaSJIuMJLpVbJ61Tsq9xU', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiS1J3Y3hISElPWmhCSjY3NFJDTnNQSHhGa0dyUFBBNWs1YkxsV1IwVyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcmVzdGF1cmFudCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQxQUg4bk4yWEwvZkhlSXNVUzJraXNlV3dybENMeDJtMTB1aDZpbjRTcHM3TWthWXF5SktHQyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkMUFIOG5OMlhML2ZIZUlzVVMya2lzZVd3cmxDTHgybTEwdWg2aW40U3BzN01rYVlxeUpLR0MiO30=', 1627481243),
-('ID9RVJURMiXzsFtYP0t2ZIN5fi85qT2X6ql94Qkt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoieEhDRFB4RzRPeHNYMjVtb1ZvdHBSckd4dDJHckRZbmRpSlpOcGxLNCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1627470793),
-('noxCaPeeVEjQSBVLlXxN2w68drNwUVvgCywR6xwg', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiamphOXFzZXB0bGI5eEs0UXh3SUlGNUs3cGJDTnU0aXpjVEdLR1lPaiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9yZXN0YXVyYW50LzIvZWRpdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQxQUg4bk4yWEwvZkhlSXNVUzJraXNlV3dybENMeDJtMTB1aDZpbjRTcHM3TWthWXF5SktHQyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkMUFIOG5OMlhML2ZIZUlzVVMya2lzZVd3cmxDTHgybTEwdWg2aW40U3BzN01rYVlxeUpLR0MiO30=', 1627475448),
-('r7SraykiK3kIoL7GzSzdBPZtcxM57KaOONdlU7TK', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiWFN1MzQ3cVFMeXhOSEY1NnJUSkRaUmRxc0VvQ29raEZYWTlrMEJIdyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ1OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcmVzdGF1cmFudC9jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkMUFIOG5OMlhML2ZIZUlzVVMya2lzZVd3cmxDTHgybTEwdWg2aW40U3BzN01rYVlxeUpLR0MiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJDFBSDhuTjJYTC9mSGVJc1VTMmtpc2VXd3JsQ0x4Mm0xMHVoNmluNFNwczdNa2FZcXlKS0dDIjt9', 1627453936);
+('cu6KerZ3cLMpgWyMaE2gk5LjkTCLTSBxzu7UZr4t', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoicnRGTm94bzFjVk9saEtwcGpnWEEyYTJnRHNRaXpTcTI0ZVowaTJvciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9tZW51LzEtcG9pbnQtNS1zdHJlZXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjM6InVybCI7YTowOnt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDFBSDhuTjJYTC9mSGVJc1VTMmtpc2VXd3JsQ0x4Mm0xMHVoNmluNFNwczdNa2FZcXlKS0dDIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQxQUg4bk4yWEwvZkhlSXNVUzJraXNlV3dybENMeDJtMTB1aDZpbjRTcHM3TWthWXF5SktHQyI7fQ==', 1627762641);
 
 -- --------------------------------------------------------
 
@@ -228,11 +383,50 @@ ALTER TABLE `cuisines`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cuisine_restaurants`
+--
+ALTER TABLE `cuisine_restaurants`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cuisine_restaurants_cuisine_id_foreign` (`cuisine_id`),
+  ADD KEY `cuisine_restaurants_restaurant_id_foreign` (`restaurant_id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `menu_groups`
+--
+ALTER TABLE `menu_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_groups_restaurant_id_foreign` (`restaurant_id`);
+
+--
+-- Indexes for table `menu_items`
+--
+ALTER TABLE `menu_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_items_restaurant_id_foreign` (`restaurant_id`),
+  ADD KEY `menu_items_menu_group_id_foreign` (`menu_group_id`);
+
+--
+-- Indexes for table `menu_items_price_quantities`
+--
+ALTER TABLE `menu_items_price_quantities`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_items_price_quantities_menu_quantity_group_id_foreign` (`menu_quantity_group_id`),
+  ADD KEY `menu_items_price_quantities_menu_item_id_foreign` (`menu_item_id`);
+
+--
+-- Indexes for table `menu_quantity_groups`
+--
+ALTER TABLE `menu_quantity_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_quantity_groups_restaurant_id_foreign` (`restaurant_id`),
+  ADD KEY `menu_quantity_groups_menu_group_id_foreign` (`menu_group_id`);
 
 --
 -- Indexes for table `migrations`
@@ -283,7 +477,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cuisines`
 --
 ALTER TABLE `cuisines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `cuisine_restaurants`
+--
+ALTER TABLE `cuisine_restaurants`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -292,10 +492,34 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `menu_groups`
+--
+ALTER TABLE `menu_groups`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `menu_items`
+--
+ALTER TABLE `menu_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `menu_items_price_quantities`
+--
+ALTER TABLE `menu_items_price_quantities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `menu_quantity_groups`
+--
+ALTER TABLE `menu_quantity_groups`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -307,13 +531,51 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cuisine_restaurants`
+--
+ALTER TABLE `cuisine_restaurants`
+  ADD CONSTRAINT `cuisine_restaurants_cuisine_id_foreign` FOREIGN KEY (`cuisine_id`) REFERENCES `cuisines` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cuisine_restaurants_restaurant_id_foreign` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu_groups`
+--
+ALTER TABLE `menu_groups`
+  ADD CONSTRAINT `menu_groups_restaurant_id_foreign` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu_items`
+--
+ALTER TABLE `menu_items`
+  ADD CONSTRAINT `menu_items_menu_group_id_foreign` FOREIGN KEY (`menu_group_id`) REFERENCES `menu_groups` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `menu_items_restaurant_id_foreign` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu_items_price_quantities`
+--
+ALTER TABLE `menu_items_price_quantities`
+  ADD CONSTRAINT `menu_items_price_quantities_menu_item_id_foreign` FOREIGN KEY (`menu_item_id`) REFERENCES `menu_items` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `menu_items_price_quantities_menu_quantity_group_id_foreign` FOREIGN KEY (`menu_quantity_group_id`) REFERENCES `menu_quantity_groups` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menu_quantity_groups`
+--
+ALTER TABLE `menu_quantity_groups`
+  ADD CONSTRAINT `menu_quantity_groups_menu_group_id_foreign` FOREIGN KEY (`menu_group_id`) REFERENCES `menu_groups` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `menu_quantity_groups_restaurant_id_foreign` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
