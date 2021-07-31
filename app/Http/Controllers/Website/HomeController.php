@@ -4,11 +4,21 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Cuisine;
+use App\Models\Restaurant;
 
 class HomeController extends Controller
 {
+    /*
+    * Return redirect to home
+    */
     public function index()
     {
-    	return view('Website.home.index');
+        $data = [];
+
+        $data['cuisine'] = Cuisine::where('status',1)->get();
+        $data['restro'] = Restaurant::with('cuisin')->where('status',1)->get();
+    	return view('Website.home.index',compact('data'));
     }
+
 }

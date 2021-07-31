@@ -10,7 +10,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="Responsive Bootstrap 5 Admin &amp; Dashboard Template">
 	<meta name="author" content="Bootlab">
-
+  <meta name="csrf-token" content="{{ @csrf_token() }}">
+	
 	<title>Admin Panel--Food Delivery</title>
 
 	<base href="{{ url('/admin') }}/">
@@ -29,6 +30,7 @@
 	<link class="js-stylesheet" href="css/light.css" rel="stylesheet">
 	
 	<!-- END SETTINGS -->
+	@stack('style')
 
 </head>
 <!--

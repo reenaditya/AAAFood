@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');
+	Route::get('/menu/{slug}','MenuController@index')->name('menu.index');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -39,5 +40,10 @@ Route::group([
 	Route::get('dashboard','DashboardController@index')->name('dashboard.index');
 	Route::resource('cuisine', 'CuisineController');
 	Route::resource('restaurant', 'RestaurantController');
-	
+	Route::resource('menu_group', 'MenuGroupController');
+	Route::resource('menu_item', 'MenuItemController');
+	Route::post('/menu-item/menugroup','MenuItemController@menuGroup');
+	Route::resource('menu_quantity_group','MenuQuantityGroupController');
+	Route::resource('menu_item_price_quantity','MenuItemPriceQuantityController');
+
 });

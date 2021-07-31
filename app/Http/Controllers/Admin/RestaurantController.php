@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Models\CuisineRestaurant;
+use App\Models\Restaurant;
+use App\Models\Cuisine;
 use DB;
-
+use Str;
 class RestaurantController extends Controller
 {
 	private $restaurant;
@@ -14,6 +16,7 @@ class RestaurantController extends Controller
 	{
 		$this->restaurant = $restaurant;
 	}
+    
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +36,8 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        return view('admin.restaurant.create');
+        $cuisine = Cuisine::select('id','name')->where('status',1)->get();
+        return view('admin.restaurant.create',compact('cuisine'));
     }
 
     /**
@@ -49,9 +53,13 @@ class RestaurantController extends Controller
         DB::beginTransaction();
     	try {
 
-     		$this->props($request)
-     		->save();	
+     		$adata = $this->props($request)
+     		->save();
      		
+            $id = $this->restaurant->id;
+            $cuisine = $request->cuisines;
+            $this->addCusinRestro($id,$cuisine);
+
      		DB::commit();
      		
      		return back()->withSuccess("New restaurant added");
@@ -84,7 +92,8 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        return view('admin.restaurant.update',compact('restaurant'));
+        $cuisine = Cuisine::select('id','name')->where('status',1)->get();
+        return view('admin.restaurant.update',compact('restaurant','cuisine'));
     }
 
     /**
@@ -103,9 +112,14 @@ class RestaurantController extends Controller
     		$this->restaurant = $restaurant;
 
      		$this->props($request)
-     		->save();	
+     		->save();
+
+            $id = $this->restaurant->id;
+            $cuisine = $request->cuisines;
      		
-     		DB::commit();
+            DB::commit();
+            $this->removeCusinRestro($id);
+            $this->addCusinRestro($id,$cuisine);
      		
      		return back()->withSuccess("Restaurant updated");
 
@@ -155,10 +169,13 @@ class RestaurantController extends Controller
     }
     private function props(Request $request)
     {
-    	$this->restaurant->name = $request->name;
+        $cuisine = isset($request->cuisines) && !empty($request->cuisines) ? implode(",", $request->cuisines) : '';
     	if ($request->hasFile('image')) {
     		$this->restaurant->image = $request->image->store('upload/restaurant','public');
     	}
+        $this->restaurant->name = $request->name;
+    	$this->restaurant->slug = Str::slug($request->name,'-');
+        $this->restaurant->cuisines = $cuisine;
         $this->restaurant->location = $request->location;
         $this->restaurant->address = $request->address;
         $this->restaurant->address2 = $request->address2;
@@ -204,5 +221,25 @@ class RestaurantController extends Controller
     {
     	$this->restaurant->save();
     	return $this;
+    }
+
+    private function addCusinRestro($id,$cuisine)
+    {
+        $add = [];
+        if (!empty($cuisine)) {
+            foreach ($cuisine as $key => $value) {
+                $add[$key]['cuisine_id'] = $value;
+                $add[$key]['restaurant_id'] = $id;
+                $add[$key]['created_at'] = date('Y-m-d H:i');
+            }
+            CuisineRestaurant::insert($add);
+        }
+        return $this;
+    }
+
+    private function removeCusinRestro($id)
+    {
+        CuisineRestaurant::where('restaurant_id',$id)->delete();
+        return 1;
     }
 }

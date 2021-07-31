@@ -2,6 +2,7 @@
 @section('content')
 @php
 	$reservation_system = Config::get('constant.reservation_system');
+	$cuisines = !empty($restaurant->cuisines) ? explode(",", $restaurant->cuisines) : [];
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
@@ -28,6 +29,18 @@
 									<label class="form-label">Restaurant Location</label>
 									<input type="text" name="location" class="form-control" placeholder="enter restaurant location" value="{{ old('location',$restaurant->location) }}">
 									@error('location')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-6">
+									<label class="form-label">Cuisines</label>
+									<select class="form-control select2" name="cuisines[]" multiple="">
+										<option value="">Select</option>
+										@foreach($cuisine as $val)
+											<option value="{{$val->id}}" @if(in_array($val->id, $cuisines)) selected="" @endif>{{$val->name}}</option>
+										@endforeach
+									</select>
+									@error('cuisines')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
@@ -418,8 +431,18 @@
 	</div>
 </main>
 @endsection
+@push('style')	
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<style type="text/css">
+		.select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice{margin: 4px !important;}
+	</style>
+@endpush
 @push('script')
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function() {
+		    $('.select2').select2();
+		});
 		@if (Session::has('success'))
 			
 			Swal.fire({
