@@ -1,35 +1,32 @@
-/*$(function() {
+$(function() {
 	$.ajaxSetup({
 	   headers: {
 	     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	   }
 	});
 
-	$("select[name='restaurant_id']").on("change",function () {
+	$("select[name='menu_group_id']").on("change",function () {
 		
-		var restaurant_id = $(this).val();
-		var thisData = $(this);
+		var menu_group_id = $(this).val();
 		$.ajax({
-	        url: base_url+'/admin/menu-item/menugroup',
+	        url: base_url+'/admin/menu-item/menu-group-quantity',
 	        type: 'POST',
 	        dataType:'json',
 	        cache: false,             
-	        data: {'restaurant_id':restaurant_id},
+	        data: {'menu_group_id':menu_group_id},
 	        success: function(result)
 	        {
-	          	var sugg =  thisData.parent().parent().find("select.menu_group_id");
-	          	sugg.html('<option value="">Select</option>');
+	          	$(".append-menu-group-quantity").html('');
 	        	if (result.status) {
 	            	var suggest = '';
-	            
-	            	$.each(result.data.menugroup,function(key , val){
-	              	suggest+= '<option value="'+val.id+'">'+val.name+'</option>';
+	            	console.log(result.data);
+	            	$.each(result.data,function(key , val){
+	              	suggest+= '<div class="mb-4 col-md-4"><input type="hidden" name="mqg_id[]" value="'+val.id+'"><label class="form-label">'+val.name+'</label><input type="number" name="price[]" class="form-control"></div>';
 	            	});
-
-	            	sugg.html(suggest);
+	          		$(".append-menu-group-quantity").html(suggest);
 	        	}
 	        	else{
-	            	sugg.html('<option value="">Select</option>');
+	          		$(".append-menu-group-quantity").html('');
 	        	}
 	        },
 	        error: function(data)
@@ -38,4 +35,4 @@
 	        }
     	});
 	});
-});*/
+});

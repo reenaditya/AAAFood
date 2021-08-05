@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\MenuQuantityGroup;
 use App\Models\MenuItem;
 use App\Models\MenuGroup;
 use App\Models\User;
 use App\Models\Restaurant;
+use App\Models\MenuItemsPriceQuantity;
 use DB;
+use Auth;
 
 class MenuItemController extends Controller
 {
@@ -37,10 +40,9 @@ class MenuItemController extends Controller
      */
     public function create()
     {
-        $user = User::get();
-        $restaurant = Restaurant::get();
-        $group = MenuGroup::where('status',1)->get();
-        return view('admin.menu_item.create',compact('restaurant','user','group'));
+        $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
+        $group = MenuGroup::where('restaurant_id',$restaurant->id)->where('user_id',Auth::id())->where('status',1)->get();
+        return view('admin.menu_item.create',compact('group'));
     }
 
     /**
@@ -56,9 +58,11 @@ class MenuItemController extends Controller
         DB::beginTransaction();
         try {
 
-            $this->props($request)
+            $menu_item_id = $this->props($request)
             ->save();   
-            
+            $menu_item_id = $menu_item_id->data->id;
+            $update = false;
+            $this->menuQuantityPrice($menu_item_id,$request,$update);
             DB::commit();
             
             return back()->withSuccess("New Menu item added");
@@ -91,12 +95,11 @@ class MenuItemController extends Controller
      */
     public function edit(MenuItem $menu_item)
     {
-        $menu_item = $menu_item->with('restaurant','user','menu_group')->where('id',$menu_item->id)->first();
-        $user = User::get();
-        $restaurant = Restaurant::get();
-        $group = MenuGroup::where('status',1)->get();
+        $menu_item = $menu_item->with('restaurant','user','menu_group','menu_price')->where('id',$menu_item->id)->first();
+        $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
+        $group = MenuGroup::where('restaurant_id',$restaurant->id)->where('user_id',Auth::id())->where('status',1)->get();
 
-        return view('admin.menu_item.update',compact('menu_item','restaurant','user','group'));
+        return view('admin.menu_item.update',compact('menu_item','group'));
     }
 
     /**
@@ -121,7 +124,10 @@ class MenuItemController extends Controller
               
             $this->props($request)
             ->save();   
-            
+
+            $update = true;
+            $this->menuQuantityPrice($menu_item->id,$request,$update);
+
             DB::commit();
             
             return back()->withSuccess("Menu item updated");
@@ -154,22 +160,22 @@ class MenuItemController extends Controller
     {
         $request->validate([
             'name' => ["required","min:2","max:100"],
-            'restaurant_id' => ['required'],
-            'user_id' => ['required'],
             'menu_group_id' => ['required'],
             'estimated_time' => ['required'],
             'discount' => ['required'],
+            'discount_type' => ['required'],
         ]);
         return $this;
     }
     private function props(Request $request)
     {
+        $restaurant = Restaurant::where('user_id',Auth::id())->first();
         $this->data->name = $request->name;
         if ($request->hasFile('image')) {
             $this->data->image = $request->image->store('upload/menu_item','public');
         }
-        $this->data->restaurant_id = $request->restaurant_id;
-        $this->data->user_id = $request->user_id;
+        $this->data->restaurant_id = $restaurant->id;
+        $this->data->user_id = Auth::id();
         $this->data->menu_group_id = $request->menu_group_id;
         $this->data->estimated_time = $request->estimated_time;
         $this->data->discount = $request->discount;
@@ -183,21 +189,37 @@ class MenuItemController extends Controller
         return $this;
     }
 
+    private function menuQuantityPrice($menu_item_id,$request,$update){
+        if ($update) {
+            MenuItemsPriceQuantity::whereIn('menu_quantity_group_id',$request->mqg_id)->delete();
+        }
+        $data = [];
+        $counts = count($request->mqg_id);
+        if ($counts >=1) {
+            for ($i=0; $i < $counts; $i++) { 
+                $data[$i]['menu_quantity_group_id'] = $request->mqg_id[$i];
+                $data[$i]['menu_item_id'] = $menu_item_id;
+                $data[$i]['price'] = $request->price[$i];
+            }
+            MenuItemsPriceQuantity::insert($data);
+        }
+        return true;
+    }
 
     /*
-    * Get Menu Group
+    * Get Menu Group Quantity
     */
-    public function menuGroup(Request $request)
+    public function menuGroupQuantity(Request $request)
     {
         $input = $request->all();
-        $restaurant_id = isset($input['restaurant_id']) && !empty($input['restaurant_id']) ? $input['restaurant_id'] : false;
-        if($restaurant_id){
-            $menugroup = MenuGroup::where('restaurant_id',$restaurant_id)->where('status',1)->get();
+        $menu_group_id = isset($input['menu_group_id']) && !empty($input['menu_group_id']) ? $input['menu_group_id'] : false;
+        if($menu_group_id){
+            $mgq = MenuQuantityGroup::where('menu_group_id',$menu_group_id)->where('status',1)->get();
             
-            if (!$menugroup->isEmpty()) {
+            if (!$mgq->isEmpty()) {
                 $response['status'] = true;
                 $response['message'] =  'Successfully';
-                $response['data'] =  $menugroup;
+                $response['data'] =  $mgq;
             }else{
                 $response['status'] = false;
                 $response['message'] =  'Somethong went wrong';

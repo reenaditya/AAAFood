@@ -19,46 +19,7 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-4">
-									<label class="form-label" >Restaurants name</label>
-									<select class="form-control" name="restaurant_id" >
-										<option value="">Select</option>
-										@foreach($restaurant as $val)
-										<option value="{{$val->id}}" @if($menu_item->restaurant_id==$val->id) selected="" @endif >{{$val->name}}</option>
-										@endforeach
-									</select>
-									@error('restaurant_id')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
 
-								<div class="mb-4 col-md-4">
-									<label class="form-label">User name</label>
-									<select class="form-control" name="user_id" >
-										<option value="">Select</option>
-										@foreach($user as $val)
-										<option value="{{$val->id}}"  @if($menu_item->user_id==$val->id) selected="" @endif>{{$val->name}}</option>
-										@endforeach
-									</select>
-									@error('user_id')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
-
-
-								<div class="mb-4 col-md-4">
-									<label class="form-label">Menu group name</label>
-									<select class="form-control" name="menu_group_id" >
-										<option value="">Select</option>
-										@foreach($group as $val)
-										<option value="{{$val->id}}"  @if($menu_item->menu_group_id==$val->id) selected="" @endif>{{$val->name}}</option>
-										@endforeach
-									</select>
-									@error('menu_group_id')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
-								
 								<div class="mb-4 col-md-4">
 									<label class="form-label" >Estimated time</label>
 									<input type="number" min="0" name="estimated_time" class="form-control" placeholder="enter estimated time(in minutes)"  value="{{ old('estimated_time',$menu_item->estimated_time) }}">
@@ -87,17 +48,6 @@
 								</div>
 								
 								<div class="mb-4 col-md-4">
-									<label class="form-label" >Image</label>
-									<input type="file" class="form-control" name="image" old="{{ old('image')  }}">
-									@error('image')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-									<div>
-										<img class="img-fluid" src="{{asset('storage/'.$menu_item->image)}}" alt="menu item image" style="width: auto;height: 100px;">
-									</div>
-								</div>
-
-								<div class="mb-4 col-md-4">
 									<label class="form-label" >Status</label>
 									<select class="form-control" name="status" >
 										<option value="1" @if($menu_item->status==1) selected="" @endif>Active</option>
@@ -108,7 +58,42 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-									
+
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Menu group name</label>
+									<select class="form-control" name="menu_group_id" >
+										<option value="">Select</option>
+										@foreach($group as $val)
+										<option value="{{$val->id}}"  @if($menu_item->menu_group_id==$val->id) selected="" @endif>{{$val->name}}</option>
+										@endforeach
+									</select>
+									@error('menu_group_id')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="row append-menu-group-quantity">
+									@if(!$menu_item->menu_price->isEmpty())
+									@foreach($menu_item->menu_price as $val)
+										<div class="mb-4 col-md-4">
+											<input type="hidden" name="mqg_id[]" value="{{$val->pivot->menu_quantity_group_id}}">
+											<label class="form-label">{{ $val->name ?? ''}}</label>
+											<input type="number" name="price[]" class="form-control" value="{{ $val->pivot->price ?? ''}}">
+										</div>
+									@endforeach
+									@endif
+								</div>
+								
+								<div class="mb-4 col-md-4">
+									<label class="form-label" >Image</label>
+									<input type="file" class="form-control" name="image" old="{{ old('image')  }}">
+									@error('image')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+									<div>
+										<img class="img-fluid" src="{{asset('storage/'.$menu_item->image)}}" alt="menu item image" style="width: auto;height: 100px;">
+									</div>
+								</div>
+
 							</div>
 							<div class="text-center">
 								<button type="submit" class="btn btn-primary">Submit</button>
@@ -125,6 +110,7 @@
 </main>
 @endsection
 @push('script')
+	<script type="text/javascript" src="{{asset('js/admin/menu_item.js')}}"></script>
 	<script type="text/javascript">
 		@if (Session::has('success'))
 			

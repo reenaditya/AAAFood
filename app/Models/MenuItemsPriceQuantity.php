@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class MenuItemsPriceQuantity extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [];
 
     public function quantity_group()
     {

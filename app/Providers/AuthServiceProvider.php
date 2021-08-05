@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Cuisine;
+use App\Policies\CuisinePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Cuisine' => 'App\Policies\CuisinePolicy',
+        /*Cuisine::class => CuisinePolicy::class,*/
     ];
 
     /**

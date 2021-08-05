@@ -42,7 +42,7 @@ Route::group([
 	Route::resource('restaurant', 'RestaurantController');
 	Route::resource('menu_group', 'MenuGroupController');
 	Route::resource('menu_item', 'MenuItemController');
-	Route::post('/menu-item/menugroup','MenuItemController@menuGroup');
+	Route::post('/menu-item/menu-group-quantity','MenuItemController@menuGroupQuantity');
 	Route::resource('menu_quantity_group','MenuQuantityGroupController');
 	Route::resource('menu_item_price_quantity','MenuItemPriceQuantityController');
 

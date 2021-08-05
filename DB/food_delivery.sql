@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2021 at 10:19 PM
+-- Generation Time: Aug 05, 2021 at 06:58 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.25
 
@@ -41,9 +41,10 @@ CREATE TABLE `cuisines` (
 --
 
 INSERT INTO `cuisines` (`id`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'Indian', 'upload/cuisines/fxQVCVgJjjE1LimGCEWBeeSzPXks9Z061RDzaaUC.jpg', 1, '2021-07-30 22:18:47', '2021-07-30 22:18:47'),
 (3, 'Itelian', 'upload/cuisines/mmFsqwtCyI9gKNA8MywztTFZ2XYGjVHqkdu8T2CQ.jpg', 1, '2021-07-30 22:19:08', '2021-07-30 22:19:08'),
-(4, 'Chinese', 'upload/cuisines/9Jl8cLfDzujCvlZpBb1mDEPcunKDqTSAgJc7LYT9.jpg', 1, '2021-07-30 22:19:49', '2021-07-30 22:19:49');
+(4, 'Chinese', 'upload/cuisines/9Jl8cLfDzujCvlZpBb1mDEPcunKDqTSAgJc7LYT9.jpg', 1, '2021-07-30 22:19:49', '2021-07-30 22:19:49'),
+(5, 'Indian', 'upload/cuisines/2U2Dc7pwMZ787bO5F4NErfKCdlDhvlXQ7wjq0HAY.jpg', 1, '2021-08-03 21:50:23', '2021-08-03 21:50:23'),
+(6, 'South Indian', 'upload/cuisines/tfujxZ0SEDgs6zmoRqauU5W8J8Pow6RHELBXmoXr.jpg', 1, '2021-08-03 21:53:03', '2021-08-03 21:53:03');
 
 -- --------------------------------------------------------
 
@@ -65,17 +66,13 @@ CREATE TABLE `cuisine_restaurants` (
 --
 
 INSERT INTO `cuisine_restaurants` (`id`, `cuisine_id`, `restaurant_id`, `status`, `created_at`, `updated_at`) VALUES
-(26, 2, 1, 1, '2021-07-31 11:02:00', NULL),
-(27, 3, 1, 1, '2021-07-31 11:02:00', NULL),
-(28, 2, 2, 1, '2021-07-31 11:03:00', NULL),
-(29, 2, 3, 1, '2021-07-31 11:03:00', NULL),
 (30, 3, 3, 1, '2021-07-31 11:03:00', NULL),
-(31, 2, 4, 1, '2021-07-31 11:04:00', NULL),
 (32, 4, 4, 1, '2021-07-31 11:04:00', NULL),
 (33, 4, 6, 1, '2021-07-31 11:04:00', NULL),
-(34, 2, 7, 1, '2021-07-31 11:04:00', NULL),
 (35, 3, 7, 1, '2021-07-31 11:04:00', NULL),
-(36, 4, 7, 1, '2021-07-31 11:04:00', NULL);
+(36, 4, 7, 1, '2021-07-31 11:04:00', NULL),
+(40, 3, 1, 1, '2021-08-04 20:05:00', NULL),
+(41, 6, 1, 1, '2021-08-04 20:05:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -115,7 +112,9 @@ CREATE TABLE `menu_groups` (
 
 INSERT INTO `menu_groups` (`id`, `restaurant_id`, `user_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'Biryanis', 1, '2021-07-30 02:55:41', '2021-07-31 13:49:24'),
-(2, 2, 1, 'Egg', 1, '2021-07-30 05:16:30', '2021-07-30 21:29:16');
+(2, 2, 1, 'Egg', 1, '2021-07-30 05:16:30', '2021-07-30 21:29:16'),
+(3, 1, 3, 'Chawmin', 1, '2021-08-03 22:50:18', '2021-08-04 20:29:05'),
+(4, 1, 3, 'Rice', 1, '2021-08-04 20:11:52', '2021-08-04 20:11:52');
 
 -- --------------------------------------------------------
 
@@ -144,9 +143,8 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `restaurant_id`, `user_id`, `menu_group_id`, `image`, `name`, `estimated_time`, `discount`, `discount_type`, `desc`, `status`, `created_at`, `updated_at`) VALUES
-(2, 2, 1, 1, 'upload/menu_item/RvKM987eux4oPKEqeGoLbFoSYGcbjH5A9F9dE2qX.jpg', 'Non Veg Biryani', 30, 20, 1, NULL, 1, '2021-07-30 07:24:10', '2021-07-31 13:31:14'),
-(3, 2, 1, 1, 'upload/menu_item/xVzPJMKN5hts94p3O0glo65P3XTgsOMRMaLrQVdH.jpg', 'Veg Biryani', 20, 21, 1, NULL, 1, '2021-07-30 12:25:46', '2021-07-31 13:05:50'),
-(4, 1, 1, 1, 'upload/menu_item/GMoo2ZK1E5lKp3X51RskOvF4iNNkd8QPHguTRL4v.jpg', 'Roast Biryani', 20, 20, 1, NULL, 1, '2021-07-31 13:24:43', '2021-07-31 13:24:43');
+(8, 1, 3, 4, 'upload/menu_item/7BChKaHwRYDe0EjTrA44O6po1Jk3ihlpCxEz9LRb.jpg', 'Masala Rice', 20, 20, 1, NULL, 1, '2021-08-04 21:29:17', '2021-08-04 21:29:17'),
+(9, 1, 3, 3, 'upload/menu_item/S7qEjgp76xSh9vCDwDaTaiQ4dHI40owuiyXMJaL4.jpg', 'Veg Chawmin', 20, 30, 1, NULL, 1, '2021-08-04 22:46:47', '2021-08-04 22:59:00');
 
 -- --------------------------------------------------------
 
@@ -169,9 +167,9 @@ CREATE TABLE `menu_items_price_quantities` (
 --
 
 INSERT INTO `menu_items_price_quantities` (`id`, `menu_quantity_group_id`, `menu_item_id`, `price`, `status`, `created_at`, `updated_at`) VALUES
-(3, 2, 2, 125.00, 1, '2021-07-30 21:26:38', '2021-07-30 21:26:38'),
-(4, 2, 3, 200.00, 1, '2021-07-31 13:25:45', '2021-07-31 13:25:45'),
-(5, 2, 4, 240.00, 1, '2021-07-31 13:25:58', '2021-07-31 13:25:58');
+(6, 3, 8, 200.00, 1, NULL, NULL),
+(7, 4, 8, 300.00, 1, NULL, NULL),
+(11, 2, 9, 150.00, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -195,7 +193,9 @@ CREATE TABLE `menu_quantity_groups` (
 --
 
 INSERT INTO `menu_quantity_groups` (`id`, `restaurant_id`, `user_id`, `menu_group_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(2, 1, 1, 1, 'per plate', 1, '2021-07-30 20:46:40', '2021-07-31 13:16:52');
+(2, 1, 3, 3, 'per plate', 1, '2021-07-30 20:46:40', '2021-08-04 20:29:29'),
+(3, 1, 3, 4, 'half plate', 1, '2021-08-04 20:26:35', '2021-08-04 20:26:35'),
+(4, 1, 3, 4, 'Full Plate', 1, '2021-08-04 20:26:50', '2021-08-04 20:26:50');
 
 -- --------------------------------------------------------
 
@@ -266,6 +266,7 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `restaurants` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `slug` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -314,13 +315,13 @@ CREATE TABLE `restaurants` (
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`id`, `name`, `slug`, `location`, `cuisines`, `address`, `address2`, `city`, `state`, `country`, `zipcode`, `website`, `sale_tax`, `dine_in`, `seating_capacity_indoor`, `seating_capacity_outdoor`, `reservations`, `reservation_system`, `takeout`, `own_delivery`, `delivery_fee`, `minimum_delivery_amount`, `free_delivery_amount`, `delivery_radius`, `delivery_zip_codes`, `order_lead_time`, `delivery_extra_time`, `delivery_service`, `participate_file`, `aaadining_club`, `birthday_club`, `mf_from`, `mf_to`, `sat_from`, `sat_to`, `sun_from`, `sun_to`, `description`, `image`, `serve`, `status`, `created_at`, `updated_at`) VALUES
-(1, '1 Point 5 Street', '1-point-5-street', 'Florida', '2,3', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'ow.com', '2', 1, '22', '22', 0, 2, 1, 0, 20.00, 100.00, 200.00, '20', '333011', 12, 23, 0, 'upload/restaurant/lLRRa2CCOpWCVnVjWMReVESCDOFvyDGAyqP0VVDz.jpg', 0, 0, '09:55:00', '20:55:00', '09:55:00', '13:55:00', '13:55:00', '20:55:00', 'New restoro', 'upload/restaurant/NQR8qBQsYIkDvfRvc7Y3TYnHAhCAtTAr6bIg105K.jpg', 0, 1, '2021-07-29 20:50:17', '2021-07-31 11:02:41'),
-(2, 'Nirman Veg & Non Veg Restroo', 'nirman-veg-non-veg-restroo', 'India', '2', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '30', '50', 0, 2, 0, 0, 10.00, 20.00, 400.00, '20', '333998,98979,89789,9879879,', 30, 10, 0, 'upload/restaurant/VWeII8EYEHlpVsPlqDQzN6GgDZ4cFfyuz392xZru.jpg', 0, 0, '09:20:00', '22:20:00', '09:20:00', '14:20:00', NULL, NULL, 'best food  and best test guarantee', 'upload/restaurant/hXUQmpCTm7m5bQFz4HiFMmxjx0DelP2UMpJ3kRYG.jpg', 0, 1, '2021-07-30 21:17:14', '2021-07-31 11:03:15'),
-(3, 'Wrapstick', 'wrapstick', 'India', '2,3', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '21', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '223344,223341', 20, 10, 1, 'upload/restaurant/JgsIOc1HVOyW1unBwHVICnXyUuE2vOuUuBrF7Mko.jpg', 1, 1, '13:10:00', '17:14:00', NULL, NULL, NULL, NULL, 'Sat sun will be off', 'upload/restaurant/PPrNG5OmJ3RkvonUjt3mb4S2X3IIyzEL844fKkiY.jpg', 0, 1, '2021-07-31 00:16:46', '2021-07-31 11:03:50'),
-(4, 'Khana Khajan restoo', 'khana-khajan-restoo', 'Jhunjhunu', '2,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '88786,23424', 20, 20, 1, 'upload/restaurant/k6Uvqze2NkQ6mzOcnySrbs21oEziZG6RofbaKUqq.jpg', 1, 1, '11:59:00', '17:05:00', '12:00:00', '23:00:00', NULL, NULL, 'try new dishs New', 'upload/restaurant/w9y4zAr0jREbjlB8onyG7fHPQUTHDhiAVwgyc0Xz.jpg', 0, 1, '2021-07-31 01:00:31', '2021-07-31 11:04:11'),
-(6, 'Kuresh non veg hotel', 'kuresh-non-veg-hotel', 'Jhunjhunu', '4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '11', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 22, 10, 1, 'upload/restaurant/ezJgCxg4ekqidIEfK8ZFaxsGvSmg08Lg7VJAcKDu.jpg', 1, 1, '14:07:00', '16:05:00', NULL, NULL, NULL, NULL, 'smndfg sdfg dfg', 'upload/restaurant/CRzLySWHfSd6561ZSbmPa3NIj7lBP8DNYTDwipWp.jpg', 0, 1, '2021-07-31 01:05:38', '2021-07-31 11:04:30'),
-(7, 'Hamara Rajasthn Restaurant', 'hamara-rajasthn-restaurant', 'Rajsathan', '2,3,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '11', '22', 1, 3, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 12, 23, 1, NULL, 1, 1, '10:00:00', '20:00:00', NULL, NULL, NULL, NULL, 'notydf sfdsfsd fd sfsd f', 'upload/restaurant/A0OuergYyqmBZPN5UDW9WELKuXIC4SAt1eKBzUL5.jpg', 0, 1, '2021-07-31 01:23:45', '2021-07-31 11:04:49');
+INSERT INTO `restaurants` (`id`, `user_id`, `name`, `slug`, `location`, `cuisines`, `address`, `address2`, `city`, `state`, `country`, `zipcode`, `website`, `sale_tax`, `dine_in`, `seating_capacity_indoor`, `seating_capacity_outdoor`, `reservations`, `reservation_system`, `takeout`, `own_delivery`, `delivery_fee`, `minimum_delivery_amount`, `free_delivery_amount`, `delivery_radius`, `delivery_zip_codes`, `order_lead_time`, `delivery_extra_time`, `delivery_service`, `participate_file`, `aaadining_club`, `birthday_club`, `mf_from`, `mf_to`, `sat_from`, `sat_to`, `sun_from`, `sun_to`, `description`, `image`, `serve`, `status`, `created_at`, `updated_at`) VALUES
+(1, 3, '1 Point 5 Street', '1-point-5-street', 'Florida', '3,6', 'Road no. 2', 'near dps school', 'JHUNJHUNU', 'RAJASTHAN', 'India', '333011', 'ow.com', '2', 1, '22', '22', 0, 2, 1, 0, 20.00, 100.00, 200.00, '20', '333011', 12, 23, 0, 'upload/restaurant/lLRRa2CCOpWCVnVjWMReVESCDOFvyDGAyqP0VVDz.jpg', 0, 0, '09:55:00', '20:55:00', '09:55:00', '13:55:00', '13:55:00', '20:55:00', 'New restoro', 'upload/restaurant/NQR8qBQsYIkDvfRvc7Y3TYnHAhCAtTAr6bIg105K.jpg', 0, 1, '2021-07-29 20:50:17', '2021-08-04 20:05:11'),
+(2, 1, 'Nirman Veg & Non Veg Restroo', 'nirman-veg-non-veg-restroo', 'India', '', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '30', '50', 0, 2, 0, 0, 10.00, 20.00, 400.00, '20', '333998,98979,89789,9879879,', 30, 10, 0, 'upload/restaurant/VWeII8EYEHlpVsPlqDQzN6GgDZ4cFfyuz392xZru.jpg', 0, 0, '09:20:00', '22:20:00', '09:20:00', '14:20:00', NULL, NULL, 'best food  and best test guarantee', 'upload/restaurant/hXUQmpCTm7m5bQFz4HiFMmxjx0DelP2UMpJ3kRYG.jpg', 0, 1, '2021-07-30 21:17:14', '2021-08-04 20:05:57'),
+(3, NULL, 'Wrapstick', 'wrapstick', 'India', '2,3', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '21', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '223344,223341', 20, 10, 1, 'upload/restaurant/JgsIOc1HVOyW1unBwHVICnXyUuE2vOuUuBrF7Mko.jpg', 1, 1, '13:10:00', '17:14:00', NULL, NULL, NULL, NULL, 'Sat sun will be off', 'upload/restaurant/PPrNG5OmJ3RkvonUjt3mb4S2X3IIyzEL844fKkiY.jpg', 0, 1, '2021-07-31 00:16:46', '2021-07-31 11:03:50'),
+(4, NULL, 'Khana Khajan restoo', 'khana-khajan-restoo', 'Jhunjhunu', '2,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '88786,23424', 20, 20, 1, 'upload/restaurant/k6Uvqze2NkQ6mzOcnySrbs21oEziZG6RofbaKUqq.jpg', 1, 1, '11:59:00', '17:05:00', '12:00:00', '23:00:00', NULL, NULL, 'try new dishs New', 'upload/restaurant/w9y4zAr0jREbjlB8onyG7fHPQUTHDhiAVwgyc0Xz.jpg', 0, 1, '2021-07-31 01:00:31', '2021-07-31 11:04:11'),
+(6, NULL, 'Kuresh non veg hotel', 'kuresh-non-veg-hotel', 'Jhunjhunu', '4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '11', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 22, 10, 1, 'upload/restaurant/ezJgCxg4ekqidIEfK8ZFaxsGvSmg08Lg7VJAcKDu.jpg', 1, 1, '14:07:00', '16:05:00', NULL, NULL, NULL, NULL, 'smndfg sdfg dfg', 'upload/restaurant/CRzLySWHfSd6561ZSbmPa3NIj7lBP8DNYTDwipWp.jpg', 0, 1, '2021-07-31 01:05:38', '2021-07-31 11:04:30'),
+(7, NULL, 'Hamara Rajasthn Restaurant', 'hamara-rajasthn-restaurant', 'Rajsathan', '2,3,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '11', '22', 1, 3, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 12, 23, 1, NULL, 1, 1, '10:00:00', '20:00:00', NULL, NULL, NULL, NULL, 'notydf sfdsfsd fd sfsd f', 'upload/restaurant/A0OuergYyqmBZPN5UDW9WELKuXIC4SAt1eKBzUL5.jpg', 0, 1, '2021-07-31 01:23:45', '2021-07-31 11:04:49');
 
 -- --------------------------------------------------------
 
@@ -342,7 +343,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('cu6KerZ3cLMpgWyMaE2gk5LjkTCLTSBxzu7UZr4t', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoicnRGTm94bzFjVk9saEtwcGpnWEEyYTJnRHNRaXpTcTI0ZVowaTJvciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9tZW51LzEtcG9pbnQtNS1zdHJlZXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjM6InVybCI7YTowOnt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDFBSDhuTjJYTC9mSGVJc1VTMmtpc2VXd3JsQ0x4Mm0xMHVoNmluNFNwczdNa2FZcXlKS0dDIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQxQUg4bk4yWEwvZkhlSXNVUzJraXNlV3dybENMeDJtMTB1aDZpbjRTcHM3TWthWXF5SktHQyI7fQ==', 1627762641);
+('iQ5bokgnmFwuHm4xF0tHoBuEe5obg47vMHQrfykQ', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiM2dVR0Y4WWJSNlNKbnFsZWNWUjRteE04QmtOcktJV3RWNTh4MlRJbCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9tZW51X2l0ZW0vOS9lZGl0Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJGlPYlZOS05yTDNFZUphV25aMzRHVXVDOW5uMUV3SHBIaW5lL1Y5emlxQ0xEM2NCaExBTTk2IjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRpT2JWTktOckwzRWVKYVduWjM0R1V1QzlubjFFd0hwSGluZS9WOXppcUNMRDNjQmhMQU05NiI7fQ==', 1628137744);
 
 -- --------------------------------------------------------
 
@@ -370,7 +371,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Aditya Singh', 'user@gmail.com', 1, NULL, '$2y$10$SId5u853113XZznZGoKjT.HRPFKJ.IhUQacA2R9FzJ8/fDB0xPl0y', NULL, NULL, 'jzBm1eHsXymt2MoEfmflVDrIIQZlZZE6l1Winh3t4eYhX0WMjIbYcf0oWeCg', '2021-07-15 08:27:17', '2021-07-15 08:55:54'),
-(2, 'Super Admin', 'super@admin.com', 2, NULL, '$2y$10$1AH8nN2XL/fHeIsUS2kiseWwrlCLx2m10uh6in4Sps7MkaYqyJKGC', NULL, NULL, '0XY7m9y1cmIPws737SR6bQH9ufjmIA8mzT6sf5FEEY7VcVMTqski4ujYNEWz', '2021-07-15 08:29:33', '2021-07-15 08:29:33');
+(2, 'Super Admin', 'super@admin.com', 2, NULL, '$2y$10$1AH8nN2XL/fHeIsUS2kiseWwrlCLx2m10uh6in4Sps7MkaYqyJKGC', NULL, NULL, 'BLc57XSOi5XiP2arhCskw5Pjc9so64xIvzjtr6h52xxFs7S85hgTxN0IaWVF', '2021-07-15 08:29:33', '2021-07-15 08:29:33'),
+(3, 'TANVEER KHAN', 'fooddeli@mailinator.com', 1, NULL, '$2y$10$iObVNKNrL3EeJaWnZ34GUuC9nn1EwHpHine/V9ziqCLD3cBhLAM96', NULL, NULL, NULL, '2021-08-03 22:36:11', '2021-08-03 22:36:11');
 
 --
 -- Indexes for dumped tables
@@ -477,13 +479,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cuisines`
 --
 ALTER TABLE `cuisines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cuisine_restaurants`
 --
 ALTER TABLE `cuisine_restaurants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -495,25 +497,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `menu_groups`
 --
 ALTER TABLE `menu_groups`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `menu_items_price_quantities`
 --
 ALTER TABLE `menu_items_price_quantities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `menu_quantity_groups`
 --
 ALTER TABLE `menu_quantity_groups`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -537,7 +539,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

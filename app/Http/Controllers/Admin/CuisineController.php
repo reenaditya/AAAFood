@@ -14,6 +14,7 @@ class CuisineController extends Controller
 	public function __construct(Cuisine $cuisine)
 	{
 		$this->cuisine = $cuisine;
+        $this->authorizeResource(Cuisine::class);
 	}
     /**
      * Display a listing of the resource.

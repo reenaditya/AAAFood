@@ -25,32 +25,7 @@
 															<span class="text-danger">{{$message}} </span>
 														@enderror
 													</div>
-													<div class="mb-4 col-md-12">
-														<label class="form-label" >Restaurants Name</label>
-														<select class="form-control" name="restaurant_id" >
-															<option value="">Select</option>
-															@foreach($restaurant as $val)
-															<option value="{{$val->id}}" @if($menu_group->restaurant_id==$val->id) selected="" @endif>{{$val->name}}</option>
-															@endforeach
-														</select>
-														@error('restaurant_id')
-															<span class="text-danger">{{$message}} </span>
-														@enderror
-													</div>
-
-													<div class="mb-4 col-md-12">
-														<label class="form-label">User Name</label>
-														<select class="form-control" name="user_id" >
-															<option value="">Select</option>
-															@foreach($user as $val)
-															<option value="{{$val->id}}"  @if($menu_group->user_id==$val->id) selected="" @endif>{{$val->name}}</option>
-															@endforeach
-														</select>
-														@error('user_id')
-															<span class="text-danger">{{$message}} </span>
-														@enderror
-													</div>
-
+													
 													<div class="mb-4 col-md-12">
 														<label class="form-label" >Status</label>
 														<select class="form-control" name="status" >

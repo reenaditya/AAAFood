@@ -19,6 +19,18 @@
 
 							<div class="row">
 								<div class="mb-4 col-md-6">
+									<label class="form-label">User</label>
+									<select class="form-control select2" name="user_id">
+										<option value="">Select</option>
+										@foreach($user as $val)
+											<option value="{{$val->id}}" @if($restaurant->user_id==$val->id) selected="" @endif>{{$val->name}}</option>
+										@endforeach
+									</select>
+									@error('user_id')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-6">
 									<label class="form-label">Restaurant Name</label>
 									<input type="text" name="name" class="form-control" placeholder="enter restaurant name" value="{{ old('name',$restaurant->name) }}">
 									@error('name')

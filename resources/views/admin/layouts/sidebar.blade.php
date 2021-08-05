@@ -25,19 +25,25 @@
               	
             			</a>
 					</li>
+					@if(Auth::check() && Auth::user()->role===2)
 					<li class="sidebar-item {{Request::routeIs('admin.cuisine.*')?'active':''}}">
 						<a data-bs-target="#cuisine" class="sidebar-link {{Request::routeIs('admin.cuisine.*')?'':'collapsed'}}" href="{{ route('admin.cuisine.index') }}">
               			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Cuisine</span>
               	
             			</a>
 					</li>
+					@endif
+					
+					@if(Auth::check() && Auth::user()->role===2)
 					<li class="sidebar-item {{Request::routeIs('admin.restaurant.*')?'active':''}}">
 						<a data-bs-target="#restaurant" class="sidebar-link {{Request::routeIs('admin.restaurant.*')?'':'collapsed'}}" href="{{ route('admin.restaurant.index') }}">
               			<i class="align-middle" data-feather="archive"></i> <span class="align-middle">Restaurant</span>
               	
             			</a>
 					</li>
+					@endif
 
+					@if(Auth::check() && Auth::user()->role===1)
 					<li class="sidebar-item {{Request::routeIs('admin.menu_group.*') || Request::routeIs('admin.menu_item.*') || Request::routeIs('admin.menu_quantity_group.*') || Request::routeIs('admin.menu_item_price_quantity.*') ?'active':''}}">
 						<a data-bs-target="#menu" data-bs-toggle="collapse" class="sidebar-link collapsed">
               <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Menu</span>
@@ -46,14 +52,16 @@
 							
 							<li class="sidebar-item {{Request::routeIs('admin.menu_group.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_group.index')}}">Menu group</a></li>
 							
-							<li class="sidebar-item {{Request::routeIs('admin.menu_item.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item.index')}}">Menu item</a></li>
-							
 							<li class="sidebar-item {{Request::routeIs('admin.menu_quantity_group.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_quantity_group.index')}}">Menu quantity group</a></li>
 							
-							<li class="sidebar-item {{Request::routeIs('admin.menu_item_price_quantity.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item_price_quantity.index')}}">Menu item price on quantity group</a></li>
+							<li class="sidebar-item {{Request::routeIs('admin.menu_item.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item.index')}}">Menu item</a></li>
+							
+							
+							{{-- <li class="sidebar-item {{Request::routeIs('admin.menu_item_price_quantity.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item_price_quantity.index')}}">Menu item price on quantity group</a></li> --}}
 
 						</ul>
 					</li>
+					@endif
 
 				</ul>			
 		</nav>

@@ -8,6 +8,7 @@ use App\Models\MenuGroup;
 use App\Models\User;
 use App\Models\Restaurant;
 use DB;
+use Auth;
 
 class MenuGroupController extends Controller
 {
@@ -24,7 +25,7 @@ class MenuGroupController extends Controller
      */
     public function index()
     {
-        $data = $this->data->with('restaurant','user')->get();
+        $data = $this->data->with('restaurant','user')->where('user_id',Auth::id())->get();
         return view("admin.menu_group.index",compact('data'));
     }
 
@@ -35,9 +36,7 @@ class MenuGroupController extends Controller
      */
     public function create()
     {
-        $user = User::get();
-        $restaurant = Restaurant::get();
-        return view('admin.menu_group.create',compact('restaurant','user'));
+        return view('admin.menu_group.create');
     }
 
     /**
@@ -89,9 +88,7 @@ class MenuGroupController extends Controller
     public function edit(MenuGroup $menu_group)
     {
         $menu_group = $menu_group->with('restaurant','user')->where('id',$menu_group->id)->first();
-        $user = User::get();
-        $restaurant = Restaurant::get();
-        return view('admin.menu_group.update',compact('menu_group','restaurant','user'));
+        return view('admin.menu_group.update',compact('menu_group'));
     }
 
     /**
@@ -140,16 +137,15 @@ class MenuGroupController extends Controller
     {
         $request->validate([
             'name' => ["required","min:2","max:100"],
-            'restaurant_id' => ['required'],
-            'user_id' => ['required'],
         ]);
         return $this;
     }
     private function props(Request $request)
     {
+        $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
         $this->data->name = $request->name;
-        $this->data->restaurant_id = $request->restaurant_id;
-        $this->data->user_id = $request->user_id;
+        $this->data->restaurant_id = $restaurant->id;
+        $this->data->user_id = Auth::id();
         $this->data->status = $request->status?true:false;
         return $this;
     }

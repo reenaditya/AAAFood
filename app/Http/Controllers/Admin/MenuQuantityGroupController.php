@@ -9,6 +9,7 @@ use App\Models\MenuQuantityGroup;
 use App\Models\User;
 use App\Models\Restaurant;
 use DB;
+use Auth;
 
 class MenuQuantityGroupController extends Controller
 {
@@ -37,10 +38,9 @@ class MenuQuantityGroupController extends Controller
      */
     public function create()
     {
-        $user = User::get();
-        $restaurant = Restaurant::get();
-        $group = MenuGroup::where('status',1)->get();
-        return view('admin.menu_quanity_group.create',compact('restaurant','user','group'));
+        $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
+        $group = MenuGroup::where('restaurant_id',$restaurant->id)->where('user_id',Auth::id())->where('status',1)->get();
+        return view('admin.menu_quanity_group.create',compact('group'));
     }
 
     /**
@@ -92,11 +92,10 @@ class MenuQuantityGroupController extends Controller
     public function edit(MenuQuantityGroup $menu_quantity_group)
     {
         $menu_quantity_group = $menu_quantity_group->with('restaurant','user','menu_group')->first();
-        $user = User::get();
-        $restaurant = Restaurant::get();
-        $group = MenuGroup::where('status',1)->get();
-
-        return view('admin.menu_quanity_group.update',compact('menu_quantity_group','restaurant','user','group'));
+        $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
+        $group = MenuGroup::where('restaurant_id',$restaurant->id)->where('user_id',Auth::id())->where('status',1)->get();
+        
+        return view('admin.menu_quanity_group.update',compact('menu_quantity_group','group'));
     }
 
     /**
@@ -146,17 +145,16 @@ class MenuQuantityGroupController extends Controller
     {
         $request->validate([
             'name' => ["required","min:2","max:100"],
-            'restaurant_id' => ['required'],
-            'user_id' => ['required'],
             'menu_group_id' => ['required'],
         ]);
         return $this;
     }
     private function props(Request $request)
     {
+        $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
         $this->data->name = $request->name;
-        $this->data->restaurant_id = $request->restaurant_id;
-        $this->data->user_id = $request->user_id;
+        $this->data->restaurant_id = $restaurant->id;
+        $this->data->user_id = Auth::id();
         $this->data->menu_group_id = $request->menu_group_id;
         $this->data->status = $request->status?true:false;
         return $this;

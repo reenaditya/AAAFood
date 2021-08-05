@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CuisineRestaurant;
 use App\Models\Restaurant;
 use App\Models\Cuisine;
+use App\Models\User;
 use DB;
 use Str;
 class RestaurantController extends Controller
@@ -36,8 +37,9 @@ class RestaurantController extends Controller
      */
     public function create()
     {
+        $user = User::select('id','name')->get();
         $cuisine = Cuisine::select('id','name')->where('status',1)->get();
-        return view('admin.restaurant.create',compact('cuisine'));
+        return view('admin.restaurant.create',compact('cuisine','user'));
     }
 
     /**
@@ -92,8 +94,9 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
+        $user = User::select('id','name')->get();
         $cuisine = Cuisine::select('id','name')->where('status',1)->get();
-        return view('admin.restaurant.update',compact('restaurant','cuisine'));
+        return view('admin.restaurant.update',compact('restaurant','cuisine','user'));
     }
 
     /**
@@ -149,6 +152,7 @@ class RestaurantController extends Controller
     private function validation(Request $request)
     {
     	$request->validate([
+            'user_id' => ["required"],
         	'name' => ["required","min:2","max:100"],
             'location' => ['required','min:2'],
             'address' => ['required','min:2','max:255'],
@@ -163,7 +167,6 @@ class RestaurantController extends Controller
         	'status' => ["sometimes","boolean"],
         	'image' => ["nullable","image"],
             'description' => ['required','min:2','max:500'],
-        	//'serve' => ["sometimes","boolean"],
         ]);
         return $this;
     }
@@ -173,6 +176,7 @@ class RestaurantController extends Controller
     	if ($request->hasFile('image')) {
     		$this->restaurant->image = $request->image->store('upload/restaurant','public');
     	}
+        $this->restaurant->user_id = $request->user_id;
         $this->restaurant->name = $request->name;
     	$this->restaurant->slug = Str::slug($request->name,'-');
         $this->restaurant->cuisines = $cuisine;

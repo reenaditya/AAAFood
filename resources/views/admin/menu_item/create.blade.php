@@ -19,46 +19,7 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-4">
-									<label class="form-label" >Restaurants name</label>
-									<select class="form-control" name="restaurant_id" >
-										<option value="">Select</option>
-										@foreach($restaurant as $val)
-										<option value="{{$val->id}}">{{$val->name}}</option>
-										@endforeach
-									</select>
-									@error('restaurant_id')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
 
-								<div class="mb-4 col-md-4">
-									<label class="form-label">User name</label>
-									<select class="form-control" name="user_id" >
-										<option value="">Select</option>
-										@foreach($user as $val)
-										<option value="{{$val->id}}">{{$val->name}}</option>
-										@endforeach
-									</select>
-									@error('user_id')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
-
-
-								<div class="mb-4 col-md-4">
-									<label class="form-label">Menu group name</label>
-									<select class="form-control menu_group_id" name="menu_group_id">
-										<option value="">Select</option>
-										@foreach($group as $val)
-										<option value="{{$val->id}}">{{$val->name}}</option>
-										@endforeach
-									</select>
-									@error('menu_group_id')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
-								
 								<div class="mb-4 col-md-4">
 									<label class="form-label" >Estimated time</label>
 									<input type="number" min="0" name="estimated_time" class="form-control" placeholder="enter estimated time(in minutes)"  value="{{ old('estimated_time') }}">
@@ -85,13 +46,27 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								
 								<div class="mb-4 col-md-4">
 									<label class="form-label" >Image</label>
 									<input type="file" class="form-control" name="image" old="{{ old('image')  }}">
 									@error('image')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
+								</div>
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Menu group name</label>
+									<select class="form-control menu_group_id" name="menu_group_id">
+										<option value="">Select</option>
+										@foreach($group as $val)
+										<option value="{{$val->id}}">{{$val->name}}</option>
+										@endforeach
+									</select>
+									@error('menu_group_id')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="row append-menu-group-quantity">
+									
 								</div>
 
 								<div class="mb-4 col-md-4">
