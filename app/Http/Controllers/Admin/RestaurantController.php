@@ -163,8 +163,7 @@ class RestaurantController extends Controller
             'sale_tax' => ['required'],
             'seating_capacity_indoor' => ['required'],
             'seating_capacity_outdoor' => ['required'],
-            'mf_from' => ['required'],
-        	'status' => ["sometimes","boolean"],
+            'status' => ["sometimes","boolean"],
         	'image' => ["nullable","image"],
             'description' => ['required','min:2','max:500'],
         ]);

@@ -3,6 +3,7 @@
 @php
 	$reservation_system = Config::get('constant.reservation_system');
 	$cuisines = !empty($restaurant->cuisines) ? explode(",", $restaurant->cuisines) : [];
+	$us_states = Config::get('constant.us_states');
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
@@ -79,7 +80,11 @@
 								</div>
 								<div class="mb-4 col-md-6">
 									<label class="form-label">State / Province</label>
-									<input type="text" name="state" class="form-control" placeholder="enter state" value="{{ old('state',$restaurant->state) }}">
+									<select name="state" class="form-control">
+										@foreach($us_states as $kii=>$val)
+										<option value="{{$kii}}" @if($restaurant->state==$kii || old('state')==$kii) selected="" @endif>{{$val}}</option>
+										@endforeach
+									</select>
 									@error('state')
 										<span class="text-danger">{{$message}} </span>
 									@enderror

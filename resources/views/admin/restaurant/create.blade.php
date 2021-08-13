@@ -2,6 +2,7 @@
 @section('content')
 @php
 	$reservation_system = Config::get('constant.reservation_system');
+	$us_states = Config::get('constant.us_states');
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
@@ -81,14 +82,18 @@
 								</div>
 								<div class="mb-4 col-md-6">
 									<label class="form-label">State / Province</label>
-									<input type="text" name="state" class="form-control" placeholder="enter state"  value="{{ old('state') }}">
+									<select name="state" class="form-control">
+										@foreach($us_states as $kii=>$val)
+										<option value="{{$kii}}">{{$val}}</option>
+										@endforeach
+									</select>
 									@error('state')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
 								<div class="mb-4 col-md-6">
 									<label class="form-label">Country</label>
-									<input type="text" name="country" class="form-control" placeholder="enter country"  value="{{ old('country') }}">
+									<input type="text" name="country" class="form-control" placeholder="enter country"  value="{{ 'United state' }}">
 									@error('country')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
