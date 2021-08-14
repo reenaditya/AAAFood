@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CuisineRestaurant;
 use App\Models\Restaurant;
 use App\Models\Cuisine;
+use App\Models\RestaurantOffer;
 use App\Models\User;
 use DB;
 use Str;
@@ -25,7 +26,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-    	$restaurants = $this->restaurant->get();
+    	$restaurants = $this->restaurant->latest()->get();
 
         return view("admin.restaurant.index",compact('restaurants'));
     }
@@ -61,7 +62,14 @@ class RestaurantController extends Controller
             $id = $this->restaurant->id;
             $cuisine = $request->cuisines;
             $this->addCusinRestro($id,$cuisine);
-
+            if(isset($request->ac_offer_type) && $request->ac_offer_type==1){
+                $oftype = 'AADINING_CLUB';
+                $this->addRestaurantOffer($id,$request,$oftype);
+            }
+            if(isset($request->bc_offer_type) && $request->bc_offer_type==1){
+                $oftype = 'BIRTHDAY_CLUB';
+                $this->addRestaurantOffer($id,$request,$oftype);
+            }
      		DB::commit();
      		
      		return back()->withSuccess("New restaurant added");
@@ -120,9 +128,11 @@ class RestaurantController extends Controller
             $id = $this->restaurant->id;
             $cuisine = $request->cuisines;
      		
-            DB::commit();
             $this->removeCusinRestro($id);
             $this->addCusinRestro($id,$cuisine);
+            $this->updateRestaurantOffer($id,$request);
+            
+            DB::commit();
      		
      		return back()->withSuccess("Restaurant updated");
 
@@ -244,5 +254,49 @@ class RestaurantController extends Controller
     {
         CuisineRestaurant::where('restaurant_id',$id)->delete();
         return 1;
+    }
+
+    private function addRestaurantOffer($restoId,$request,$oftype){
+        $add = new RestaurantOffer;
+        $add->restaurant_id = $restoId;
+        $add->offer_type = $oftype;
+        if ($request->hasFile('ac_image') && $oftype=='AADINING_CLUB') {        
+            $add->file = $request->ac_image->store('upload/restaurant','public');
+            $add->offer_valid_day = !empty($request->ac_days)? json_encode($request->ac_days) :'';
+            $add->offer_valid_time = $request->ac_time!=null?$request->ac_time :'';
+            $add->terms_condition = json_encode($request->ac_terms_condition);
+        }
+        if($oftype=='BIRTHDAY_CLUB'){
+            $add->terms_condition = json_encode($request->bc_terms_condition);   
+        }
+        $add->status = false;
+        $add->save();
+        return $this;
+    }
+
+    private function updateRestaurantOffer($restoId,$request){
+        $getAllId = $request->rest_offer_id;
+        if($request->ac_offer_type!=null){
+            $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->first(); 
+            if ($request->hasFile('ac_image')) {        
+                $getAaaData->file =$request->ac_image->store('upload/restaurant','public');  
+            }
+            $getAaaData->offer_valid_day = !empty($request->ac_days)? json_encode($request->ac_days) :'';
+            $getAaaData->offer_valid_time = $request->ac_time!=null?$request->ac_time :'';
+            $getAaaData->terms_condition = !empty($request->ac_terms_condition) ? json_encode($request->ac_terms_condition):'';
+            $getAaaData->status = false;
+            $getAaaData->update();    
+        }else{
+            $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->update(['status'=>false]);
+        }
+        if ($request->bc_offer_type!=null) {
+            $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->first();
+            $getAaaData1->terms_condition = !empty($request->bc_terms_condition) ? json_encode($request->bc_terms_condition):'';
+            $getAaaData1->status = false;
+            $getAaaData1->update();
+        }else{
+            $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->update(['status'=>false]);
+        }
+        return $this;
     }
 }

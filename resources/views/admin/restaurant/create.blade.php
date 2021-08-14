@@ -3,6 +3,10 @@
 @php
 	$reservation_system = Config::get('constant.reservation_system');
 	$us_states = Config::get('constant.us_states');
+	$birthday_club = Config::get('constant.birthday_club');
+	$aaadining_club = Config::get('constant.aaadining_club');
+	$days = Config::get('constant.days');
+	$time = Config::get('constant.time');
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
@@ -275,6 +279,84 @@
 								<div class="mb-4 col-md-6">
 									<fieldset class="mb-3">
 										<div class="row">
+											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you want to participate in our AAAdining club ? *</label>
+											<div class="col-sm-4">
+												<label class="form-check">
+													<input name="aaadining_club" type="radio" class="form-check-input" value="1">
+													<span class="form-check-label">Yes</span>
+												</label>
+												<label class="form-check">
+													<input name="aaadining_club" type="radio" class="form-check-input" checked="" value="0">
+													<span class="form-check-label">No</span>
+												</label>
+											</div>
+										</div>
+									</fieldset>
+									<div class="border-1 mb-3 d-none aaading_club_offer">
+										<input type="hidden" name="ac_offer_type" value="">
+										<div class="mb-3">
+											<label class="form-label w-100">Image</label>
+											<input type="file" name="ac_image" class="form-control">
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label w-100">Select Days</label>
+											<select class="form-control select2" name="ac_days[]" multiple="">
+											@foreach($days as $kii=>$val)
+												<option value="{{$kii}}">{{$val}}</option>
+											@endforeach
+											</select>
+										</div>
+										<div class="mb-3">
+											<label class="form-label w-100">Select Time</label>
+											<select class="form-control" name="ac_time">
+											@foreach($time as $kii=>$val)
+												<option value="{{$kii}}">{{$val}}</option>
+											@endforeach
+											</select>
+										</div>
+
+										<label class="form-label w-100">Include terms and condition</label>
+										@foreach($aaadining_club as $kii=>$val)
+										<label class="form-check m-0">
+								            <input type="checkbox" value="{{$kii}}" class="form-check-input" name="ac_terms_condition[]">
+								            <span class="form-check-label">{{$val}}</span>
+							            </label>
+							            @endforeach
+									</div>
+								</div>
+								<div class="mb-4 col-md-6">
+									<fieldset class="mb-3">
+										<div class="row">
+											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">
+												Do you want to participate in our AAAdining Birthday club?
+											</label>
+											<div class="col-sm-4">
+												<label class="form-check">
+													<input name="birthday_club" type="radio" class="form-check-input" value="1">
+													<span class="form-check-label">Yes</span>
+												</label>
+												<label class="form-check">
+													<input name="birthday_club" type="radio" class="form-check-input" checked="" value="0">
+													<span class="form-check-label">No</span>
+												</label>
+											</div>
+										</div>
+									</fieldset>
+									<div class="border-1 mb-3 d-none birthday_club_offer">
+										<input type="hidden" name="bc_offer_type" value="">
+										<label class="form-label w-100">Include terms and condition</label>
+										@foreach($birthday_club as $kii=>$val)
+										<label class="form-check m-0">
+								            <input type="checkbox" value="{{$kii}}" class="form-check-input" name="bc_terms_condition[]">
+								            <span class="form-check-label">{{$val}}</span>
+							            </label>
+							            @endforeach
+									</div>
+								</div>
+								<div class="mb-4 col-md-6">
+									<fieldset class="mb-3">
+										<div class="row">
 											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you use outside Delivery Services?</label>
 											<div class="col-sm-4">
 												<label class="form-check">
@@ -291,42 +373,6 @@
 									@error('delivery_service')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
-								</div>
-								<div class="mb-4 col-md-6">
-									<fieldset class="mb-3">
-										<div class="row">
-											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you want to participate in our AAAdining club ? *</label>
-											<div class="col-sm-4">
-												<label class="form-check">
-													<input name="aaadining_club" type="radio" class="form-check-input" checked="" value="1">
-													<span class="form-check-label">Yes</span>
-												</label>
-												<label class="form-check">
-													<input name="aaadining_club" type="radio" class="form-check-input" value="0">
-													<span class="form-check-label">No</span>
-												</label>
-											</div>
-										</div>
-									</fieldset>
-								</div>
-								<div class="mb-4 col-md-6">
-									<fieldset class="mb-3">
-										<div class="row">
-											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">
-												Do you want to participate in our AAAdining Birthday club?
-											</label>
-											<div class="col-sm-4">
-												<label class="form-check">
-													<input name="birthday_club" type="radio" class="form-check-input" checked="" value="1">
-													<span class="form-check-label">Yes</span>
-												</label>
-												<label class="form-check">
-													<input name="birthday_club" type="radio" class="form-check-input" value="0">
-													<span class="form-check-label">No</span>
-												</label>
-											</div>
-										</div>
-									</fieldset>
 								</div>
 								<div class="mb-4 col-md-6">
 									<label class="form-label" >Participate Meal</label>
@@ -432,9 +478,11 @@
 @endsection
 @push('style')	
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="{{asset('css/admin_custom.css')}}">
 @endpush
 @push('script')
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('js/admin/restaurant.js')}}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		    $('.select2').select2();

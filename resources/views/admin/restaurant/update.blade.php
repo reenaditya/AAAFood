@@ -4,6 +4,26 @@
 	$reservation_system = Config::get('constant.reservation_system');
 	$cuisines = !empty($restaurant->cuisines) ? explode(",", $restaurant->cuisines) : [];
 	$us_states = Config::get('constant.us_states');
+	$birthday_club = Config::get('constant.birthday_club');
+	$aaadining_club = Config::get('constant.aaadining_club');
+	$days = Config::get('constant.days');
+	$time = Config::get('constant.time');
+
+	if (!$restaurant->restaurantOffer->isEmpty()) {
+		foreach ($restaurant->restaurantOffer as $kii => $val) {
+			if($val->offer_type=='AADINING_CLUB'){
+				$ac_offer_type = 1;
+				$ac_image = $val->file;
+				$ac_days = json_decode($val->offer_valid_day);
+				$ac_time = $val->offer_valid_time;
+				$ac_terms_condition = json_decode($val->terms_condition);
+			}
+			if($val->offer_type=='BIRTHDAY_CLUB'){
+				$bc_offer_type = 1;
+				$bc_terms_condition = json_decode($val->terms_condition);				
+			}
+		}
+	}
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
@@ -17,7 +37,11 @@
 						<form action="{{ route('admin.restaurant.update',$restaurant->id) }}" method="post" enctype="multipart/form-data">
 							@csrf
 							@method('PUT')
-
+							@if (!$restaurant->restaurantOffer->isEmpty())
+							@foreach ($restaurant->restaurantOffer as $kii => $val) 
+							<input type="hidden" name="rest_offer_id[]" value="{{$val->id}}">
+							@endforeach
+							@endif
 							<div class="row">
 								<div class="mb-4 col-md-6">
 									<label class="form-label">User</label>
@@ -273,26 +297,6 @@
 								<div class="mb-4 col-md-6">
 									<fieldset class="mb-3">
 										<div class="row">
-											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you use outside Delivery Services?</label>
-											<div class="col-sm-4">
-												<label class="form-check">
-													<input name="delivery_service" type="radio" class="form-check-input"  @if($restaurant->delivery_service==1) checked="" @endif value="1">
-													<span class="form-check-label">Yes</span>
-												</label>
-												<label class="form-check">
-													<input name="delivery_service" type="radio" class="form-check-input" @if($restaurant->delivery_service==0) checked="" @endif value="0">
-													<span class="form-check-label">No</span>
-												</label>
-											</div>
-										</div>
-									</fieldset>
-									@error('delivery_service')
-										<span class="text-danger">{{$message}} </span>
-									@enderror
-								</div>
-								<div class="mb-4 col-md-6">
-									<fieldset class="mb-3">
-										<div class="row">
 											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you want to participate in our AAAdining club ? *</label>
 											<div class="col-sm-4">
 												<label class="form-check">
@@ -306,6 +310,45 @@
 											</div>
 										</div>
 									</fieldset>
+									<div class="border-1 mb-3 @if($restaurant->aaadining_club!=1) d-none @endif aaading_club_offer">
+										<input type="hidden" name="ac_offer_type" value="{{$ac_offer_type ?? ''}}">
+										<div class="row">
+											<div class="col-md-9">
+												<div class="mb-3">
+													<label class="form-label w-100">Image</label>
+													<input type="file" name="ac_image" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<img class="img-fluid" src="{{asset('storage')}}/{{$ac_image ?? ''}}">
+											</div>
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label w-100">Select Days</label>
+											<select class="form-control select2" name="ac_days[]" multiple="">
+											@foreach($days as $kii=>$val)
+												<option value="{{$kii}}" @if(isset($ac_days) && !empty($ac_days) && in_array($kii, $ac_days) ) selected="" @endif>{{$val}}</option>
+											@endforeach
+											</select>
+										</div>
+										<div class="mb-3">
+											<label class="form-label w-100">Select Time</label>
+											<select class="form-control" name="ac_time">
+											@foreach($time as $kii=>$val)
+												<option value="{{$kii}}" @if(isset($ac_time) && $ac_time==$kii ) selected="" @endif>{{$val}}</option>
+											@endforeach
+											</select>
+										</div>
+
+										<label class="form-label w-100">Include terms and condition</label>
+										@foreach($aaadining_club as $kii=>$val)
+										<label class="form-check m-0">
+								            <input type="checkbox" value="{{$kii}}" class="form-check-input" @if(isset($ac_terms_condition) && !empty($ac_terms_condition) && in_array($kii, $ac_terms_condition) ) checked="" @endif name="ac_terms_condition[]">
+								            <span class="form-check-label">{{$val}}</span>
+							            </label>
+							            @endforeach
+									</div>
 								</div>
 								<div class="mb-4 col-md-6">
 									<fieldset class="mb-3">
@@ -325,6 +368,36 @@
 											</div>
 										</div>
 									</fieldset>
+									<div class="border-1 mb-3 @if($restaurant->birthday_club!=1) d-none @endif birthday_club_offer">
+										<input type="hidden" name="bc_offer_type" value="{{$bc_offer_type ?? ''}}">
+										<label class="form-label w-100">Include terms and condition</label>
+										@foreach($birthday_club as $kii=>$val)
+										<label class="form-check m-0">
+								            <input type="checkbox" value="{{$kii}}" class="form-check-input" @if(isset($bc_terms_condition) && !empty($bc_terms_condition) && in_array($kii, $bc_terms_condition) ) checked="" @endif name="bc_terms_condition[]">
+								            <span class="form-check-label">{{$val}}</span>
+							            </label>
+							            @endforeach
+									</div>
+								</div>
+								<div class="mb-4 col-md-6">
+									<fieldset class="mb-3">
+										<div class="row">
+											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you use outside Delivery Services?</label>
+											<div class="col-sm-4">
+												<label class="form-check">
+													<input name="delivery_service" type="radio" class="form-check-input"  @if($restaurant->delivery_service==1) checked="" @endif value="1">
+													<span class="form-check-label">Yes</span>
+												</label>
+												<label class="form-check">
+													<input name="delivery_service" type="radio" class="form-check-input" @if($restaurant->delivery_service==0) checked="" @endif value="0">
+													<span class="form-check-label">No</span>
+												</label>
+											</div>
+										</div>
+									</fieldset>
+									@error('delivery_service')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
 								</div>
 								<div class="mb-4 col-md-6">
 									<label class="form-label" >Participate Meal</label>
@@ -438,7 +511,7 @@
 								</div>
 							</div>
 							
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary">Update</button>
 						</form>
 					</div>
 				</div>
@@ -450,12 +523,14 @@
 @endsection
 @push('style')	
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="{{asset('css/admin_custom.css')}}">
 	<style type="text/css">
 		.select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice{margin: 4px !important;}
 	</style>
 @endpush
 @push('script')
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('js/admin/restaurant.js')}}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		    $('.select2').select2();
