@@ -193,7 +193,6 @@
 								<div class="mb-4 col-md-6">
 									<label class="form-label">Who do you use for reservation system?</label>
 									<select class="form-control" name="reservation_system">
-										<option value="">Select</option>
 										@foreach($reservation_system as $k=>$val)
 											<option value="{{$k}}" @if($restaurant->reservation_system==$k) selected="" @endif>{{$val}}</option>
 										@endforeach
