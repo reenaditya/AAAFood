@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2021 at 03:13 PM
+-- Generation Time: Aug 18, 2021 at 06:29 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.25
 
@@ -66,11 +66,18 @@ CREATE TABLE `cuisine_restaurants` (
 --
 
 INSERT INTO `cuisine_restaurants` (`id`, `cuisine_id`, `restaurant_id`, `status`, `created_at`, `updated_at`) VALUES
-(32, 4, 4, 1, '2021-07-31 11:04:00', NULL),
-(33, 4, 6, 1, '2021-07-31 11:04:00', NULL),
-(46, 6, 7, 1, '2021-08-13 09:12:00', NULL),
-(47, 3, 3, 1, '2021-08-14 01:34:00', NULL),
-(62, 3, 11, 1, '2021-08-14 07:41:00', NULL);
+(86, 4, 6, 1, '2021-08-17 12:35:00', NULL),
+(87, 3, 7, 1, '2021-08-17 12:38:00', NULL),
+(88, 6, 7, 1, '2021-08-17 12:38:00', NULL),
+(89, 4, 4, 1, '2021-08-17 12:41:00', NULL),
+(90, 6, 4, 1, '2021-08-17 12:41:00', NULL),
+(91, 3, 3, 1, '2021-08-17 12:42:00', NULL),
+(92, 5, 3, 1, '2021-08-17 12:42:00', NULL),
+(93, 3, 14, 1, '2021-08-18 10:39:00', NULL),
+(94, 5, 14, 1, '2021-08-18 10:39:00', NULL),
+(95, 4, 15, 1, '2021-08-18 10:50:00', NULL),
+(96, 5, 15, 1, '2021-08-18 10:50:00', NULL),
+(98, 5, 17, 1, '2021-08-18 10:56:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,6 +111,14 @@ CREATE TABLE `menu_groups` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `menu_groups`
+--
+
+INSERT INTO `menu_groups` (`id`, `restaurant_id`, `user_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(5, 7, 3, 'Biryani', 1, '2021-08-17 13:10:30', '2021-08-17 13:10:30'),
+(6, 7, 3, 'Burger', 1, '2021-08-17 13:11:07', '2021-08-17 13:13:27');
+
 -- --------------------------------------------------------
 
 --
@@ -126,6 +141,16 @@ CREATE TABLE `menu_items` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `menu_items`
+--
+
+INSERT INTO `menu_items` (`id`, `restaurant_id`, `user_id`, `menu_group_id`, `image`, `name`, `estimated_time`, `discount`, `discount_type`, `desc`, `status`, `created_at`, `updated_at`) VALUES
+(10, 7, 3, 6, 'upload/menu_item/P5Dj53nLHPQOKK1hl67iwepCLjGNt1NZI4tfJ3Ot.jpg', 'Double daker burger', 20, 10, 2, NULL, 1, '2021-08-17 13:19:46', '2021-08-17 13:19:46'),
+(11, 7, 3, 6, 'upload/menu_item/RJ8bhigTZ3N6S7w9fbYjojT7eocLwvzJpTKeJt3B.jpg', 'Big tornado buger', 25, 20, 1, NULL, 1, '2021-08-17 13:21:40', '2021-08-17 13:21:40'),
+(12, 7, 3, 5, 'upload/menu_item/0Fj6uTbAVkEoxFnOeLd6RFmI3ftwI7RBBnRzsvxz.jpg', 'Veg Biryani', 20, 10, 1, NULL, 1, '2021-08-17 13:22:23', '2021-08-17 13:22:23'),
+(13, 7, 3, 5, 'upload/menu_item/NdjXBcPC7Mn2lUep1Wyn637L1djD9ysHk5oaog4F.jpg', 'Non Veg Biryani', 25, 10, 1, NULL, 1, '2021-08-17 13:23:16', '2021-08-17 13:23:16');
+
 -- --------------------------------------------------------
 
 --
@@ -141,6 +166,18 @@ CREATE TABLE `menu_items_price_quantities` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_items_price_quantities`
+--
+
+INSERT INTO `menu_items_price_quantities` (`id`, `menu_quantity_group_id`, `menu_item_id`, `price`, `status`, `created_at`, `updated_at`) VALUES
+(12, 7, 10, 20.00, 1, NULL, NULL),
+(13, 7, 11, 80.00, 1, NULL, NULL),
+(14, 5, 12, 50.00, 1, NULL, NULL),
+(15, 6, 12, 80.00, 1, NULL, NULL),
+(16, 5, 13, 80.00, 1, NULL, NULL),
+(17, 6, 13, 130.00, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -158,6 +195,15 @@ CREATE TABLE `menu_quantity_groups` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_quantity_groups`
+--
+
+INSERT INTO `menu_quantity_groups` (`id`, `restaurant_id`, `user_id`, `menu_group_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(5, 7, 3, 5, 'half plate', 1, '2021-08-17 13:11:46', '2021-08-17 13:11:46'),
+(6, 7, 3, 5, 'Full Plate', 1, '2021-08-17 13:11:56', '2021-08-17 13:11:56'),
+(7, 7, 3, 6, 'Per Peace', 1, '2021-08-17 13:13:58', '2021-08-17 13:16:34');
 
 -- --------------------------------------------------------
 
@@ -268,6 +314,7 @@ CREATE TABLE `restaurants` (
   `sun_to` time DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `serve` tinyint(4) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -278,12 +325,14 @@ CREATE TABLE `restaurants` (
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`id`, `user_id`, `name`, `slug`, `location`, `cuisines`, `address`, `address2`, `city`, `state`, `country`, `zipcode`, `website`, `sale_tax`, `dine_in`, `seating_capacity_indoor`, `seating_capacity_outdoor`, `reservations`, `reservation_system`, `takeout`, `own_delivery`, `delivery_fee`, `minimum_delivery_amount`, `free_delivery_amount`, `delivery_radius`, `delivery_zip_codes`, `order_lead_time`, `delivery_extra_time`, `delivery_service`, `participate_file`, `aaadining_club`, `birthday_club`, `mf_from`, `mf_to`, `sat_from`, `sat_to`, `sun_from`, `sun_to`, `description`, `image`, `serve`, `status`, `created_at`, `updated_at`) VALUES
-(3, 4, 'Wrapstick', 'wrapstick', 'India', '3', 'Ward No. 10', 'kk hsd dsd', 'buana vista', 'FL', 'United State', '333011', 'nirman.com', '12', 1, '12', '21', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '223344,223341', 20, 10, 1, 'upload/restaurant/JgsIOc1HVOyW1unBwHVICnXyUuE2vOuUuBrF7Mko.jpg', 1, 1, '13:10:00', '17:14:00', NULL, NULL, NULL, NULL, 'Sat sun will be off', 'upload/restaurant/PPrNG5OmJ3RkvonUjt3mb4S2X3IIyzEL844fKkiY.jpg', 0, 1, '2021-07-31 00:16:46', '2021-08-14 01:34:40'),
-(4, NULL, 'Khana Khajan restoo', 'khana-khajan-restoo', 'Jhunjhunu', '2,4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '12', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '88786,23424', 20, 20, 1, 'upload/restaurant/k6Uvqze2NkQ6mzOcnySrbs21oEziZG6RofbaKUqq.jpg', 1, 1, '11:59:00', '17:05:00', '12:00:00', '23:00:00', NULL, NULL, 'try new dishs New', 'upload/restaurant/w9y4zAr0jREbjlB8onyG7fHPQUTHDhiAVwgyc0Xz.jpg', 0, 1, '2021-07-31 01:00:31', '2021-07-31 11:04:11'),
-(6, NULL, 'Kuresh non veg hotel', 'kuresh-non-veg-hotel', 'Jhunjhunu', '4', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '5', 1, '11', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 22, 10, 1, 'upload/restaurant/ezJgCxg4ekqidIEfK8ZFaxsGvSmg08Lg7VJAcKDu.jpg', 1, 1, '14:07:00', '16:05:00', NULL, NULL, NULL, NULL, 'smndfg sdfg dfg', 'upload/restaurant/CRzLySWHfSd6561ZSbmPa3NIj7lBP8DNYTDwipWp.jpg', 0, 1, '2021-07-31 01:05:38', '2021-07-31 11:04:30'),
-(7, 3, 'Meeting with', 'meeting-with', 'Rajsathan', '6', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'RAJASTHAN', 'Norway', '333011', 'nirman.com', '12', 1, '11', '22', 1, 3, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 12, 23, 1, NULL, 1, 1, '10:00:00', '20:00:00', NULL, NULL, NULL, NULL, 'notydf sfdsfsd fd sfsd f', 'upload/restaurant/A0OuergYyqmBZPN5UDW9WELKuXIC4SAt1eKBzUL5.jpg', 0, 1, '2021-07-31 01:23:45', '2021-08-13 09:12:06'),
-(11, 4, 'Testing', 'testing', 'Florida', '3', 'Ward No. 10', 'Kyamsar', 'JHUNJHUNU', 'CA', 'Norway', '333011', 'nirman.com', '2', 1, '12', '22', 1, 3, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 11, 33, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, 'NA', 'upload/restaurant/yqH5fgNPlOGUuPvaOe2aOFx4TFYQQqU0qO9UblWl.jpg', 0, 1, '2021-08-14 05:48:56', '2021-08-14 07:41:05');
+INSERT INTO `restaurants` (`id`, `user_id`, `name`, `slug`, `location`, `cuisines`, `address`, `address2`, `city`, `state`, `country`, `zipcode`, `website`, `sale_tax`, `dine_in`, `seating_capacity_indoor`, `seating_capacity_outdoor`, `reservations`, `reservation_system`, `takeout`, `own_delivery`, `delivery_fee`, `minimum_delivery_amount`, `free_delivery_amount`, `delivery_radius`, `delivery_zip_codes`, `order_lead_time`, `delivery_extra_time`, `delivery_service`, `participate_file`, `aaadining_club`, `birthday_club`, `mf_from`, `mf_to`, `sat_from`, `sat_to`, `sun_from`, `sun_to`, `description`, `image`, `icon`, `serve`, `status`, `created_at`, `updated_at`) VALUES
+(3, 4, 'Wrapstick fast food', 'wrapstick-fast-food', 'India', '3,5', 'B3 New Palm', 'Near Beach Bala', 'buana vista', 'FL', 'United State', '333011', 'nirman.com', '12', 1, '12', '21', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '223344,223341', 20, 10, 1, 'upload/restaurant/JgsIOc1HVOyW1unBwHVICnXyUuE2vOuUuBrF7Mko.jpg', 1, 1, '13:10:00', '17:14:00', NULL, NULL, NULL, NULL, 'lorida is the southeasternmost U.S. state, with the Atlantic on one side and the Gulf of Mexico on the other. It has hundreds of miles of beaches. The city of Miami is known for its Latin-American cultural influences and notable arts scene, as well as its nightlife, especially in upscale South Bea', 'upload/restaurant/PPrNG5OmJ3RkvonUjt3mb4S2X3IIyzEL844fKkiY.jpg', 'upload/restaurant/WQeDcsW4dVJPQNsFjwDP083BvDpuSolMbNeUyZSS.png', 0, 1, '2021-07-31 00:16:46', '2021-08-17 12:42:54'),
+(4, 4, 'Khana Khajan restoo', 'khana-khajan-restoo', 'sarasota', '4,6', '55/0', 'DGH Street', 'Sarasota', 'FL', 'United State', '333011', 'nirman.com', '12', 1, '12', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', '88786,23424', 20, 20, 1, 'upload/restaurant/k6Uvqze2NkQ6mzOcnySrbs21oEziZG6RofbaKUqq.jpg', 1, 1, '11:59:00', '17:05:00', '12:00:00', '23:00:00', NULL, NULL, 'lorida is the southeasternmost U.S. state, with the Atlantic on one side and the Gulf of Mexico on the other. It has hundreds of miles of beaches. The city of Miami is known for its Latin-American cultural influences and notable arts scene, as well as its nightlife, especially in upscale South Bea', 'upload/restaurant/w9y4zAr0jREbjlB8onyG7fHPQUTHDhiAVwgyc0Xz.jpg', 'upload/restaurant/juEKqXYVUx6vvsjZQGJQtiGmLuUrBWSPr6ZQhD2R.png', 0, 1, '2021-07-31 01:00:31', '2021-08-17 12:41:05'),
+(6, 1, 'Kuresh non veg hotel', 'kuresh-non-veg-hotel', 'Jhunjhunu', '4', '20/12', 'califo street', 'Orlando', 'FL', 'United State', '333011', 'nirman.com', '5', 1, '11', '22', 1, 2, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 22, 10, 1, 'upload/restaurant/ezJgCxg4ekqidIEfK8ZFaxsGvSmg08Lg7VJAcKDu.jpg', 1, 1, '14:07:00', '16:05:00', NULL, NULL, NULL, NULL, 'smndfg sdfg dfg', 'upload/restaurant/CRzLySWHfSd6561ZSbmPa3NIj7lBP8DNYTDwipWp.jpg', 'upload/restaurant/1FBjzhzO949uO77MIOoxMli6A1RsK4PqNlzfnpLb.png', 0, 1, '2021-07-31 01:05:38', '2021-08-17 12:35:18'),
+(7, 3, 'wesley chapel catering', 'wesley-chapel-catering', 'Florida', '3,6', '12/45', 'keywater', 'Tampa', 'FL', 'United State', '333011', 'nirman.com', '12', 1, '11', '22', 1, 3, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 12, 23, 1, NULL, 1, 0, '10:00:00', '20:00:00', NULL, NULL, NULL, NULL, 'lorida is the southeasternmost U.S. state, with the Atlantic on one side and the Gulf of Mexico on the other. It has hundreds of miles of beaches. The city of Miami is known for its Latin-American cultural influences and notable arts scene, as well as its nightlife, especially in upscale South Bea', 'upload/restaurant/A0OuergYyqmBZPN5UDW9WELKuXIC4SAt1eKBzUL5.jpg', 'upload/restaurant/JuTsrVjnV4gd6zso3Rb2iCRdUoLfSryRilhdgqxh.png', 0, 1, '2021-07-31 01:23:45', '2021-08-17 12:38:29'),
+(14, 5, 'mr & miss Smith caters', 'mr-miss-smith-caters', 'Florida', '3,5', '10', 'KK Loan bar', 'florida', 'CA', 'United State', '333011', 'nirman.com', '12', 1, '12', '12', 1, 1, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 23, 22, 1, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'NA', 'upload/restaurant/N869WP88PQvCqaVCtyroVXvwYfZUsNgoVcyb1oCX.jpg', 'upload/restaurant/wBapflyL8SL4LcPfZEdq9ubgeNKjQE2JTjNWxLXU.png', 0, 1, '2021-08-18 10:39:51', '2021-08-18 10:39:51'),
+(15, 7, 'The Floridian Restaurant', 'the-floridian-restaurant', 'Florida', '4,5', '72 Spanish', 'St #3638', 'St. Augustine', 'FL', 'United state', '90876', 'www.3638.com', '4', 1, '34', '55', 1, 1, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 20, 15, 1, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'NA', 'upload/restaurant/Jy0DWUIefYKEUIVwFmEF6kDwF6Ke4Z3JAf3djivt.jpg', 'upload/restaurant/ZdxJzS3jVEmeEuHPLQnVmPMmG35xO88DnU5ZPFv6.png', 0, 1, '2021-08-18 10:50:18', '2021-08-18 10:50:18'),
+(17, 10, 'Farmers Market Restaurant', 'farmers-market-restaurant', 'Florida', '5', '2736', 'Edison Ave', 'Fort Myers', 'FL', 'United state', '098hy', 'nirman.com', '2', 1, '55', '66', 1, 1, 1, 1, 20.00, 100.00, 200.00, '20', NULL, 12, 15, 1, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'NA', 'upload/restaurant/NANTbvslKoDs6p8UpOBtmTZVyIhYEP6nHywhVtrt.jpg', 'upload/restaurant/jDaQWbWWeWyu5rpP8XycW0gPthPZAqb2WSZs20dk.png', 0, 1, '2021-08-18 10:56:59', '2021-08-18 10:56:59');
 
 -- --------------------------------------------------------
 
@@ -297,7 +346,8 @@ CREATE TABLE `restaurant_offers` (
   `offer_type` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `offer_valid_day` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `offer_valid_time` tinyint(4) DEFAULT NULL,
+  `offer_valid_from` time DEFAULT NULL,
+  `offer_valid_to` time DEFAULT NULL,
   `terms_condition` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -308,9 +358,15 @@ CREATE TABLE `restaurant_offers` (
 -- Dumping data for table `restaurant_offers`
 --
 
-INSERT INTO `restaurant_offers` (`id`, `restaurant_id`, `offer_type`, `file`, `offer_valid_day`, `offer_valid_time`, `terms_condition`, `status`, `created_at`, `updated_at`) VALUES
-(3, 11, 'AADINING_CLUB', 'upload/restaurant/7EMIn3v9ybobcKWr5iz53Dd3yTrCRbh40hNWCWYl.jpg', '[\"2\",\"3\"]', 1, '[\"1\",\"3\"]', 0, '2021-08-14 05:48:56', '2021-08-14 07:41:05'),
-(4, 11, 'BIRTHDAY_CLUB', NULL, NULL, NULL, '[\"2\",\"3\",\"4\",\"5\"]', 0, '2021-08-14 05:48:56', '2021-08-14 07:41:05');
+INSERT INTO `restaurant_offers` (`id`, `restaurant_id`, `offer_type`, `file`, `offer_valid_day`, `offer_valid_from`, `offer_valid_to`, `terms_condition`, `status`, `created_at`, `updated_at`) VALUES
+(9, 6, 'AADINING_CLUB', 'upload/restaurant/5h0GsONRxEFfmkaTXllwZ5txYGBwiFvQrIBHnbXR.png', '[\"3\"]', '01:29:00', '02:30:00', '[\"1\",\"2\",\"5\"]', 0, '2021-08-17 12:25:43', '2021-08-17 12:35:18'),
+(10, 6, 'BIRTHDAY_CLUB', NULL, NULL, NULL, NULL, '[\"3\",\"4\"]', 0, '2021-08-17 12:25:43', '2021-08-17 12:35:18'),
+(11, 7, 'AADINING_CLUB', 'upload/restaurant/VTMkOZQgjdo4rCLFz2M0SBHEA1pZH0XbMHzcTjwD.png', '[\"3\"]', '01:36:00', '10:41:00', '[\"3\"]', 0, '2021-08-17 12:38:29', '2021-08-17 12:38:29'),
+(12, 7, 'BIRTHDAY_CLUB', NULL, NULL, NULL, NULL, '[\"4\"]', 0, '2021-08-17 12:38:29', '2021-08-17 12:38:29'),
+(13, 4, 'AADINING_CLUB', 'upload/restaurant/Odfou8rtDK3o842AXGs6dVWmafZ0wrY1nmfbV000.jpg', '[\"1\",\"3\"]', '04:45:00', '10:45:00', '[\"1\",\"2\"]', 0, '2021-08-17 12:41:05', '2021-08-17 12:41:05'),
+(14, 4, 'BIRTHDAY_CLUB', NULL, NULL, NULL, NULL, '[\"3\",\"5\"]', 0, '2021-08-17 12:41:05', '2021-08-17 12:41:05'),
+(15, 3, 'AADINING_CLUB', 'upload/restaurant/RryhCQ2It79AeVbJdAIlCOJpzYBdWXGrZuyEP8L6.jpg', '[\"3\",\"5\",\"6\"]', '09:43:00', '22:48:00', '[\"1\",\"2\"]', 0, '2021-08-17 12:42:55', '2021-08-17 12:42:55'),
+(16, 3, 'BIRTHDAY_CLUB', NULL, NULL, NULL, NULL, '[\"7\",\"8\"]', 0, '2021-08-17 12:42:55', '2021-08-17 12:42:55');
 
 -- --------------------------------------------------------
 
@@ -332,7 +388,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1gFT8ZKcTyhJjhu4ZZP8kwKfcq9a1000AkWZLM9G', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiV1E0NFNFd1RpdGpKVHZ6bklSUFFNNVFzNXdZalEwY2FTMEU4TlVVUiI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcmVzdGF1cmFudCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQxQUg4bk4yWEwvZkhlSXNVUzJraXNlV3dybENMeDJtMTB1aDZpbjRTcHM3TWthWXF5SktHQyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkMUFIOG5OMlhML2ZIZUlzVVMya2lzZVd3cmxDTHgybTEwdWg2aW40U3BzN01rYVlxeUpLR0MiO30=', 1628946702);
+('tfyBiqMIjbuln7F7XIEoh4L6kMDQk54qmGlXSYx2', 10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiRHJaUmdkMGFMamZ5ZlR0R2JEUmdTcFhWNW9xRHd3SHk1WmJjMXJmaiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9idXNzaW5lc3MtYWNjb3VudCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEwO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkUjMxaXhZUkh4RDdJeENPLmxQTGpndU5DaVJ0dkxUNmVLdWRQNzM2SEtqRzVHRlpuZVlXVXkiO30=', 1629304161);
 
 -- --------------------------------------------------------
 
@@ -344,7 +400,7 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` int(11) DEFAULT 1,
+  `role` int(11) DEFAULT 4 COMMENT '1=Vendor,2=Admin,3=Delivery,4=Customer',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `two_factor_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -360,9 +416,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Aditya Singh', 'user@gmail.com', 1, NULL, '$2y$10$SId5u853113XZznZGoKjT.HRPFKJ.IhUQacA2R9FzJ8/fDB0xPl0y', NULL, NULL, 'jzBm1eHsXymt2MoEfmflVDrIIQZlZZE6l1Winh3t4eYhX0WMjIbYcf0oWeCg', '2021-07-15 08:27:17', '2021-07-15 08:55:54'),
-(2, 'Super Admin', 'super@admin.com', 2, NULL, '$2y$10$1AH8nN2XL/fHeIsUS2kiseWwrlCLx2m10uh6in4Sps7MkaYqyJKGC', NULL, NULL, 'qOGizwWITLtSkmhbH5yoHhSvunIVIcbQmVAItFMVl7YjSyUWbppwxDPrw9G1', '2021-07-15 08:29:33', '2021-07-15 08:29:33'),
+(2, 'Super Admin', 'super@admin.com', 2, NULL, '$2y$10$1AH8nN2XL/fHeIsUS2kiseWwrlCLx2m10uh6in4Sps7MkaYqyJKGC', NULL, NULL, 'UN028wp6KQpCAicpz9md0tsBfPIT9IONlrUCwa7X6kDL8JEYKowsO5gGSOLx', '2021-07-15 08:29:33', '2021-07-15 08:29:33'),
 (3, 'TANVEER KHAN', 'fooddeli@mailinator.com', 1, NULL, '$2y$10$iObVNKNrL3EeJaWnZ34GUuC9nn1EwHpHine/V9ziqCLD3cBhLAM96', NULL, NULL, NULL, '2021-08-03 22:36:11', '2021-08-03 22:36:11'),
-(4, 'mandeep', 'mandeep@mailinator.com', 1, NULL, '$2y$10$6xBHKkWURpXkdVYgrdAKDedBnueF12FlZ6JISBO9T8ojvttY14iPa', NULL, NULL, NULL, '2021-08-13 08:51:00', '2021-08-13 08:51:00');
+(4, 'mandeep', 'mandeep@mailinator.com', 1, NULL, '$2y$10$6xBHKkWURpXkdVYgrdAKDedBnueF12FlZ6JISBO9T8ojvttY14iPa', NULL, NULL, NULL, '2021-08-13 08:51:00', '2021-08-13 08:51:00'),
+(5, 'test123', 'test123@gmail.com', 4, NULL, '$2y$10$6wd7Wd0h1IhVHgYkw7S5A.qKNHZyG6RbAzvqp63zOfDlc6thGSuhK', NULL, NULL, NULL, '2021-08-18 10:39:51', '2021-08-18 10:39:51'),
+(7, 'test124', 'test124@gmail.com', 1, NULL, '$2y$10$kVbNZkiVw0bLs6b5wGjwKOKyJ88ctHjWzSADrb3dXUAruJ2ftMd9.', NULL, NULL, NULL, '2021-08-18 10:50:18', '2021-08-18 10:50:18'),
+(10, 'test125', 'test125@gmail.com', 1, NULL, '$2y$10$R31ixYRHxD7IxCO.lPLjguNCiRtvLT6eKudP736HKjG5GFZneYWUy', NULL, NULL, NULL, '2021-08-18 10:56:59', '2021-08-18 10:56:59');
 
 --
 -- Indexes for dumped tables
@@ -482,7 +541,7 @@ ALTER TABLE `cuisines`
 -- AUTO_INCREMENT for table `cuisine_restaurants`
 --
 ALTER TABLE `cuisine_restaurants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -494,25 +553,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `menu_groups`
 --
 ALTER TABLE `menu_groups`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `menu_items_price_quantities`
 --
 ALTER TABLE `menu_items_price_quantities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `menu_quantity_groups`
 --
 ALTER TABLE `menu_quantity_groups`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -530,19 +589,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `restaurant_offers`
 --
 ALTER TABLE `restaurant_offers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
