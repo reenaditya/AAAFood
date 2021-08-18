@@ -17,6 +17,10 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');
 	Route::get('/menu/{slug}','MenuController@index')->name('menu.index');
+	Route::get('/cuisines/{id}','MenuController@restaurantList')->name('restaurant.list');
+
+	Route::get('/bussiness-account','BussinessAccountController@create')->name('bussiness.account');
+	Route::post('/bussiness-account','BussinessAccountController@store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

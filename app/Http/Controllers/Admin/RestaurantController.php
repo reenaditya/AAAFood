@@ -38,7 +38,8 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        $user = User::select('id','name')->get();
+        $alredyAssign = Restaurant::pluck('user_id');
+        $user = User::where('role',1)->whereNotIn('id',$alredyAssign)->select('id','name')->get();
         $cuisine = Cuisine::select('id','name')->where('status',1)->get();
         return view('admin.restaurant.create',compact('cuisine','user'));
     }
@@ -185,6 +186,9 @@ class RestaurantController extends Controller
     	if ($request->hasFile('image')) {
     		$this->restaurant->image = $request->image->store('upload/restaurant','public');
     	}
+        if ($request->hasFile('icon')) {
+            $this->restaurant->icon = $request->icon->store('upload/restaurant','public');
+        }
         $this->restaurant->user_id = $request->user_id;
         $this->restaurant->name = $request->name;
     	$this->restaurant->slug = Str::slug($request->name,'-');
@@ -263,7 +267,8 @@ class RestaurantController extends Controller
         if ($request->hasFile('ac_image') && $oftype=='AADINING_CLUB') {        
             $add->file = $request->ac_image->store('upload/restaurant','public');
             $add->offer_valid_day = !empty($request->ac_days)? json_encode($request->ac_days) :'';
-            $add->offer_valid_time = $request->ac_time!=null?$request->ac_time :'';
+            $add->offer_valid_from = $request->offer_valid_from!=null?$request->offer_valid_from :'';
+            $add->offer_valid_to = $request->offer_valid_to!=null?$request->offer_valid_to :'';
             $add->terms_condition = json_encode($request->ac_terms_condition);
         }
         if($oftype=='BIRTHDAY_CLUB'){
@@ -276,26 +281,34 @@ class RestaurantController extends Controller
 
     private function updateRestaurantOffer($restoId,$request){
         $getAllId = $request->rest_offer_id;
-        if($request->ac_offer_type!=null){
-            $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->first(); 
-            if ($request->hasFile('ac_image')) {        
-                $getAaaData->file =$request->ac_image->store('upload/restaurant','public');  
+        if ($getAllId==null) {
+            $oftype = 'AADINING_CLUB';
+            $this->addRestaurantOffer($restoId,$request,$oftype);
+            $oftype = 'BIRTHDAY_CLUB';
+            $this->addRestaurantOffer($restoId,$request,$oftype);
+        }else{
+            if($request->ac_offer_type!=null){
+                $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->first(); 
+                if ($request->hasFile('ac_image')) {        
+                    $getAaaData->file =$request->ac_image->store('upload/restaurant','public');  
+                }
+                $getAaaData->offer_valid_day = !empty($request->ac_days)? json_encode($request->ac_days) :'';
+                $getAaaData->offer_valid_from = $request->offer_valid_from!=null?$request->offer_valid_from :null;
+                $getAaaData->offer_valid_to = $request->offer_valid_to!=null?$request->offer_valid_to :null;
+                $getAaaData->terms_condition = !empty($request->ac_terms_condition) ? json_encode($request->ac_terms_condition):'';
+                $getAaaData->status = false;
+                $getAaaData->update();    
+            }else{
+                $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->update(['status'=>false]);
             }
-            $getAaaData->offer_valid_day = !empty($request->ac_days)? json_encode($request->ac_days) :'';
-            $getAaaData->offer_valid_time = $request->ac_time!=null?$request->ac_time :'';
-            $getAaaData->terms_condition = !empty($request->ac_terms_condition) ? json_encode($request->ac_terms_condition):'';
-            $getAaaData->status = false;
-            $getAaaData->update();    
-        }else{
-            $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->update(['status'=>false]);
-        }
-        if ($request->bc_offer_type!=null) {
-            $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->first();
-            $getAaaData1->terms_condition = !empty($request->bc_terms_condition) ? json_encode($request->bc_terms_condition):'';
-            $getAaaData1->status = false;
-            $getAaaData1->update();
-        }else{
-            $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->update(['status'=>false]);
+            if ($request->bc_offer_type!=null) {
+                $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->first();
+                $getAaaData1->terms_condition = !empty($request->bc_terms_condition) ? json_encode($request->bc_terms_condition):'';
+                $getAaaData1->status = false;
+                $getAaaData1->update();
+            }else{
+                $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->update(['status'=>false]);
+            }
         }
         return $this;
     }

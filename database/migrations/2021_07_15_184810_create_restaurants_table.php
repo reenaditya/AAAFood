@@ -54,6 +54,7 @@ class CreateRestaurantsTable extends Migration
             $table->time('sun_to')->nullable();
             $table->text('description')->nullable();
             $table->string('image',255)->nullable();
+            $table->string('icon',255)->nullable();
             $table->tinyInteger('serve')->nullable();
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->timestamps();

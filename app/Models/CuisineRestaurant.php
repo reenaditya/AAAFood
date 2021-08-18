@@ -9,5 +9,5 @@ class CuisineRestaurant extends Model
 {
     use HasFactory;
     protected $fillable = [];
-
+    
 }

@@ -27,7 +27,7 @@ class MenuQuantityGroupController extends Controller
      */
     public function index()
     {
-        $data = $this->data->with('restaurant','user','menu_group')->get();
+        $data = $this->data->with('restaurant','user','menu_group')->where('user_id',Auth::id())->get();
         return view("admin.menu_quanity_group.index",compact('data'));
     }
 
@@ -91,7 +91,7 @@ class MenuQuantityGroupController extends Controller
      */
     public function edit(MenuQuantityGroup $menu_quantity_group)
     {
-        $menu_quantity_group = $menu_quantity_group->with('restaurant','user','menu_group')->first();
+        $menu_quantity_group = $menu_quantity_group->with('restaurant','user','menu_group')->where('id',$menu_quantity_group->id)->first();
         $restaurant = Restaurant::select('id')->where('user_id',Auth::id())->first();
         $group = MenuGroup::where('restaurant_id',$restaurant->id)->where('user_id',Auth::id())->where('status',1)->get();
         

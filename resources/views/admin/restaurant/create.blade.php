@@ -306,15 +306,16 @@
 											@endforeach
 											</select>
 										</div>
-										<div class="mb-3">
-											<label class="form-label w-100">Select Time</label>
-											<select class="form-control" name="ac_time">
-											@foreach($time as $kii=>$val)
-												<option value="{{$kii}}">{{$val}}</option>
-											@endforeach
-											</select>
+										<div class="row">
+											<div class="col-md-6 mb-3">
+												<label class="form-label w-100">Offer valid time from </label>
+												<input type="time" name="offer_valid_from" class="form-control" value="">
+											</div>
+											<div class="col-md-6 mb-3">
+												<label class="form-label w-100">Offer valid time to </label>
+												<input type="time" name="offer_valid_to" class="form-control" value="">
+											</div>
 										</div>
-
 										<label class="form-label w-100">Include terms and condition</label>
 										@foreach($aaadining_club as $kii=>$val)
 										<label class="form-check m-0">
@@ -449,6 +450,13 @@
 									<label class="form-label" >Image</label>
 									<input type="file" name="image" class="form-control" >
 									@error('image')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-6">
+									<label class="form-label">Restaurant icon</label>
+									<input type="file" name="icon" class="form-control">
+									@error('icon')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>

@@ -23,11 +23,11 @@ class MenuItem extends Model
     {
         return $this->belongsTo(MenuGroup::class, 'menu_group_id');
     }
-
+/*
     public function menuQuntPrice()
     {
         return $this->hasMany(MenuItemsPriceQuantity::class, 'menu_item_id');
-    }
+    }*/
 
      public function menu_price(){
         return $this->belongsToMany(MenuQuantityGroup::class,'menu_items_price_quantities','menu_item_id','menu_quantity_group_id')->withPivot('price');

@@ -19,7 +19,8 @@ class CreateRestaurantOffersTable extends Migration
             $table->string('offer_type',250)->nullable();
             $table->string('file',250)->nullable();
             $table->string('offer_valid_day',250)->nullable();
-            $table->tinyInteger('offer_valid_time')->nullable();
+            $table->time('offer_valid_from')->nullable();
+            $table->time('offer_valid_to')->nullable();
             $table->text('terms_condition')->nullable();
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->timestamps();

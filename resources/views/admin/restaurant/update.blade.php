@@ -15,7 +15,8 @@
 				$ac_offer_type = 1;
 				$ac_image = $val->file;
 				$ac_days = json_decode($val->offer_valid_day);
-				$ac_time = $val->offer_valid_time;
+				$ac_time_from = $val->offer_valid_from;
+				$ac_time_to = $val->offer_valid_to;
 				$ac_terms_condition = json_decode($val->terms_condition);
 			}
 			if($val->offer_type=='BIRTHDAY_CLUB'){
@@ -331,15 +332,16 @@
 											@endforeach
 											</select>
 										</div>
-										<div class="mb-3">
-											<label class="form-label w-100">Select Time</label>
-											<select class="form-control" name="ac_time">
-											@foreach($time as $kii=>$val)
-												<option value="{{$kii}}" @if(isset($ac_time) && $ac_time==$kii ) selected="" @endif>{{$val}}</option>
-											@endforeach
-											</select>
+										<div class="row">
+											<div class="col-md-6 mb-3">
+												<label class="form-label w-100">Offer valid time from </label>
+												<input type="time" name="offer_valid_from" class="form-control" value="{{ $ac_time_from ?? '' }}">
+											</div>
+											<div class="col-md-6 mb-3">
+												<label class="form-label w-100">Offer valid time to </label>
+												<input type="time" name="offer_valid_to" class="form-control" value="{{ $ac_time_to ?? '' }}">
+											</div>
 										</div>
-
 										<label class="form-label w-100">Include terms and condition</label>
 										@foreach($aaadining_club as $kii=>$val)
 										<label class="form-check m-0">
@@ -495,6 +497,16 @@
 									@enderror
 									<div>
 										<img style="width:auto;height: 100px" src="{{asset("storage/$restaurant->image")}}">
+									</div>
+								</div>
+								<div class="mb-4 col-md-6">
+									<label class="form-label">Restaurant icon</label>
+									<input type="file" name="icon" class="form-control">
+									@error('icon')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+									<div>
+										<img style="width:auto;height: 100px" src="{{asset("storage/$restaurant->icon")}}">
 									</div>
 								</div>
 							</div>

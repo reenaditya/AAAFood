@@ -29,7 +29,7 @@ class MenuItemController extends Controller
      */
     public function index()
     {
-        $data = $this->data->with('restaurant','user','menu_group')->get();
+        $data = $this->data->with('restaurant','user','menu_group')->where('user_id',Auth::id())->get();
         return view("admin.menu_item.index",compact('data'));
     }
 

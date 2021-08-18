@@ -13,7 +13,11 @@
                 <div class="col-md-12">
                   <div class="restaurent-area">
                     <div class="restaurent-logo">
-                        <img src="assets/img/restaurants2/rest5.png" class="img-fluid" alt="">
+                    	@if($restaurant->icon)
+                        <img src="{{asset('storage/'.$restaurant->icon)}}" class="img-fluid" alt="">
+                        @else
+                        <img src="assets/img/image_not_f.jpeg" class="img-fluid" alt="">
+                        @endif
                      </div>
                          <div class="head-rating text-center">
                           <div class="rating"> 
@@ -42,7 +46,7 @@
                   <div class="col-md-2"></div>
                   <div class="col-md-6">
                     <div class="heading padding-tb-10">
-                        <h3 class="text-light-black title fw-700 no-margin">{{ $restaurant->name }}</h3>
+                        <h3 class="text-light-black title fw-700 no-margin">{{ $restaurant->name ?? '' }}</h3>
                         <p class="text-light-black sub-title no-margin">{{ $restaurant->address ?? '' }} {{ $restaurant->address2 ?? '' }}, {{ $restaurant->city ?? '' }}, {{ $restaurant->state ?? '' }}, {{ $restaurant->country ?? '' }}, {{ $restaurant->zipcode ?? '' }}</p>
                        
                     </div>
@@ -63,68 +67,72 @@
                
                 <div class="col-xl-8 col-lg-8">
                     <div class="row">
-                        
-                   	<div class="col-lg-12"><hr></hr></div>
-                   	@if(!$data->isEmpty())
-                   	@foreach($data as $key=>$val)
-                   	<div class="col-lg-12">
-                        <div class="section-header-left">
-                            <h3 class="text-light-black header-title title">{{ $val->name ?? '' }}</h3>
-                        </div>
-                        <div class="row">
-                        	@if(!$val->menuItems->isEmpty())
-                        	@foreach($val->menuItems as $ki=>$vlu)
-	                        <div class="col-lg-4 col-md-6 col-sm-6">
-	                            <div class="product-box mb-xl-20">
-	                                <div class="product-img">
-	                                    <a href="#">
-	                                        <img src="{{ asset('storage/'.$vlu->image) }}" class="img-fluid full-width" alt="product-img" style="height:200px;">
-	                                    </a>
-	                                    <div class="overlay">
-	                                        <div class="product-tags padding-10"> <span class="circle-tag">
-						                      <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-						                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <div class="product-caption">
-	                                    <div class="title-box">
-	                                        <h6 class="product-title"><a href="#" class="text-light-black ">{{ $vlu->name ?? '' }}</a></h6>
-	                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
-	                                        </div>
-	                                    </div>
-	                                    @php
-	                                    	$qunty = !$vlu->menu_price->isEmpty() ? $vlu->menu_price[0] :'';
-	                                    @endphp
-	                                    <p class="text-light-white">Quantity: {{ $qunty->name ?? '' }}</p>
-	                                    
-	                                    <div class="product-details">
-	                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-	                                            <span class="text-light-white price">${{ $qunty->pivot->price ?? '' }} min</span>
-	                                        </div>
-	                                        <div class="rating"> <span>
-	                                                <i class="fas fa-star text-yellow"></i>
-	                                                <i class="fas fa-star text-yellow"></i>
-	                                                <i class="fas fa-star text-yellow"></i>
-	                                                <i class="fas fa-star text-yellow"></i>
-	                                                <i class="fas fa-star text-yellow"></i>
-	                                              </span>
-	                                            <span class="text-light-white text-right">4225 ratings</span>
-	                                        </div>
-	                                    </div>
-	                                    <a href="#" class="dsp-inline btn44 mt-4">Add to Cart</a>
-	                                    <div class="dsp-inline qty mt-4">
-	                                        <span class="minus bg-dark">-</span>
-	                                        <input type="number" class="count" name="qty1" value="1">
-	                                        <span class="plus bg-dark">+</span>
-	                                    </div>
-	                                </div>
-	                            </div>
+                        <div class="col-lg-12"><hr></hr></div>
+                   		@if(!$data->isEmpty())
+                   		@foreach($data as $key=>$val)
+                   		<div class="col-lg-12">
+	                        <div class="section-header-left">
+	                            <h3 class="text-light-black header-title title">{{ $val->name ?? '' }}</h3>
 	                        </div>
-	                        @endforeach
-	                        @endif
-	                        {{-- <div class="col-lg-4 col-md-6 col-sm-6">
+	                        <div class="row">
+	                        	@if(!$val->menuItems->isEmpty())
+	                        	@foreach($val->menuItems as $ki=>$vlu)
+	                        	 @php
+		                        	 if (!$vlu->menu_price->isEmpty()) {
+		                        	 	$qunty = $vlu->menu_price[0];
+	                                	$discountType = $vlu->discount_type;
+	                                	$discount = $vlu->discount;
+		                        	 }
+                                @endphp
+		                        <div class="col-lg-4 col-md-6 col-sm-6">
+		                            <div class="product-box mb-xl-20">
+		                                <div class="product-img">
+		                                    <a href="#">
+		                                        <img src="{{ asset('storage/'.$vlu->image) }}" class="img-fluid full-width" alt="product-img" style="height:200px;">
+		                                    </a>
+		                                    <div class="overlay">
+		                                        <div class="product-tags padding-10"> <span class="circle-tag">
+							                      <img src="assets/img/svg/013-heart-1.svg" alt="tag">
+							                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">{{$discount}} @if($discountType==1) % @else $ @endif</span>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="product-caption">
+		                                    <div class="title-box">
+		                                        <h6 class="product-title"><a href="#" class="text-light-black ">{{ $vlu->name ?? '' }}</a></h6>
+		                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
+		                                        </div>
+		                                    </div>
+		                                   
+		                                    <p class="text-light-white">Quantity: {{ $qunty->name ?? '' }}</p>
+		                                    
+		                                    <div class="product-details">
+		                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+		                                            <span class="text-light-white price">${{ $qunty->pivot->price ?? '' }} </span>
+		                                        </div>
+		                                        <div class="rating"> <span>
+		                                                <i class="fas fa-star text-yellow"></i>
+		                                                <i class="fas fa-star text-yellow"></i>
+		                                                <i class="fas fa-star text-yellow"></i>
+		                                                <i class="fas fa-star text-yellow"></i>
+		                                                <i class="fas fa-star text-yellow"></i>
+		                                              </span>
+		                                            <span class="text-light-white text-right">4225 ratings</span>
+		                                        </div>
+		                                    </div>
+		                                    <a href="#" class="dsp-inline btn44 mt-4">Add to Cart</a>
+		                                    <div class="dsp-inline qty mt-4">
+		                                        <span class="minus bg-dark">-</span>
+		                                        <input type="number" class="count" name="qty1" value="1">
+		                                        <span class="plus bg-dark">+</span>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        @endforeach
+		                        @endif
+	                        	{{-- <div class="col-lg-4 col-md-6 col-sm-6">
 	                            <div class="product-box mb-xl-20">
 	                                <div class="product-img">
 	                                    <a href="#">
@@ -165,8 +173,8 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-	                        </div>
-	                        <div class="col-lg-4 col-md-6 col-sm-6">
+		                        </div>
+		                        <div class="col-lg-4 col-md-6 col-sm-6">
 	                            <div class="product-box mb-xl-20">
 	                                <div class="product-img">
 	                                    <a href="#">
@@ -198,7 +206,7 @@
 	                                            <i class="fas fa-star text-yellow"></i>
 	                                            <i class="fas fa-star text-yellow"></i>
 	                                          </span>
-	                            <span class="text-light-white text-right">4225 ratings</span>
+	                            		<span class="text-light-white text-right">4225 ratings</span>
 	                                        </div>
 	                                    </div>
 	                                    <a href="#" class="dsp-inline btn44 mt-4">Add to Cart</a>
@@ -209,8 +217,8 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-	                        </div>
-	                        <div class="col-lg-4 col-md-6 col-sm-6">
+		                        </div>
+		                        <div class="col-lg-4 col-md-6 col-sm-6">
 	                            <div class="product-box mb-xl-20">
 	                                <div class="product-img">
 	                                    <a href="#">
@@ -253,8 +261,8 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-	                        </div>
-	                        <div class="col-lg-4 col-md-6 col-sm-6">
+		                        </div>
+		                        <div class="col-lg-4 col-md-6 col-sm-6">
 	                            <div class="product-box mb-xl-20">
 	                                <div class="product-img">
 	                                    <a href="#">
@@ -301,8 +309,8 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-	                        </div>
-	                        <div class="col-lg-4 col-md-6 col-sm-6">
+		                        </div>
+		                        <div class="col-lg-4 col-md-6 col-sm-6">
 	                            <div class="product-box mb-xl-20">
 	                                <div class="product-img">
 	                                    <a href="#">
@@ -345,345 +353,349 @@
 	                                    </div>
 		                            </div>
 		                        </div>                      
-	                    	</div> --}}
-				   		</div>
-					</div>
-					@endforeach	
-					@endif
-               <div class="col-lg-12"><hr></hr></div>
-                   
-                   <div class="col-lg-12">
-                          <div class="section-header-left">
-                            <h3 class="text-light-black header-title title">Most Ordered Pizzas</h3>
-                          </div>
-                     <table class="table-responsive">
-                      <thead>
-                        <tr>
-                          <th scope="col"><img src="assets/img/restaurants2/rest5.png" class="img-fluid" alt=""></th>
-                          <th scope="col">10” SOLO<br>PERSONAL</th>
-                          <th scope="col">16”<br> SPECIAL</th>
-                          <th scope="col"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><h6>Cheese</h6></td>
-                          <td>8.00</td>
-                          <td>10.00</td>
-                          <td><p></p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Vegitarians</h6></td>
-                          <td>9.00</td>
-                          <td>10.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives</p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Pepperoni</h6></td>
-                          <td>10.00</td>
-                          <td>12.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives</p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Sausage</h6></td>
-                          <td>10.00</td>
-                          <td>12.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives</p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Chicken</h6></td>
-                          <td>10.00</td>
-                          <td>12.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives,
-and mozzarella cheese.</p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Greek Style</h6></td>
-                          <td>10.00</td>
-                          <td>12.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives,
-and mozzarella cheese.</p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Hawaiian</h6></td>
-                          <td>8.00</td>
-                          <td>10.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives,
-and mozzarella cheese.</p></td>
-                        </tr>
-                         <tr>
-                          <td><h6>Combo</h6></td>
-                          <td>8.00</td>
-                          <td>10.00</td>
-                          <td><p>pepperoni, Italian sausage, red onions, green
-peppers, Sliced tomatoes, mushrooms, black olives,
-and mozzarella cheese.</p></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-               </div>
+		                    	</div>
+		                    	 --}}
+					   		</div>
+						</div>
+						@endforeach
+						@else
+		                    <div class="text-danger">No menu found!</div>	
+						@endif
+               		
+               		{{-- <div class="col-lg-12"><hr></hr></div>
+                   	<div class="col-lg-12">
+                        <div class="section-header-left">
+                           	<h3 class="text-light-black header-title title">Most Ordered Pizzas</h3>
+                        </div>
+	                    <table class="table-responsive">
+	                      	<thead>
+		                        <tr>
+		                          <th scope="col"><img src="assets/img/restaurants2/rest5.png" class="img-fluid" alt=""></th>
+		                          <th scope="col">10” SOLO<br>PERSONAL</th>
+		                          <th scope="col">16”<br> SPECIAL</th>
+		                          <th scope="col"></th>
+		                        </tr>
+	                      	</thead>
+	                      	<tbody>
+		                        <tr>
+		                          <td><h6>Cheese</h6></td>
+		                          <td>8.00</td>
+		                          <td>10.00</td>
+		                          <td><p></p></td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Vegitarians</h6></td>
+		                          <td>9.00</td>
+		                          <td>10.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green
+		                        	peppers, Sliced tomatoes, mushrooms, black olives</p>
+		                          </td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Pepperoni</h6></td>
+		                          <td>10.00</td>
+		                          <td>12.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green peppers, Sliced tomatoes, mushrooms, black olives</p></td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Sausage</h6></td>
+		                          <td>10.00</td>
+		                          <td>12.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green
+		                          	peppers, Sliced tomatoes, mushrooms, black olives< p></td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Chicken</h6></td>
+		                          <td>10.00</td>
+		                          <td>12.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green
+		                          peppers, Sliced tomatoes, mushrooms, black olives, and mozzarella cheese.</p></td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Greek Style</h6></td>
+		                          <td>10.00</td>
+		                          <td>12.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green
+		                          peppers, Sliced tomatoes, mushrooms, black olives, and mozzarella cheese.</p></td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Hawaiian</h6></td>
+		                          <td>8.00</td>
+		                          <td>10.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green
+		                          peppers, Sliced tomatoes, mushrooms, black olives, and mozzarella cheese.</p></td>
+		                        </tr>
+		                         <tr>
+		                          <td><h6>Combo</h6></td>
+		                          <td>8.00</td>
+		                          <td>10.00</td>
+		                          <td><p>pepperoni, Italian sausage, red onions, green
+		                          peppers, Sliced tomatoes, mushrooms, black olives, and mozzarella cheese.</p></td>
+		                        </tr>
+	                      	</tbody>
+	                    </table>
+               		</div> --}}
 
 
-<div class="col-lg-12"><hr></hr></div>
-<div class="col-lg-12">
-                          <div class="section-header-left">
-                            <h3 class="text-light-black header-title title">Your favorite pizza</h3>
-                          </div>
-                          <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                                           <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
-                                            </div>
+			<div class="col-lg-12"><hr></hr></div>
+			
+			{{-- <div class="col-lg-12">
+                <div class="section-header-left">
+                    <h3 class="text-light-black header-title title">Your favorite pizza</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-box mb-xl-20">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
+                                </a>
+                                <div class="overlay">
+                                    <div class="product-tags padding-10"> <span class="circle-tag">
+                                       <img src="assets/img/svg/013-heart-1.svg" alt="tag">
+                  							</span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Joe’s Favorite</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">American, Fast Food</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                              </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn44 mt-4">Order again</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                      </span>
-                                        </div>
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title"><a href="#" class="text-light-black "> Joe’s Favorite</a></h6>
+                                    <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
                                     </div>
                                 </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Mike’s pizza</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-red">
-                        2.1
-                      </span>
-                                        </div>
+                                <p class="text-light-white">American, Fast Food</p>
+                                <div class="product-details">
+                                    <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+                                        <span class="text-light-white price">$10 min</span>
                                     </div>
-                                    <p class="text-light-white">Breakfast, Lunch &amp; Dinner</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
+                                    <div class="rating"> <span>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                           </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
+                                        <span class="text-light-white text-right">4225 ratings</span>
                                     </div>
-                                   <a href="#" class="btn44 mt-4">Order again</a> 
                                 </div>
+                                <a href="#" class="btn44 mt-4">Order again</a>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                      </span><span class="type-tag bg-gradient-green text-custom-white">
-                        Trending</span>
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-box mb-xl-20">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
+                                </a>
+                                <div class="overlay">
+                                    <div class="product-tags padding-10"> 
+                                    	<span class="circle-tag">
+				                        	<img src="assets/img/svg/013-heart-1.svg" alt="tag">
+				                      	</span>
                                     </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Alen’s Favorite</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Pizzas, Fast Food</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn44 mt-4">Order again</a>
                                 </div>
                             </div>
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title"><a href="#" class="text-light-black "> Mike’s pizza</a></h6>
+                                    <div class="tags"> 
+                                    	<span class="text-custom-white rectangle-tag bg-red">
+					                        2.1
+					                     </span>
+                                    </div>
+                                </div>
+                                <p class="text-light-white">Breakfast, Lunch &amp; Dinner</p>
+                                <div class="product-details">
+                                    <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+                                        <span class="text-light-white price">$10 min</span>
+                                    </div>
+                                    <div class="rating"> <span>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                      </span>
+                                        <span class="text-light-white text-right">4225 ratings</span>
+                                    </div>
+                                </div>
+                               <a href="#" class="btn44 mt-4">Order again</a> 
+                            </div>
                         </div>
-                 </div>
-            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-box mb-xl-20">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
+                                </a>
+                                <div class="overlay">
+                                    <div class="product-tags padding-10"> 
+                                    	<span class="circle-tag">
+				                        	<img src="assets/img/svg/013-heart-1.svg" alt="tag">
+				                      	</span>
+				                      	<span class="type-tag bg-gradient-green text-custom-white">
+			                        		Trending
+			                        	</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title"><a href="#" class="text-light-black "> Alen’s Favorite</a></h6>
+                                    <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
+                                    </div>
+                                </div>
+                                <p class="text-light-white">Pizzas, Fast Food</p>
+                                <div class="product-details">
+                                    <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+                                        <span class="text-light-white price">$10 min</span>
+                                    </div>
+                                    <div class="rating"> <span>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                      </span>
+                        				<span class="text-light-white text-right">4225 ratings</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn44 mt-4">Order again</a>
+                            </div>
+                        </div>
+                    </div>
+            	</div>
+        	</div> --}}
 
-            <div class="col-lg-12"><hr></hr></div>
-<div class="col-lg-12">
-                          <div class="section-header-left">
-                            <h3 class="text-light-black header-title title">Cartering Packages</h3>
-                          </div>
-                          <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
-                                            </div>
+            {{-- <div class="col-lg-12"><hr></hr></div>
+			<div class="col-lg-12">
+                <div class="section-header-left">
+                    <h3 class="text-light-black header-title title">Cartering Packages</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-box mb-xl-20">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
+                                </a>
+                                <div class="overlay">
+                                    <div class="product-tags padding-10"> <span class="circle-tag">
+				                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
+				                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Joe’s Favorite</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">American, Fast Food</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                                <i class="fas fa-star text-yellow"></i>
-                                              </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn44 mt-4">Order again</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                      </span>
-                                        </div>
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title"><a href="#" class="text-light-black "> Joe’s Favorite</a></h6>
+                                    <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
                                     </div>
                                 </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Mike’s pizza</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-red">
-                        2.1
-                      </span>
-                                        </div>
+                                <p class="text-light-white">American, Fast Food</p>
+                                <div class="product-details">
+                                    <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+                                        <span class="text-light-white price">$10 min</span>
                                     </div>
-                                    <p class="text-light-white">Breakfast, Lunch &amp; Dinner</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
+                                    <div class="rating"> <span>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                             <i class="fas fa-star text-yellow"></i>
                                           </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
+                                        <span class="text-light-white text-right">4225 ratings</span>
                                     </div>
-                                   <a href="#" class="btn44 mt-4">Order again</a> 
                                 </div>
+                                <a href="#" class="btn44 mt-4">Order again</a>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                      </span><span class="type-tag bg-gradient-green text-custom-white">
-                        Trending</span>
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-box mb-xl-20">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
+                                </a>
+                                <div class="overlay">
+                                    <div class="product-tags padding-10"> <span class="circle-tag">
+				                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
+				                      </span>
                                     </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Alen’s Favorite</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Pizzas, Fast Food</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn44 mt-4">Order again</a>
                                 </div>
                             </div>
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title"><a href="#" class="text-light-black "> Mike’s pizza</a></h6>
+                                    <div class="tags"> <span class="text-custom-white rectangle-tag bg-red">
+			                        2.1
+			                      </span>
+                                    </div>
+                                </div>
+                                <p class="text-light-white">Breakfast, Lunch &amp; Dinner</p>
+                                <div class="product-details">
+                                    <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+                                        <span class="text-light-white price">$10 min</span>
+                                    </div>
+                                    <div class="rating"> <span>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                      </span>
+                                        <span class="text-light-white text-right">4225 ratings</span>
+                                    </div>
+                                </div>
+                               <a href="#" class="btn44 mt-4">Order again</a> 
+                            </div>
                         </div>
-                 </div>
-            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-box mb-xl-20">
+                            <div class="product-img">
+                                <a href="#">
+                                    <img src="assets/img/restaurants/pizza.jpg" class="img-fluid full-width" alt="product-img">
+                                </a>
+                                <div class="overlay">
+                                    <div class="product-tags padding-10"> <span class="circle-tag">
+			                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
+			                      </span><span class="type-tag bg-gradient-green text-custom-white">
+			                        Trending</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title"><a href="#" class="text-light-black "> Alen’s Favorite</a></h6>
+                                    <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
+                                    </div>
+                                </div>
+                                <p class="text-light-white">Pizzas, Fast Food</p>
+                                <div class="product-details">
+                                    <div class="price-time"> <span class="text-light-black time">30-40 min</span>
+                                        <span class="text-light-white price">$10 min</span>
+                                    </div>
+                                    <div class="rating"> <span>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                        <i class="fas fa-star text-yellow"></i>
+                                      </span>
+                        				<span class="text-light-white text-right">4225 ratings</span>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn44 mt-4">Order again</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
 
                     </div>
                 </div>

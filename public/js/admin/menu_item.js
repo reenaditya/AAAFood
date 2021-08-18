@@ -21,7 +21,7 @@ $(function() {
 	            	var suggest = '';
 	            	console.log(result.data);
 	            	$.each(result.data,function(key , val){
-	              	suggest+= '<div class="mb-4 col-md-4"><input type="hidden" name="mqg_id[]" value="'+val.id+'"><label class="form-label">'+val.name+'</label><input type="number" name="price[]" class="form-control"></div>';
+	              	suggest+= '<div class="mb-4 col-md-4"><input type="hidden" name="mqg_id[]" value="'+val.id+'"><label class="form-label">'+val.name+' price</label><input type="number" name="price[]" class="form-control"></div>';
 	            	});
 	          		$(".append-menu-group-quantity").html(suggest);
 	        	}

@@ -25,7 +25,7 @@ class MenuItemPriceQuantityController extends Controller
      */
     public function index()
     {
-        $data = $this->data->with('quantity_group','menu_item')->get();
+        $data = $this->data->with('quantity_group','menu_item')->where('user_id',Auth::id())->get();
         return view("admin.menu_item_price_quantity.index",compact('data'));
     }
 

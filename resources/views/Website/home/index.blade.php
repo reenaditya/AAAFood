@@ -13,13 +13,13 @@
                     <div class="section-2 main-page section-2-bg main-padding">
                          <img src="assets/img/1s.png" alt="" style="max-width: 340px;">
                          <h1 class="text-light-black fw-700">From our kitchen to your home</h1>
-                         <a href="#" class="btn11">Dine-in</a>
-                         <a href="#" class="btn22">Delivery</a>
-                         <a href="#" class="btn23">Catering</a>
-                         <a href="#" class="btn24">Pick-up</a>
+                         <a href="javascript::void(0)" class="coming_soon btn11">Dine-in</a>
+                         <a href="javascript::void(0)" class="coming_soon btn22">Delivery</a>
+                         <a href="javascript::void(0)" class="coming_soon btn23">Catering</a>
+                         <a href="javascript::void(0)" class="coming_soon btn24">Pick-up</a>
 
                         <div class="section-header-center text-center mt-5">
-                               <form action="#">
+                               <form>
                                 <input type="text" class="search11 form-control" name="search" placeholder="Search Restaurant">
                                 <input type="submit" class="submit11 form-control" value="Search">
                                </form>
@@ -54,64 +54,21 @@
                 <div class="col-12">
                     <div class="category-slider swiper-container" id="slideshow_services11">
                         <div class="swiper-wrapper">
-                            
+                            @if(!$data['restro']->isEmpty())
+                            @foreach($data['restro'] as $key=>$value)
                             <div class="swiper-slide">
-                                <a href="#" class="categories">
+                                <a href="{{route('webiste.menu.index',$value->slug)}}" class="categories">
                                     <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest1.png" class="rounded-circle" alt="">
+                                        @if($value->icon)
+                                        <img src="{{asset('storage/'.$value->icon)}}" class="rounded-circle" alt="">
+                                        @else
+                                        <img src="assets/img/image_not_f.jpeg" class="rounded-circle" alt="">
+                                        @endif
                                     </div> 
                                 </a>
                             </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest4.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest3.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
-                           <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest5.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
-
-                           <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest6.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
-                           <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest7.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest8.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
-                           <div class="swiper-slide">
-                                <a href="#" class="categories">
-                                    <div class="icon2 text-custom-white bg-light-green ">
-                                        <img src="assets/img/restaurants2/rest2.png" class="rounded-circle" alt="">
-                                    </div> 
-                                </a>
-                            </div>
+                            @endforeach
+                            @endif
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next"></div>
@@ -133,179 +90,24 @@
                 <div class="col-12">
                     <div class="category-slider swiper-container" id="slideshow_services">
                         <div class="swiper-wrapper">
-                         
-                        <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/new/meal1.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                </div>
-                                <div class="product-caption">
-                                    <h6 class="product-title"><a href="#" class="text-light-black "> Vegan Burger</a></h6>
-                                    <p class="text-light-white">$10</p>
-                                    <div class="product-btn">
-                                        <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
+                            @for($i=0; $i<=5; $i++)
+                            <div class="swiper-slide">
+                               <div class="product-box mb-md-20">
+                                    <div class="product-img">
+                                        <a href="javascript::void(0)" class="coming_soon">
+                                            <img src="assets/img/restaurants/new/meal{{$i+1}}.jpg" class="img-fluid full-width" alt="product-img">
+                                        </a>
+                                    </div>
+                                    <div class="product-caption">
+                                        <h6 class="product-title"><a href="javascript::void(0)" class="text-light-black coming_soon"> Vegan Burger</a></h6>
+                                        <p class="text-light-white">$10</p>
+                                        <div class="product-btn">
+                                            <a href="javascript::void(0)" class="btn-first white-btn full-width text-light-green fw-600 coming_soon">Order Now</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="product-box mb-md-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/new/meal2.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                </div>
-                                <div class="product-caption">
-                                    <h6 class="product-title"><a href="#" class="text-light-black "> Chilli Chicken Pizza</a></h6>
-                                    <p class="text-light-white">$10</p>
-                                    <div class="product-btn">
-                                        <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/new/meal3.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                </div>
-                                <div class="product-caption">
-                                    <h6 class="product-title"><a href="#" class="text-light-black "> Vegan Burger</a></h6>
-                                    <p class="text-light-white">$10</p>
-                                    <div class="product-btn">
-                                        <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal4.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black ">Vegan Burger</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal5.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black "> Chilli Chicken Pizza</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal6.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black "> Vegan Burger</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal7.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black "> Chilli Chicken Pizza</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal8.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black "> Hakka Noodles</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal9.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black "> Sticky Date Cake</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-
-                         <div class="swiper-slide">
-                           <div class="product-box mb-md-20">
-                           <div class="product-img">
-                            <a href="#">
-                                <img src="assets/img/restaurants/new/meal10.jpg" class="img-fluid full-width" alt="product-img">
-                            </a>
-                           </div>
-                          <div class="product-caption">
-                            <h6 class="product-title"><a href="#" class="text-light-black "> Great Burger</a></h6>
-                            <p class="text-light-white">$10</p>
-                            <div class="product-btn">
-                                <a href="#" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
-                            </div>
-                            </div>
-                           </div>
-                         </div>
-                         
+                            @endfor
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next"></div>
@@ -332,7 +134,7 @@
                             @if(!$data['cuisine']->isEmpty())
                             @foreach($data['cuisine'] as $val)
                             <div class="swiper-slide">
-                                <a href="#" class="categories">
+                                <a href="{{route('webiste.restaurant.list',$val->id)}}" class="categories">
                                     <div class="icon icon-parent text-custom-white bg-light-green"> @if($val->image) <img src="{{ asset('storage/'.$val->image) }}" class="rounded-circle" alt="categories"> @else<i class="fas fa-map-marker-alt"></i>@endif
                                     </div> <span class="text-light-black cat-name">{{ $val->name ?? '' }}</span>
                                 </a>
@@ -386,7 +188,7 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product-box mb-xl-20">
                                 <div class="product-img">
-                                    <a href="#">
+                                    <a href="{{route('webiste.menu.index',$val->slug)}}">
                                         @if($val->image)
                                         <img src="{{asset('storage/'.$val->image)}}" class="img-fluid full-width" alt="product-img" style="height:200px;">
                                         @else

@@ -19,7 +19,7 @@
     <!-- Munch Box Js -->
     <script src="assets/js/quickmunch.js"></script>
     <!-- /Place all Scripts Here -->
-
+    @stack('script')
     <script>
       $(function(){
           var swiper_services = new Swiper('#slideshow_services', {
@@ -93,6 +93,10 @@
                 }
             }
         });
+
+        $(document).on('click','.coming_soon',function () {
+            alert('coming soon! Under processing');
+        })
     });
 </script>
 </body>
