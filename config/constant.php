@@ -1,6 +1,12 @@
 <?php
 return[
-	'reservation_system' => [
+	'role' => [
+        1 => 'Vendor',
+        2 => 'Super Admin',
+        3 => 'Delivery',
+        4 => 'Customer',
+    ],
+    'reservation_system' => [
         1 => 'Grub Hub',
         2 => 'Uber Eats',
         3 => 'In House',

@@ -57,7 +57,7 @@ class RestaurantController extends Controller
         DB::beginTransaction();
     	try {
 
-     		$adata = $this->props($request)
+     		$this->props($request)
      		->save();
      		
             $id = $this->restaurant->id;

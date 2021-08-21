@@ -445,7 +445,7 @@
                 <div class="col-md-4">
                   <div class="box">
                   <h3>Are you a restaurant owner?</h3><br>
-                  <a href="#" class="btn33">Add your restaurant Here</a>
+                  <a href="{{route('webiste.bussiness.account')}}" class="btn33">Add your restaurant Here</a>
                </div></div>
                <div class="col-md-4">
                 <div class="box">

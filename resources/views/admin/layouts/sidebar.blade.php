@@ -21,10 +21,16 @@
 				
 					<li class="sidebar-item {{Request::routeIs('admin.dashboard.*')?'active':''}}">
 						<a data-bs-target="#dashboard" class="sidebar-link {{Request::routeIs('admin.dashboardd.*')?'':'collapsed'}}" href="{{ route('admin.dashboard.index') }}">
-              			<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Dashboard</span>
-              	
-            			</a>
+							<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Dashboard</span>
+          	</a>
 					</li>
+					@if(Auth::check() && Auth::user()->role===2)
+					<li class="sidebar-item {{Request::routeIs('admin.user.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.user.*')?'':'collapsed'}}" href="{{ route('admin.user.index') }}">
+              <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
+             </a>
+					</li>
+					@endif
 					@if(Auth::check() && Auth::user()->role===2)
 					<li class="sidebar-item {{Request::routeIs('admin.cuisine.*')?'active':''}}">
 						<a data-bs-target="#cuisine" class="sidebar-link {{Request::routeIs('admin.cuisine.*')?'':'collapsed'}}" href="{{ route('admin.cuisine.index') }}">
