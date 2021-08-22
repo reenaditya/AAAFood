@@ -7,7 +7,11 @@
 <input type="hidden" class="user_id" @if(Auth::check()) value="{{Auth::id()}}" @endif>
 <!-- restaurent top -->
 <div class="page-banner p-relative smoothscroll" id="menu">
+    @if($restaurant->banner_img)
+    <img src="{{asset('storage/'.$restaurant->banner_img)}}" class="img-fluid full-width" alt="banner">  
+    @else
     <img src="assets/img/pizza-banner.jpg" class="img-fluid full-width" alt="banner">  
+    @endif
 </div>
 <!-- restaurent top -->
 <!-- restaurent details -->

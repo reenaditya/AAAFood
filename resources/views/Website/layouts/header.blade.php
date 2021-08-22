@@ -1,3 +1,4 @@
+<input type="hidden" value="{{Auth::id() ?? ''}}" class="check-auth-id">
 <header>
     <div class="container-fluid">
         <div class="row">
@@ -13,7 +14,7 @@
                                 <a class="nav-link" href="#">Home</a>
                             </li> -->
                             <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link" href="{{route('webiste.aboutus')}}">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Buy the AAAdining Club Card</a>

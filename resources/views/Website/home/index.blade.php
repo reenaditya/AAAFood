@@ -5,10 +5,10 @@
         <div class="container-fluid">
             <div class="row no-gutters">
                
-                    <div class="slide__pizza">
-                        <img src="assets/img/slider-pizza.png" alt="pizza images">
-                    </div>
-               <div class="col-md-3"> <a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" class="img-fluid" alt="Logo"></a></div>
+                <div class="slide__pizza">
+                    <img src="assets/img/slider-pizza.png" alt="pizza images">
+                </div>
+               <div class="col-md-3"> <a class="navbar-brand" href="{{url('/')}}"><img src="assets/img/logo.png" class="img-fluid" alt="Logo"></a></div>
                 <div class="col-md-6 text-center">
                     <div class="section-2 main-page section-2-bg main-padding">
                          <img src="assets/img/1s.png" alt="" style="max-width: 340px;">
@@ -90,24 +90,26 @@
                 <div class="col-12">
                     <div class="category-slider swiper-container" id="slideshow_services">
                         <div class="swiper-wrapper">
-                            @for($i=0; $i<=5; $i++)
+                            @if(!$data['menu_item']->isEmpty())
+                            @foreach($data['menu_item'] as $key=>$value)
                             <div class="swiper-slide">
                                <div class="product-box mb-md-20">
                                     <div class="product-img">
-                                        <a href="javascript::void(0)" class="coming_soon">
-                                            <img src="assets/img/restaurants/new/meal{{$i+1}}.jpg" class="img-fluid full-width" alt="product-img">
+                                        <a href="{{route('webiste.menu.index',$value->restaurant->slug)}}">
+                                            <img src="{{asset('storage/'.$value->image)}}" class="img-fluid full-width" alt="product-img">
                                         </a>
                                     </div>
                                     <div class="product-caption">
-                                        <h6 class="product-title"><a href="javascript::void(0)" class="text-light-black coming_soon"> Vegan Burger</a></h6>
-                                        <p class="text-light-white">$10</p>
+                                        <h6 class="product-title"><a href="{{route('webiste.menu.index',$value->restaurant->slug)}}" class="text-light-black">{{$value->name ?? ''}}</a></h6>
+                                        <p class="text-light-white">${{$value->menu_price[0]->pivot->price ?? ''}}</p>
                                         <div class="product-btn">
-                                            <a href="javascript::void(0)" class="btn-first white-btn full-width text-light-green fw-600 coming_soon">Order Now</a>
+                                            <a href="{{route('webiste.menu.index',$value->restaurant->slug)}}" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            @endfor
+                            @endforeach
+                            @endif
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next"></div>
@@ -125,7 +127,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-header-left">
-                        <h3 class="text-light-black header-title title">Browse by cuisine <span class="fs-14"><a href="#">See all restaurant</a></span></h3>
+                        <h3 class="text-light-black header-title title">Browse by cuisine <span class="fs-14"><a href="{{route('webiste.restaurant.list.categ')}}">See all restaurant</a></span></h3>
                     </div>
                 </div>
                 <div class="col-12">
@@ -167,14 +169,14 @@
                 <div class="col-md-6">
                     <div class="ex-collection-box mb-xl-20">
                         <img src="assets/img/restaurants/540x300/collection-1.jpg" class="img-fluid full-width" alt="image">
-                        <div class="category-type overlay padding-15"> <a href="#" class="category-btn">Top rated</a>
+                        <div class="category-type overlay padding-15"> <a href="{{route('webiste.restaurant.list.categ')}}?category=top-rated" class="category-btn">Top rated</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="ex-collection-box mb-xl-20">
                         <img src="assets/img/restaurants/540x300/collection-2.jpg" class="img-fluid full-width" alt="image">
-                        <div class="category-type overlay padding-15"> <a href="#" class="category-btn">Top rated</a>
+                        <div class="category-type overlay padding-15"> <a href="{{route('webiste.restaurant.list.categ')}}?category=new" class="category-btn">New</a>
                         </div>
                     </div>
                 </div>
@@ -197,10 +199,14 @@
                                     </a>
                                     <div class="overlay">
                                         <div class="product-tags padding-10"> 
-                                            <span class="circle-tag">
+                                            <span class="circle-tag add-wish-list">
                                                 <img src="assets/img/svg/013-heart-1.svg" alt="tag">
                                             </span>
+                                            @if($val->trending)
                                             <span class="type-tag bg-gradient-green text-custom-white">Trending</span>
+                                            @elseif($val->new)
+                                            <span class="text-custom-white type-tag bg-gradient-orange">NEW</span>
+                                            @endif
                                             <div class="custom-tag"> 
                                                 <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
                                             </div>
@@ -210,7 +216,7 @@
                                 <div class="product-caption">
                                     <div class="title-box">
                                         <h6 class="product-title"><a href="{{route('webiste.menu.index',$val->slug)}}" class="text-light-black"> {{ $val->name ?? '' }}</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
+                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.1</span>
                                         </div>
                                     </div>
                                     <p class="text-light-white">
@@ -224,7 +230,9 @@
                                     </p>
                                     <div class="product-details">
                                         <div class="price-time"> <span class="text-light-black time">{{ $val->order_lead_time ?? '' }}-{{ $val->delivery_extra_time+$val->order_lead_time }} min</span>
-                                            <span class="text-light-white price">${{$val->delivery_fee}} min</span>
+                                            @if($val->meal_starting)
+                                            <span class="text-light-white price">${{$val->meal_starting}} min price</span>
+                                            @endif
                                         </div>
                                         <div class="rating"> 
                                             <span>
@@ -243,203 +251,13 @@
                         </div>
                         @endforeach
                         @endif
-                        {{-- <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/255x150/shop-2.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag">
-                                        <img src="assets/img/svg/013-heart-1.svg" alt="tag"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="#" class="text-light-black "> Flavor Town</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-red">2.1</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Breakfast, Lunch & Dinner</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-footer"> 
-                                        <span class="text-custom-white square-tag"><img src="assets/img/svg/007-chili-1.svg" alt="tag"></span>
-                                        <span class="text-custom-white square-tag"><img src="assets/img/svg/004-leaf.svg" alt="tag"></span>
-                                        <span class="text-custom-white square-tag"><img src="assets/img/svg/009-lemon.svg" alt="tag"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/255x150/shop-3.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag"><img src="assets/img/svg/013-heart-1.svg" alt="tag"></span>
-                                        <span class="type-tag bg-gradient-green text-custom-white">Trending</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="restaurant.html" class="text-light-black "> Big Bites</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Pizzas, Fast Food</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/255x150/shop-4.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag"><img src="assets/img/svg/013-heart-1.svg" alt="tag"></span>
-                                            <span class="type-tag bg-gradient-green text-custom-white">Trending</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="restaurant.html" class="text-light-black "> Smile N’ Delight</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Desserts, Beverages</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/255x150/shop-5.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag"><img src="assets/img/svg/013-heart-1.svg" alt="tag"></span>
-                                            <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">20%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="restaurant.html" class="text-light-black "> Lil Johnny’s</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-red">2.1</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Continental & Mexican</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product-box mb-xl-20">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/restaurants/255x150/shop-6.jpg" class="img-fluid full-width" alt="product-img">
-                                    </a>
-                                    <div class="overlay">
-                                        <div class="product-tags padding-10"> <span class="circle-tag"><img src="assets/img/svg/013-heart-1.svg" alt="tag"></span>
-                                            <span class="text-custom-white type-tag bg-gradient-orange">NEW</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="title-box">
-                                        <h6 class="product-title"><a href="restaurant.html" class="text-light-black "> Choice Foods</a></h6>
-                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.5</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-light-white">Indian, Chinese, Tandoor</p>
-                                    <div class="product-details">
-                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
-                                            <span class="text-light-white price">$10 min</span>
-                                        </div>
-                                        <div class="rating"> <span>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                            <i class="fas fa-star text-yellow"></i>
-                                          </span>
-                                            <span class="text-light-white text-right">4225 ratings</span>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
             </div>
     </section>
     <!-- Explore collection -->
 
- <section class="section-padding" style="border-top: 1px solid rgba(67, 41, 163, .2);">
+    <section class="section-padding" style="border-top: 1px solid rgba(67, 41, 163, .2);">
         <div class="container">
             <div class="row text-center">
                 <div class="col-md-4">
@@ -457,25 +275,29 @@
                   <h3>Are you a local chef?</h3><br><br>
                   <a href="#" class="btn33">Join Here</a>
                </div></div>
-      </div>
-   </div>
- </section>
+            </div>
+        </div>
+    </section>
 
 <section class="footer-bottom-search pt-5 pb-5 bg-white">
-<div class="container">
-<div class="row">
-<div class="col-xl-12">
-<p class="text-black">POPULAR COUNTRIES</p>
-<div class="search-links">
-<a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a><a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a>
-</div>
-<p class="mt-4 text-black">POPULAR FOOD</p>
-<div class="search-links">
- <a href="#">Fast Food</a> | <a href="#">Chinese</a> | <a href="#">Street Food</a> | <a href="#">Continental</a> | <a href="#">Mithai</a> | <a href="#">Cafe</a> | <a href="#">South Indian</a> | <a href="#">Punjabi Food</a> | <a href="#">Fast Food</a> | <a href="#">Chinese</a> | <a href="#">Street Food</a> | <a href="#">Continental</a> | <a href="#">Mithai</a> | <a href="#">Cafe</a> | <a href="#">South Indian</a> | <a href="#">Punjabi Food</a><a href="#">Fast Food</a> | <a href="#">Chinese</a> | <a href="#">Street Food</a> | <a href="#">Continental</a> | <a href="#">Mithai</a> | <a href="#">Cafe</a> | <a href="#">South Indian</a> | <a href="#">Punjabi Food</a> | <a href="#">Fast Food</a> | <a href="#">Chinese</a> | <a href="#">Street Food</a> | <a href="#">Continental</a> | <a href="#">Mithai</a> | <a href="#">Cafe</a> | <a href="#">South Indian</a> | <a href="#">Punjabi Food</a>
-</div>
-</div>
-</div>
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <p class="text-black">POPULAR COUNTRIES</p>
+                <div class="search-links">
+                    <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a><a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a>
+                </div>
+                <p class="mt-4 text-black">POPULAR FOOD</p>
+                <div class="search-links">
+                    @if(!$data['cuisine']->isEmpty())
+                    @foreach($data['cuisine'] as $val)
+                        <a href="{{route('webiste.restaurant.list',$val->id)}}">{{$val->name ?? ''}}</a> | 
+                    @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
     <!-- footer -->
@@ -568,3 +390,6 @@
 </div>
 </section>
 @endsection
+@push('script')
+    <script type="text/javascript" src="{{asset('js/front/home_page.js')}}"></script>
+@endpush

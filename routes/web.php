@@ -27,11 +27,16 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 	Route::get('/','HomeController@index')->name('home.index');
 	
 	Route::get('/menu/{slug}','MenuController@index')->name('menu.index');
+	Route::get('/restaurants','MenuController@listCategoryWise')->name('restaurant.list.categ');
+
 	Route::get('/cuisines/{id}','MenuController@restaurantList')->name('restaurant.list');
 	Route::post('/website/add-to-cart','MenuController@addToCart');
 
 	Route::get('/bussiness-account','BussinessAccountController@create')->name('bussiness.account');
 	Route::post('/bussiness-account','BussinessAccountController@store');
+
+	Route::get('/about','HomeController@aboutus')->name('aboutus');
+
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

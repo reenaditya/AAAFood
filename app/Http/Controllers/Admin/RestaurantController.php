@@ -220,7 +220,6 @@ class RestaurantController extends Controller
         if ($request->hasFile('participate_file')) {        
             $this->restaurant->participate_file = $request->participate_file->store('upload/restaurant','public');
         }
-        
         $this->restaurant->aaadining_club = $request->aaadining_club;
         $this->restaurant->birthday_club = $request->birthday_club;
         $this->restaurant->mf_from = $request->mf_from;
@@ -231,6 +230,13 @@ class RestaurantController extends Controller
         $this->restaurant->sun_to = $request->sun_to;
         $this->restaurant->description = $request->description;
     	$this->restaurant->serve = $request->serve?true:false;
+        $this->restaurant->meal_starting = $request->meal_starting;
+        if ($request->hasFile('banner_img')) {        
+            $this->restaurant->banner_img = $request->banner_img->store('upload/restaurant','public');
+        }
+        $this->restaurant->trending = $request->trending?true:false;
+        $this->restaurant->new = $request->new?true:false;
+        $this->restaurant->top_rated = $request->top_rated?true:false;
         $this->restaurant->status = $request->status?true:false;
         return $this;
     }

@@ -72,4 +72,21 @@ class MenuController extends Controller
         
         return response()->json($response);
     }
+
+    /*
+    * Get all data according to category like top-rated,trending
+    */
+    public function listCategoryWise(Request $request)
+    {
+        $data = Restaurant::where('status',1);
+        if ($request->has('category') && $request->category=='top-rated') {
+            $data = $data->where('top_rated',1);
+        }elseif($request->has('category') && $request->category=='new'){
+            $data = $data->where('new',1);
+        }elseif($request->has('category') && $request->category=='trending'){
+            $data = $data->where('trending',1);
+        }
+        $data = $data->get();
+        return view('Website.restaurant.restaurant',compact('data'));        
+    }
 }

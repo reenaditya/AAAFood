@@ -436,7 +436,29 @@
 							</div>
 
 							<div class="row">
-								<div class="mb-4 col-md-6">
+								<div class="mb-4 col-md-4">
+									<label class="form-label" >Image</label>
+									<input type="file" name="image" class="form-control" >
+									@error('image')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Restaurant icon</label>
+									<input type="file" name="icon" class="form-control">
+									@error('icon')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Banner image</label>
+									<input type="file" name="banner_img" class="form-control">
+									@error('banner_img')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+
+								<div class="mb-4 col-md-4">
 									<label class="form-label" >Status</label>
 									<select class="form-control" name="status" >
 										<option value="1">Active</option>
@@ -446,17 +468,40 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-6">
-									<label class="form-label" >Image</label>
-									<input type="file" name="image" class="form-control" >
-									@error('image')
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Starting meal(price)</label>
+									<input type="number" name="meal_starting" class="form-control" value="0">
+									@error('meal_starting')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-6">
-									<label class="form-label">Restaurant icon</label>
-									<input type="file" name="icon" class="form-control">
-									@error('icon')
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Trending</label>
+									<select class="form-control" name="trending">
+										<option value="0">No</option>
+										<option value="1">Yes</option>
+									</select>
+									@error('pending')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-4">
+									<label class="form-label">New</label>
+									<select class="form-control" name="new">
+										<option value="0">No</option>
+										<option value="1">Yes</option>
+									</select>
+									@error('new')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Top rated</label>
+									<select class="form-control" name="top_rated">
+										<option value="0">No</option>
+										<option value="1">Yes</option>
+									</select>
+									@error('top_rated')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>

@@ -26,10 +26,8 @@
 											<tr>
 												<th width="2%">S.No</th>
 												<th>Name</th>
-												{{-- <th>Email</th>
-												<th>Phone</th> --}}
-												<th>City</th>
-												<th>Zipcode</th>
+												<th>Address</th>
+												<th>Vendor name</th>
 												<th>Status</th>
 												<th width="10%">Action</th>
 											</tr>
@@ -39,10 +37,9 @@
 												<tr>
 													<td>{{ ++$key }} </td>
 													<td>{{$restaurant->name ?? ''}} </td>
-													{{-- <td>{{$restaurant->email ?? ''}} </td>
-													<td>{{ $restaurant->phone_number ?? ''}} </td> --}}
-													<td>{{ $restaurant->city ?? ''}} </td>
-													<td>{{$restaurant->zipcode ?? ''}} </td>
+													
+													<td>{{ $restaurant->city ?? ''}}, {{ $restaurant->country ?? ''}}, {{$restaurant->zipcode ?? ''}}</td>
+													<td>{{ $restaurant->user->name ?? '' }} </td>
 													<td><button class="btn btn-{{$restaurant->status?'success':'danger'}} ">
 														{{$restaurant->status? 'Active':'Inactive'}}
 													</button> </td>

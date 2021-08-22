@@ -8,7 +8,7 @@
                     <div class="footer-links">
                         <h6 class="text-light-black">Get to Know Us</h6>
                         <ul>
-                            <li><a href="#" class="text-light-white fw-600">About Us</a>
+                            <li><a href="{{route('webiste.aboutus')}}" class="text-light-white fw-600">About Us</a>
                             </li>
                             <li><a href="#" class="text-light-white fw-600">Blog</a>
                             </li>
