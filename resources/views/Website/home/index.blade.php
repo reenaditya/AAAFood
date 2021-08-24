@@ -1,6 +1,7 @@
 @extends('Website.layouts.app')
 @section('content')
  <!-- Navigation -->
+    <input type="hidden" class="user-id" value="{{Auth::id() ?? ''}}">
     <div class="inner-wrapper bg-image">
         <div class="container-fluid">
             <div class="row no-gutters">
@@ -200,7 +201,16 @@
                                     <div class="overlay">
                                         <div class="product-tags padding-10"> 
                                             <span class="circle-tag add-wish-list">
+                                                @if($val->wishlist->isEmpty())
                                                 <img src="assets/img/svg/013-heart-1.svg" alt="tag">
+                                                @else
+                                                @foreach($val->wishlist as $va)
+                                                    @if($va->product_id==$val->id)
+                                                    <img src="assets/img/svg/010-heart.svg" alt="tag">
+                                                    @endif
+                                                @endforeach
+                                                @endif
+                                                <input type="hidden" class="restaurant-id" value="{{ $val->id ?? ''}}">
                                             </span>
                                             @if($val->trending)
                                             <span class="type-tag bg-gradient-green text-custom-white">Trending</span>

@@ -22,6 +22,12 @@ Route::get('/clear', function() {
    return "Cleared!";
 });
 
+Route::get('/migrate', function() {
+   Artisan::call('migrate');
+   /*Artisan::call('migrate:refresh --path=/database/migrations/2021_08_16_162921_create_activities_table.php');*/
+   return "Migrated!";
+});
+
 Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');
@@ -36,6 +42,8 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 	Route::post('/bussiness-account','BussinessAccountController@store');
 
 	Route::get('/about','HomeController@aboutus')->name('aboutus');
+	
+	Route::post('/website/add-wish-list','WishlistController@addToWishList');
 
 });
 

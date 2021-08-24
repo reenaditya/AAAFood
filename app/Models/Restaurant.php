@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class Restaurant extends Model
 {
     use HasFactory;
@@ -23,4 +23,10 @@ class Restaurant extends Model
     {
         return $this->hasMany(RestaurantOffer::class,'restaurant_id');
     }
+    
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class,'product_id');
+    }
+
 }
