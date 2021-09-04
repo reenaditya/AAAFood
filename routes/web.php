@@ -28,6 +28,16 @@ Route::get('/migrate', function() {
    return "Migrated!";
 });
 
+
+/*SOCIAL MEDIA LOGIN */
+Route::get('auth/google', 'SocialLoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'SocialLoginController@handleGoogleCallback');
+
+Route::get('auth/facebook', 'SocialLoginController@facebookRedirect');
+Route::get('auth/facebook/callback', 'SocialLoginController@loginWithFacebook');
+/*END*/
+
+
 Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');
@@ -74,5 +84,7 @@ Route::group([
 	Route::post('/menu-item/menu-group-quantity','MenuItemController@menuGroupQuantity');
 	Route::resource('menu_quantity_group','MenuQuantityGroupController');
 	Route::resource('menu_item_price_quantity','MenuItemPriceQuantityController');
+	Route::resource('restaurant_request','RestraurantRequestController');
+	Route::resource('setting','SettingController');
 
 });

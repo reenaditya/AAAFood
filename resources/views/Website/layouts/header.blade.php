@@ -20,9 +20,6 @@
                                 <a class="nav-link" href="#">Buy the AAAdining Club Card</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Birthday club</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('webiste.bussiness.account')}}">Create a business account</a>
                             </li>
                         </ul>

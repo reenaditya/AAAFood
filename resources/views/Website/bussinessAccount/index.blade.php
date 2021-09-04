@@ -10,9 +10,113 @@
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
-
+		<div class="row no-gutters">
+	        <div class="col-md-6">
+	          <div class="main-banner" style="height: 120vh;">
+	            <img src="assets/img/banner/banner-1.jpg" class="img-fluid full-width main-img" alt="banner">
+	            
+	            <img src="assets/img/banner/burger.png" class="footer-img" alt="footer-img">
+	          </div>
+	        </div>
+	        <div class="col-md-6">
+	          <div class="section-2 user-page pt-4">
+	            <div class="login-sec" style="position: static;transform: inherit;">
+	              <div class="login-box" style="max-width: 85%;">
+	              	  <div class="row">
+	                	<div class="col-md-10 text-success">
+		                	@if (Session::has('success'))
+		                		{{ Session::get('success')}}
+		                	@endif
+	                	</div>
+	                  </div>
+	                  <form method="POST" action="{{ route('webiste.bussiness.account') }}">
+	                  @csrf
+	                  <h4 class="text-light-black fw-600">Add Restaurant Request Form</h4>
+	                  <div class="row">
+	                    <div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">First name<span class="text-danger">*</span></label>
+	                        <input type="text" name="firstname" class="form-control form-control-submit" placeholder="Name" required value="{{old('firstname')}} " >
+	                        @error('firstname')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                    </div>
+	                    <div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Last name<span class="text-danger">*</span></label>
+	                        <input type="text" name="lastname" class="form-control form-control-submit" placeholder="Name" required value="{{old('lastname')}} " >
+	                        @error('lastname')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                    </div>
+	                    <div class="col-md-12">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Your Work Email<span class="text-danger">*</span></label>
+	                        <input type="email" name="email" value="{{old('email')}} " class="form-control form-control-submit" placeholder="Email I'd" required>
+	                        @error('email')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                    <div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Your Phone Number<span class="text-danger">*</span></label>
+	                        <input type="text" name="phone_number" value="{{old('phone_number')}} " class="form-control form-control-submit" required>
+	                        @error('phone_number')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Restaurant Name<span class="text-danger">*</span></label>
+	                        <input type="text" name="restaurant_name" value="{{old('restaurant_name')}} " class="form-control form-control-submit" required>
+	                        @error('restaurant_name')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Types of Food<span class="text-danger">*</span></label>
+	                        <input type="text" name="food_type" value="{{old('food_type')}} " class="form-control form-control-submit" required>
+	                        @error('food_type')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Restaurant Address<span class="text-danger">*</span></label>
+	                        <input type="text" name="restaurant_address" value="{{old('restaurant_address')}} " class="form-control form-control-submit" required>
+	                        @error('restaurant_address')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-12">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Comments or Notes</label>
+	                        <textarea name="comments" rows="3" class="form-control form-control-submit">{{old('comments')}}</textarea>
+	                        @error('restaurant_address')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-12 text-center">
+	                  		<button type="submit" class="btn-second btn-submit pr-5 pl-5">Submit Restaurant Request</button>
+	                  	</div>
+	                  </div>
+	                </form>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+		{{-- 
 		<h1 class="h3 mb-3">Add Restaurant</h1>
-
 		<div class="row">
 			
 			<div class="col-md-12">
@@ -495,7 +599,7 @@
 			</div>
 
 			
-		</div>
+		</div> --}}
 
 	</div>
 </main>

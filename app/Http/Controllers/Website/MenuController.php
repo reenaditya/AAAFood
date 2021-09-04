@@ -79,14 +79,28 @@ class MenuController extends Controller
     public function listCategoryWise(Request $request)
     {
         $data = Restaurant::where('status',1);
-        if ($request->has('category') && $request->category=='top-rated') {
+        if ($request->has('category') && $request->category=='top-rated'){
             $data = $data->where('top_rated',1);
-        }elseif($request->has('category') && $request->category=='new'){
+        }
+        elseif($request->has('category') && $request->category=='new'){
             $data = $data->where('new',1);
-        }elseif($request->has('category') && $request->category=='trending'){
+        }
+        elseif($request->has('category') && $request->category=='trending'){
             $data = $data->where('trending',1);
         }
-        $data = $data->get();
+        elseif($request->has('category') && $request->category=='dine-in'){
+            $data = $data->where('dine_in',1);
+        }
+        elseif($request->has('category') && $request->category=='delivery'){
+            $data = $data->where('own_delivery',1);
+        }
+        elseif($request->has('category') && $request->category=='catering'){
+        }
+        elseif($request->has('category') && $request->category=='pickup'){
+            $data = $data->where('takeout',1);
+        }
+
+        $data = $data->latest()->get();
         return view('Website.restaurant.restaurant',compact('data'));        
     }
 }

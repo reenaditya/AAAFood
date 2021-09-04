@@ -9,15 +9,15 @@
                 <div class="slide__pizza">
                     <img src="assets/img/slider-pizza.png" alt="pizza images">
                 </div>
-               <div class="col-md-3"> <a class="navbar-brand" href="{{url('/')}}"><img src="assets/img/logo.png" class="img-fluid" alt="Logo"></a></div>
+               <div class="col-md-3"> <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('storage/'.Settings::get('general_setting_website_logo')) ??'assets/img/logo.png'}}" class="img-fluid" alt="Logo"></a></div>
                 <div class="col-md-6 text-center">
                     <div class="section-2 main-page section-2-bg main-padding">
                          <img src="assets/img/1s.png" alt="" style="max-width: 340px;">
-                         <h1 class="text-light-black fw-700">From our kitchen to your home</h1>
-                         <a href="javascript::void(0)" class="coming_soon btn11">Dine-in</a>
-                         <a href="javascript::void(0)" class="coming_soon btn22">Delivery</a>
-                         <a href="javascript::void(0)" class="coming_soon btn23">Catering</a>
-                         <a href="javascript::void(0)" class="coming_soon btn24">Pick-up</a>
+                         <h1 class="text-light-black fw-700">{{ Settings::get('general_setting_header_title') }}</h1>
+                         <a href="{{route('webiste.restaurant.list.categ')}}?category=dine-in" class="btn11">Dine-in</a>
+                         <a href="{{route('webiste.restaurant.list.categ')}}?category=delivery" class="btn22">Delivery</a>
+                         <a href="{{route('webiste.restaurant.list.categ')}}?category=catering" class="btn23">Catering</a>
+                         <a href="{{route('webiste.restaurant.list.categ')}}?category=pickup" class="btn24">Pick-up</a>
 
                         <div class="section-header-center text-center mt-5">
                                <form>
@@ -25,7 +25,7 @@
                                 <input type="submit" class="submit11 form-control" value="Search">
                                </form>
                         </div>
-                        <h2 class="text-light-black fw-700 mt-3 slg">We make it EZ</h2>
+                        <h2 class="text-light-black fw-700 mt-3 slg">{{ Settings::get('general_setting_header_title2') }}</h2>
                         <!-- <div class="input-group row">
                             <div class="input-group2 col-xl-8">
                                 <input type="search" class="form-control form-control-submit" placeholder="Enter street address or zip code" value="1246 57th St, Brooklyn, NY, 11219">
@@ -47,7 +47,7 @@
 
     <section class="browse-cat section-padding" style="padding: 0px 0 40px 0;">
           <div class="section-header-center text-center">
-            <h3 class="text-light-black header-title h3">Choose a restaurant </h3>
+            <h3 class="text-light-black header-title h3">{{ Settings::get('general_setting_restaurant_icon_heading') }}</h3>
           </div>
         <div class="container">
             <div class="row">
@@ -83,7 +83,7 @@
 
     <section class="browse-cat u-line section-padding" style="padding: 0px 0 40px 0;">
         <div class="section-header-center text-center">
-           <h3 class="text-light-black header-title h3">Or just order any of these meals</h3>
+           <h3 class="text-light-black header-title h3">{{ Settings::get('general_setting_meal_list_heading') }}</h3>
         </div>
         <div class="container">
             <div class="row">
@@ -104,7 +104,7 @@
                                         <h6 class="product-title"><a href="{{route('webiste.menu.index',$value->restaurant->slug)}}" class="text-light-black">{{$value->name ?? ''}}</a></h6>
                                         <p class="text-light-white">${{$value->menu_price[0]->pivot->price ?? ''}}</p>
                                         <div class="product-btn">
-                                            <a href="{{route('webiste.menu.index',$value->restaurant->slug)}}" class="btn-first white-btn full-width text-light-green fw-600">Order Now</a>
+                                            <a href="{{route('webiste.menu.index',$value->restaurant->slug)}}" class="btn-first white-btn full-width text-light-green fw-600">{{ Settings::get('general_setting_meal_list_btn_heading') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-header-left">
-                        <h3 class="text-light-black header-title title">Browse by cuisine <span class="fs-14"><a href="{{route('webiste.restaurant.list.categ')}}">See all restaurant</a></span></h3>
+                        <h3 class="text-light-black header-title title">{{ Settings::get('general_setting_cuisine_heading') }} <span class="fs-14"><a href="{{route('webiste.restaurant.list.categ')}}">See all restaurant</a></span></h3>
                     </div>
                 </div>
                 <div class="col-12">
@@ -161,7 +161,7 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <div class="section-header-center">
-                        <h3 class="text-light-black header-title"> Order Your Favorite Recipes </h3>
+                        <h3 class="text-light-black header-title">{{ Settings::get('general_setting_restaurant_list_head') }} </h3>
                     </div>
                 </div>
             </div>
@@ -272,18 +272,18 @@
             <div class="row text-center">
                 <div class="col-md-4">
                   <div class="box">
-                  <h3>Are you a restaurant owner?</h3><br>
-                  <a href="{{route('webiste.bussiness.account')}}" class="btn33">Add your restaurant Here</a>
+                  <h3>{{ Settings::get('general_setting_add_your_restaurant_text') }}</h3><br>
+                  <a href="{{route('webiste.bussiness.account')}}" class="btn33">{{ Settings::get('general_setting_add_your_restaurant_btn_text') }}</a>
                </div></div>
                <div class="col-md-4">
                 <div class="box">
-                  <h3>Do you want to use one of our kitchens to sell your famous dish</h3>
-                  <a href="#" class="btn33">Click Here</a>
+                  <h3>{{ Settings::get('general_setting_use_kitchens_text') }}</h3>
+                  <a href="#" class="btn33">{{ Settings::get('general_setting_use_kitchens_button_text') }}</a>
                </div></div>
                <div class="col-md-4">
                 <div class="box">
-                  <h3>Are you a local chef?</h3><br><br>
-                  <a href="#" class="btn33">Join Here</a>
+                  <h3>{{ Settings::get('general_setting_local_chef_text') }}</h3><br><br>
+                  <a href="#" class="btn33">{{ Settings::get('general_setting_local_chef_button_text') }}</a>
                </div></div>
             </div>
         </div>
@@ -293,11 +293,11 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <p class="text-black">POPULAR COUNTRIES</p>
+                <p class="text-black">{{ Settings::get('general_setting_popular_country_text') }}</p>
                 <div class="search-links">
                     <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a><a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a>
                 </div>
-                <p class="mt-4 text-black">POPULAR FOOD</p>
+                <p class="mt-4 text-black">{{ Settings::get('general_setting_popular_food_text') }}</p>
                 <div class="search-links">
                     @if(!$data['cuisine']->isEmpty())
                     @foreach($data['cuisine'] as $val)
@@ -351,7 +351,7 @@
 <section class="pt-5 pb-5 bg-white">
 <div class="container">
     <div class="section-header-center text-center">
-                        <h3 class="text-light-black header-title">Join our online classes</h3>
+                        <h3 class="text-light-black header-title">{{ Settings::get('general_setting_join_online_class') }}</h3>
                     </div>
  <div class="instagram-slider swiper-container" id="slideshow_services2">
             <ul class="hm-list hm-instagram swiper-wrapper">

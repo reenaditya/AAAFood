@@ -49,6 +49,24 @@
 					</li>
 					@endif
 
+					@if(Auth::check() && Auth::user()->role===2)
+					<li class="sidebar-item {{Request::routeIs('admin.restaurant_request.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.restaurant_request.*')?'':'collapsed'}}" href="{{ route('admin.restaurant_request.index') }}">
+              			<i class="align-middle" data-feather="bell"></i> <span class="align-middle">Restaurant Request</span>
+              	
+            			</a>
+					</li>
+					@endif
+
+					@if(Auth::check() && Auth::user()->role===2)
+					<li class="sidebar-item {{Request::routeIs('admin.setting.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.setting.*')?'':'collapsed'}}" href="{{ route('admin.setting.index') }}">
+              			<i class="align-middle" data-feather="settings"></i> <span class="align-middle">Setting</span>
+              	
+            			</a>
+					</li>
+					@endif
+
 					@if(Auth::check() && Auth::user()->role===1)
 					<li class="sidebar-item {{Request::routeIs('admin.menu_group.*') || Request::routeIs('admin.menu_item.*') || Request::routeIs('admin.menu_quantity_group.*') || Request::routeIs('admin.menu_item_price_quantity.*') ?'active':''}}">
 						<a data-bs-target="#menu" data-bs-toggle="collapse" class="sidebar-link collapsed">
