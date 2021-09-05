@@ -20,10 +20,25 @@
                          <a href="{{route('webiste.restaurant.list.categ')}}?category=pickup" class="btn24">Pick-up</a>
 
                         <div class="section-header-center text-center mt-5">
-                               <form>
-                                <input type="text" class="search11 form-control" name="search" placeholder="Search Restaurant">
+                            <form method="POST" action="{{url('home/search')}}">
+                                @csrf
+                                <input type="text" class="search11 form-control" name="search" placeholder="Search Restaurant" autocomplete="off">
+                                
+                                <input type="hidden" name="type">
+                                
+                                <input type="hidden" name="slug">
+
                                 <input type="submit" class="submit11 form-control" value="Search">
-                               </form>
+                                
+                                <ul class="list-group text-left suggest d-none">
+                                  <li class="list-group-item">Cras justo odio</li>
+                                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                                  <li class="list-group-item">Morbi leo risus</li>
+                                  <li class="list-group-item">Porta ac consectetur ac</li>
+                                  <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+
+                            </form>
                         </div>
                         <h2 class="text-light-black fw-700 mt-3 slg">{{ Settings::get('general_setting_header_title2') }}</h2>
                         <!-- <div class="input-group row">
@@ -400,6 +415,29 @@
 </div>
 </section>
 @endsection
+@push('style')
+    <style type="text/css">
+        .suggest{position: absolute;width: 62%;left: 56px;margin-top: -21px;border-radius: 0px 6px;z-index: 99999999999;opacity: 1;height: `;height: 141px;max-height: 150px;overflow-x: auto;}
+        .suggest li{padding: 6px !important;cursor: pointer !important;}
+        .suggest li:hover{background-color: #ec2229 !important;color: #fff;}
+
+        ul.suggest::-webkit-scrollbar-track
+        {
+          border-radius: 0px;
+          background-color: #cecece;
+        }
+        ul.suggest::-webkit-scrollbar
+        {
+          width: 6px;
+        }
+        ul.suggest::-webkit-scrollbar-thumb
+        {
+          border-radius: 0px;
+          background-color: #ec2229;
+        }
+
+    </style>
+@endpush
 @push('script')
     <script type="text/javascript" src="{{asset('js/front/home_page.js')}}"></script>
 @endpush

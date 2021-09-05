@@ -29,4 +29,32 @@ class Restaurant extends Model
         return $this->hasMany(Wishlist::class,'product_id');
     }
 
+    public function getMultipleMenuItem()
+    {
+        return $this->hasMany(MenuItem::class,'restaurant_id','id');
+    }
+
+    /*
+    * Search restaurant data > Using for home search page
+    */
+    public function scopeRsearch($query,$value='')
+    {
+        if ($value) {
+            $query->where('name','LIKE','%'.$value.'%');
+        }
+    }
+
+    /*
+    * get Restoutrant according to item
+    */
+    public function scopeValidateItem($query, $value='')
+    {
+        if ($value) {
+            $query->whereHas('getMultipleMenuItem',function ($query) use($value)
+            {
+                $query->where('name','LIKE','%'.$value.'%');        
+            });
+        }
+    }
+
 }

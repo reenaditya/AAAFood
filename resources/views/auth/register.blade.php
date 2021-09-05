@@ -61,12 +61,12 @@
                       <div class="form-group text-center"> <span>or</span>
                       </div>
                       <div class="form-group">
-                        <button type="submit" class="btn-second btn-facebook full-width">
-                          <img src="assets/img/facebook-logo.svg" alt="btn logo">Continue with Facebook</button>
+                        <a href="{{url('auth/facebook')}}" class="btn-second btn-facebook full-width">
+                          <img src="assets/img/facebook-logo.svg" alt="btn logo">Continue with Facebook</a>
                       </div>
                       <div class="form-group">
-                        <button type="submit" class="btn-second btn-google full-width">
-                          <img src="assets/img/google-logo.png" alt="btn logo">Continue with Google</button>
+                        <a href="{{url('auth/google')}}" class="btn-second btn-google full-width">
+                          <img src="assets/img/google-logo.png" alt="btn logo">Continue with Google</a>
                       </div>
                       <div class="form-group text-center">
                         <p class="text-light-black mb-0">Have an account? <a href="{{ route('login') }}">Sign in</a>

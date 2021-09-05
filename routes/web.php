@@ -37,10 +37,11 @@ Route::get('auth/facebook', 'SocialLoginController@facebookRedirect');
 Route::get('auth/facebook/callback', 'SocialLoginController@loginWithFacebook');
 /*END*/
 
-
 Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');
+	Route::post('/search/suggetion/list','HomeController@searchRestro');
+	Route::post('/home/search','HomeController@homeSearch');
 	
 	Route::get('/menu/{slug}','MenuController@index')->name('menu.index');
 	Route::get('/restaurants','MenuController@listCategoryWise')->name('restaurant.list.categ');

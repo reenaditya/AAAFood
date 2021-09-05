@@ -9,5 +9,15 @@ class CuisineRestaurant extends Model
 {
     use HasFactory;
     protected $fillable = [];
+
+    public function cuisineId()
+    {
+        return $this->belongsTo(Cuisine::class,'cuisine_id');
+    }
+
+    public function restaurantId()
+    {
+        return $this->belongsTo(Restaurant::class,'restaurant_id');
+    }
     
 }

@@ -33,4 +33,11 @@ class MenuItem extends Model
         return $this->belongsToMany(MenuQuantityGroup::class,'menu_items_price_quantities','menu_item_id','menu_quantity_group_id')->withPivot('price');
     }
 
+    public function scopeIsearch($query,$value='')
+    {
+        if ($value) {
+            $query->where('name','LIKE','%'.$value.'%');
+        }
+    }
+
 }
