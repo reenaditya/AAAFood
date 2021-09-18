@@ -4,7 +4,7 @@
     <div class="container-fluid no-padding">
       <div class="row no-gutters overflow-auto">
         <div class="col-md-6">
-          <div class="main-banner" style="height: 100vh;">
+          <div class="main-banner" style="height: 140vh;">
             <img src="assets/img/banner/banner-1.jpg" class="img-fluid full-width main-img" alt="banner">
             
             <img src="assets/img/banner/burger.png" class="footer-img" alt="footer-img">
@@ -35,6 +35,28 @@
                         	<span class="text-danger">{{$message}} </span>
                         @enderror
                       </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <label class="text-light-white fs-14">VIP Member? </label>
+                          <div class="form-group d-flex">
+                            <label class="custom-checkbox mb-0 mr-3">
+                              <input type="radio" name="vip" value="1"> 
+                              <span class="checkmark"></span> Yes
+                            </label>
+                            <label class="custom-checkbox mb-0">
+                              <input type="radio" name="vip" value="0" > 
+                              <span class="checkmark"></span> No
+                            </label>
+                          </div>    
+                        </div>
+                        <div class="col-6">
+                          <label class="text-light-white fs-14">Coupon code </label>
+                          <div class="form-group">
+                            <input type="text" name="coupen" value="{{old('coupen')}} " class="form-control form-control-submit" placeholder="coupon code" >
+                          </div>
+                        </div>
+                      </div>
+                      
                       <div class="form-group">
                         <label class="text-light-white fs-14">Password (8 character minimum)</label>
                         <input type="password" id="password-field" name="password" class="form-control form-control-submit" value="password" placeholder="Password" required>

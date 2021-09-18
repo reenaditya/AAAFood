@@ -43,5 +43,8 @@ return [
         'client_secret' => 'e6d32fc6e13f6c9a94a7afac5ac0dbd4',
         'redirect' => 'https://webb4biz.space/AAAFood/public/auth/facebook/callback',
     ],
+    'stripe' => [
+     'secret' => env('STRIPE_SECRET'),
+    ],
 
 ];

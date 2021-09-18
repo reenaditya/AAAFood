@@ -85,7 +85,10 @@ function itemAddToCart() {
 	var subTotal = 0.00;
 	var suggest = '';
 	var prod = JSON.parse(localStorage.getItem('products'));
+	proceedToCheckoutLink(false);
 	if (prod && prod.length >=1) {
+		$("span.user-alert-cart").text(prod.length);
+		proceedToCheckoutLink(true);
         $.each(prod,function(key , val){
           	suggest+= '<div class="cat-product"><div class="delete-btn mt-1" data-id="'+val.id+'"><a href="javascript:void(0)" class="text-dark-white"> <i class="fa fa-times-circle"></i></a></div><div class="cat-name ml-2 wdt13"><a href="javascript:void(0)"><p class="text-light-green fw-700 tlt">'+val.name+'</p></a></div><div class="pull-none">'+val.qunt+'('+val.count+')</div><div class="price">$'+val.price+'</div></div>';
         	var setData = $("input.item-id"+val.id).parent();
@@ -95,16 +98,79 @@ function itemAddToCart() {
         	subTotal = subTotal+val.price;
         });
 	}
-    $(".sub-total").text(subTotal);
-    $(".total-amount").text(subTotal);
-    $("input.total-amt").val(subTotal);
+
+	calculateDeliveryFees(subTotal);
+
+	deliveryAvailability(subTotal);
+
+	calculateFeestaxes(subTotal)
+
+    getTotalAmount(subTotal);
+    
     $(".cat-product-box").html(suggest);
+
 	addCartItemToDB()
+}
+
+function calculateDeliveryFees(subTotal) {
+	
+	if (parseFloat(subTotal) > parseFloat(free_delivery_amount)) {
+		localStorage.setItem('delivery_fee',0);
+		$("span.delivery-fees").text('0.00');
+	}else{
+		localStorage.setItem('delivery_fee',delivery_fee);
+		$("span.delivery-fees").text(delivery_fee);
+	}	
+}
+
+function calculateFeestaxes(subTotal) {
+	if (sale_tax) {
+		subTotal = parseFloat(subTotal);
+		tax = parseFloat(sale_tax);
+		tax = subTotal/100*tax;
+		tax = tax.toFixed(2);
+		localStorage.setItem('tax_amount',tax);
+		$("span.tax-amount").text(tax);
+	}else{
+		localStorage.setItem('tax_amount',0);
+		$("span.tax-amount").text('0.00');
+	}	
+}
+
+
+function deliveryAvailability(subTotal) {
+	if (subTotal >= minimum_delivery_amount) {
+		proceedToCheckoutLink(true);
+		$('div.show-erroe').text('');
+	}else{
+		proceedToCheckoutLink(false);
+		$('div.show-erroe').text('Minimum delivery amount should be $'+minimum_delivery_amount)
+	}
+	
+}
+
+function getTotalAmount(subTotal) {
+	
+	$(".sub-total").text(subTotal);
+
+	var delivery_fee = localStorage.getItem('delivery_fee');
+	
+	var tax_amount = localStorage.getItem('tax_amount');
+	
+	var total = Math.round((parseFloat(tax_amount)+parseFloat(delivery_fee)+parseFloat(subTotal)).toFixed(2));
+    
+    $("input.total-amt").val(total);
+	$(".total-amount").text(total);
+	if (parseFloat(subTotal) < total) {
+		deliveryAvailability(total);
+	}
+	localStorage.setItem('total_amt',total);
 }
 
 $(document).on('click','.empty-cart',function () {
 	emptyCart();
 	refreshCart();
+	proceedToCheckoutLink(false);
 });
 
 $(document).on('click','.delete-btn',function () {
@@ -158,5 +224,15 @@ function addCartItemToDB() {
 	        
 	    }
   	});
+	}
+}
+
+function proceedToCheckoutLink(argument) {
+	if (argument) {
+		var url = base_url+'/menu/'+restro_slug+'/checkout';
+		$('.checkout-btn').attr("href",url);
+	}else{
+		var url = 'javascript:void(0)';
+		$('.checkout-btn').attr("href",url);
 	}
 }

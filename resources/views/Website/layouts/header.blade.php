@@ -22,6 +22,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('webiste.bussiness.account')}}">Create a business account</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('webiste.delivery.account')}}">Create a Delivery account</a>
+                            </li>
+                            @if(Auth::check() && Auth::user()->role ===4)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('webiste.order.history')}}">Your Orders</a>
+                            </li>
+                            @endif
                         </ul>
                         @guest
                         <div class="my-2 my-lg-0">

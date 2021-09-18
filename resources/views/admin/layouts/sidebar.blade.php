@@ -67,7 +67,33 @@
 					</li>
 					@endif
 
+					@if(Auth::check() && Auth::user()->role==1 || Auth::user()->role==3)
+					
+					<li class="sidebar-item {{Request::routeIs('admin.order.*')?'active':''}}">
+						<a data-bs-target="#orders" data-bs-toggle="collapse" class="sidebar-link collapsed">
+              <i class="align-middle" data-feather="archive"></i> <span class="align-middle">Manage Orders</span>
+            </a>
+						<ul id="orders" class="sidebar-dropdown list-unstyled collapse {{Request::routeIs('admin.order.*') ? 'show':''}}" data-bs-parent="#sidebar">
+							
+							<li class="sidebar-item {{Request::routeIs('admin.order.new')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.new')}}">Pending orders</a></li>
+							
+							@if(Auth::check() && Auth::user()->role==1)		
+							<li class="sidebar-item {{Request::routeIs('admin.order.index')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.index')}}">All orders</a></li>
+							@endif
+
+							<li class="sidebar-item {{Request::routeIs('admin.order.completed')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.completed')}}">Completed orders</a></li>
+
+							@if(Auth::check() && Auth::user()->role==3)		
+							<li class="sidebar-item {{Request::routeIs('admin.order.db.history')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.db.history')}}">Orders history</a></li>
+							@endif
+
+						</ul>
+					</li>
+
+					@endif
+
 					@if(Auth::check() && Auth::user()->role===1)
+
 					<li class="sidebar-item {{Request::routeIs('admin.menu_group.*') || Request::routeIs('admin.menu_item.*') || Request::routeIs('admin.menu_quantity_group.*') || Request::routeIs('admin.menu_item_price_quantity.*') ?'active':''}}">
 						<a data-bs-target="#menu" data-bs-toggle="collapse" class="sidebar-link collapsed">
               <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Menu</span>

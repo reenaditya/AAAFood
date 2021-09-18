@@ -94,6 +94,14 @@ class HomeController extends Controller
             return redirect($url);
         }
     }
+
+    /*
+    * view delivery boy account
+    */
+    public function deliveryAcc()
+    {
+        return view('auth.delivery_account');
+    }
 }
 
 

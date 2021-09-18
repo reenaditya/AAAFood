@@ -136,8 +136,8 @@
 									@enderror
 								</div>
 								<div class="mb-4 col-md-6">
-									<label class="form-label">Sale Tax</label>
-									<input type="text" name="sale_tax" class="form-control" placeholder="The sales tax to charge for each order" value="{{ old('sale_tax',$restaurant->sale_tax) }}">
+									<label class="form-label">Sale Tax(%)</label>
+									<input type="number" name="sale_tax" class="form-control" placeholder="The sales tax to charge for each order eg: 5" value="{{ old('sale_tax',$restaurant->sale_tax) }}">
 									@error('sale_tax')
 										<span class="text-danger">{{$message}} </span>
 									@enderror

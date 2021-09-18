@@ -100,4 +100,27 @@ return[
         4 => "9 to 8",
         5 => "9 to 9",
     ],
+    'order_status' =>[
+        1 => 'Pending',
+        2 => 'Prepare',
+        3 => 'Packed',
+        4 => 'On the way',
+        5 => 'Delivered',
+        6 => 'Canceled',
+        7 => 'Completed',
+        8 => 'Refunded',
+    ],
+    'del_order_status' =>[
+        7 => 'Completed',
+    ],
+    'pay_mode' =>[
+        1 => 'Cash',
+        2 => 'Card',
+    ], 
+    'transaction_status' =>[
+        1 => 'Pending',
+        2 => 'Completed',
+        3 => 'Failed',
+        4 => 'Refunded',
+    ],
 ];

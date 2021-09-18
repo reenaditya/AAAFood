@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('google_id')->nullable();
             $table->string('fb_id')->nullable();
+            $table->tinyInteger('vip')->default(0)->comment('1=Yes,0=No')->nullable();
+            $table->string('coupen',50)->nullable();
             $table->integer('role')->default(4)->comment("1=Vendor,2=Admin,3=Delivery,4=Customer");
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

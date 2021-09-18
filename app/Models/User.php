@@ -29,6 +29,10 @@ class User extends Authenticatable
         'password',
         'google_id',
         'fb_id',
+        'vip',
+        'coupen',
+        'role',
+        'status',
     ];
 
     /**
@@ -60,4 +64,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function deliveryBoyLocation()
+    {
+        return $this->hasOne(DeliveryBoyLocation::class,'user_id');
+    }
+
 }

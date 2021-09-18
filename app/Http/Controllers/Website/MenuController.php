@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Models\MenuGroup;
 use App\Models\Cuisine;
+use App\Models\Order;
 use App\Models\Cart;
+use Auth;
+use Cache;
 
 class MenuController extends Controller
 {
@@ -113,5 +116,30 @@ class MenuController extends Controller
 
         $data = $data->latest()->get();
         return view('Website.restaurant.restaurant',compact('data'));        
+    }
+
+    /*
+    * 
+    */
+    public function checkout(Request $request)
+    {
+        if (!Auth::check()) {
+            $url = url('menu/'.$request->slug.'/checkout');
+            Cache::put('checkout_url', $url);
+        }
+        $restaurant = Restaurant::where('slug',$request->slug)->first();
+        return view('Website.menu.checkout',compact('restaurant'));
+    }
+
+    /*
+    * order history 
+    */
+    public function orderHistory()
+    {
+        if (Auth::check() && Auth::user()->role==4) {
+            $data = Order::where('user_id',Auth::id())->get();
+            return view('Website.menu.order_history',compact('data'));
+        }
+            return redirect()->back();
     }
 }
