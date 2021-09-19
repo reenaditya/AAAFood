@@ -16,13 +16,13 @@
 
 		<div class="navbar-collapse collapse">
 			<ul class="navbar-nav navbar-align">
-				@if(Auth::check() && Auth::user()->role==3 && Auth::user()->deliveryBoyLocation->status==1)
+				@if(Auth::check() && Auth::user()->role==3 && Auth::user()->deliveryBoyLocation && Auth::user()->deliveryBoyLocation->status==1)
 				<li class="nav-item dropdown" style="margin-right: 20px;">
 					<button class="btn btn-success change-delivery-boy-status" data-userid="{{Auth::id()}}" type="button">
 						Active
 					</button>
 				</li>
-				@elseif(Auth::check() && Auth::user()->role==3 && Auth::user()->deliveryBoyLocation->status==0)
+				@elseif(Auth::check() && Auth::user()->role==3 && Auth::user()->deliveryBoyLocation && Auth::user()->deliveryBoyLocation->status==0)
 					<li class="nav-item dropdown" style="margin-right: 20px;">
 						<button class="btn btn-danger change-delivery-boy-status" data-userid="{{Auth::id()}}" type="button">
 							Not Active

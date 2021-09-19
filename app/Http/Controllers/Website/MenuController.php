@@ -137,7 +137,7 @@ class MenuController extends Controller
     public function orderHistory()
     {
         if (Auth::check() && Auth::user()->role==4) {
-            $data = Order::where('user_id',Auth::id())->get();
+            $data = Order::where('user_id',Auth::id())->latest()->get();
             return view('Website.menu.order_history',compact('data'));
         }
             return redirect()->back();
