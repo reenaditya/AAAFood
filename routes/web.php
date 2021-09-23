@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 /*===  RUN COMMAND ======*/
 Route::get('/clear', function() {
    Artisan::call('cache:clear');
@@ -27,6 +28,7 @@ Route::get('/migrate', function() {
    /*Artisan::call('migrate:refresh --path=/database/migrations/2021_08_16_162921_create_activities_table.php');*/
    return "Migrated!";
 });
+
 
 
 /*SOCIAL MEDIA LOGIN */
@@ -62,9 +64,11 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 	Route::get('/delivery-account','HomeController@deliveryAcc')->name('delivery.account');
 
 	Route::get('/about','HomeController@aboutus')->name('aboutus');
-	
 	Route::post('/website/add-wish-list','WishlistController@addToWishList');
-
+	
+	/*Create Restaurant link*/
+	Route::get('/bussiness-account/restaurant/add','RestaurantController@index');
+	Route::post('/bussiness-account/restaurant/add','RestaurantController@store');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -111,6 +115,7 @@ Route::group([
 	Route::post('order/status','OrderController@orderStatus');
 	Route::get('order-new','OrderController@newOrder')->name('order.new');
 	Route::get('order-completed','OrderController@completedOrder')->name('order.completed');
+	Route::get('order-details/{id}','OrderController@detailsOrder')->name('order.details');
 	Route::get('delivery-boy-order-history','OrderController@deliveryBoyOrderHistory')->name('order.db.history');
 
 	Route::post('user/change-delivery-boy-status','OrderController@deliveryBoyStatus');

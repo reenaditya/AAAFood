@@ -57,4 +57,12 @@ class Restaurant extends Model
         }
     }
 
+
+    public function scopeFilterData($query)
+    {
+        if (Auth::check() && Auth::user()->role==1) {
+            $query->where('user_id',Auth::id());
+        }
+    }
+
 }

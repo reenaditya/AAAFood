@@ -17,6 +17,8 @@ class RestaurantController extends Controller
 	public function __construct(Restaurant $restaurant)
 	{
 		$this->restaurant = $restaurant;
+        $this->authorizeResource(Restaurant::class);
+
 	}
     
     /**
@@ -26,7 +28,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-    	$restaurants = $this->restaurant->latest()->get();
+    	$restaurants = $this->restaurant->filterData()->latest()->get();
 
         return view("admin.restaurant.index",compact('restaurants'));
     }

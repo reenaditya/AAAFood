@@ -27,10 +27,11 @@
 							<thead>
 								<tr>
 									<th width="2%">S.No</th>
-									<th>Order item</th>
+									<th>Order number</th>
 									<th>Amount</th>
 									<th>Payment Status</th>
 									<th>Order Status</th>
+									<th width="10%">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -39,13 +40,15 @@
 										<td>{{ ++$key }} </td>
 										
 										<td>
-											@if(!$value->orderItem->isEmpty())
+											{{ $value->order_number ?? '' }}
+											
+											{{-- @if(!$value->orderItem->isEmpty())
 											@foreach($value->orderItem as $kii=>$val)
 												{{++$kii}}. {{ $val->menuItem->name ?? '' }}
 												<br><strong>Unit: {{$val->unit ?? ''}}&nbsp;&nbsp;
 												Quantity: {{$val->quantity ?? ''}}</strong><br>
 											@endforeach
-											@endif
+											@endif --}}
 										</td>
 										<td>${{ $value->grand_total ?? '' }} </td>
 										<td>
@@ -62,6 +65,9 @@
 													<option value="{{$kii}}" @if($value->order_status==$kii) selected="" @endif>{{$val}}</option>
 												@endforeach
 											</select>
+										</td>
+										<td>
+											<a href="{{url('admin/order-details/'.$value->id)}}" class="btn btn-info">Details</a>
 										</td>
 									</tr>
 								@endforeach

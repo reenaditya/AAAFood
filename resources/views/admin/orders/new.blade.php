@@ -33,7 +33,7 @@
 							<thead>
 								<tr>
 									<th width="2%">S.No</th>
-									<th>Order item</th>
+									<th>Order number</th>
 									@if(Auth::check() && Auth::user()->role===3)
 									<th>Restaurant name</th>
 									<th>Delivery address</th>
@@ -43,9 +43,7 @@
 									<th>Payment Status</th>
 									@endif
 									<th>Order Status</th>
-									@if(Auth::check() && Auth::user()->role===3)
 									<th width="10%">Action</th>
-									@endif
 								</tr>
 							</thead>
 							<tbody>
@@ -54,13 +52,15 @@
 										<td>{{ ++$key }} </td>
 										
 										<td>
-											@if(!$value->orderItem->isEmpty())
+											{{ $value->order_number ?? '' }}
+											
+											{{-- @if(!$value->orderItem->isEmpty())
 											@foreach($value->orderItem as $kii=>$val)
 												{{++$kii}}. {{ $val->menuItem->name ?? '' }}
 												<br><strong>Unit: {{$val->unit ?? ''}}&nbsp;&nbsp;
 												Quantity: {{$val->quantity ?? ''}}</strong><br>
 											@endforeach
-											@endif
+											@endif --}}
 										</td>
 										@if(Auth::check() && Auth::user()->role===3)
 										<td>{{ $value->restaurant->name ?? '' }}</td>
@@ -100,6 +100,11 @@
 											@endif
 										</td>
 										@endif
+										
+										<td>
+											<a href="{{url('admin/order-details/'.$value->order->id)}}" class="btn btn-info">Details</a>
+											
+										</td>
 									</tr>
 								@endforeach
 								

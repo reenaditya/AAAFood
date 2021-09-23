@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Notifications\OrderStatusNotification;
 use App\Models\DeliveryBoyLocation;
 use App\Models\DeliveryBoyHistory;
+use App\Models\User;
 use App\Models\Order;
 use DB;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -123,24 +126,67 @@ class OrderController extends Controller
 
         if(empty($cid) || empty($status)){
             $response['status'] = false;
-        }else{
+        }
+        else
+        {
+            
             $data = Order::where('id',$cid)->first();
             $data->order_status = $status;
-            if ($status==7) {
+            
+            if ($status==7) 
+            {
                 $dbl = DeliveryBoyLocation::where('user_id',$data->delivery_user_id)->first();
                 $dbl->is_busy = 0;
                 $dbl->total_delivery = $dbl->total_delivery+1;
                 $dbl->update();
                 $data->payment_status = 2;
             }
+            
             if ($data->update()) {
+
+                $this->sendNotification($data);
+
                 $response['status'] = true;
                 $response['message'] = "Status Successfully changed";
-            }else{
+
+            }
+            else
+            {
                 $response['status'] = false;
             }
         }
         return response()->json($response);
+    }
+
+    private function sendNotification($data,$deliver=false)
+    {
+        if ($deliver) {
+            $firstLine = 'Your order is accepted by deliver boy, will reach soon';
+            User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine));
+        }
+        else{
+
+            if ($data->order_status==2) 
+            {
+                $firstLine = 'Your order is accepted by restaurant and prepare';
+                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine));
+            }
+            if ($data->order_status==4) 
+            {
+                $firstLine = 'Your order is on the way our delivery partner will reach you soon.';
+                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine));
+            }
+            if ($data->order_status==7) 
+            {
+                $nowTimeDate = Carbon::now();
+                $delay = Carbon::now()->addMinutes(1);
+                $firstLine = 'Your order is completed thank you.';
+                User::where('id',$data->user_id)->first()->notify((new OrderStatusNotification($firstLine))->delay($delay));
+                User::where('id',$data->vendor_id)->first()->notify((new OrderStatusNotification($firstLine))->delay($delay));
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -230,6 +276,8 @@ class OrderController extends Controller
                 }
             }
             if ($update) {
+                $deliver = true;
+                $this->sendNotification($data,$deliver);           
                 DB::commit();
                 $response['status'] = true;
                 $response['message'] = "Status Successfully changed";
@@ -241,4 +289,10 @@ class OrderController extends Controller
         return response()->json($response);
     }
 
+
+    public function detailsOrder(Order $id)
+    {
+        $data = $id;
+        return view('admin.orders.details',compact('data'));
+    }
 }

@@ -16,6 +16,24 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class,'order_id')->with('menuItem');
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(user::class,'user_id');
+    }
+
+
+    public function vendor()
+    {
+        return $this->belongsTo(user::class,'vendor_id');
+    }
+
+
+    public function deliveryUser()
+    {
+        return $this->belongsTo(user::class,'delivery_user_id');
+    }
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class,'restaurant_id');

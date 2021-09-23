@@ -33,7 +33,7 @@
 										<td>{{ $value->restaurant_name ?? '' }}</td>
 										<td>{{ $value->food_type ?? '' }}</td>
 										<td><button class="btn btn-{{$value->status?'success':'danger'}} ">
-											{{$value->status? 'Active':'Inactive'}}
+											{{$value->status? 'Approved':'Not Approved'}}
 										</button> </td>
 										<td>
 											<a href="{{ route('admin.restaurant_request.edit',$value->id) }}" class="btn btn-primary">Edit</a>

@@ -1,11 +1,5 @@
 @extends('Website.layouts.app')
 @section('content')
-	@if (Session::has('success'))
-        <div class="alert alert-success text-center">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-            <p>{{ Session::get('success') }}</p>
-        </div>
-    @endif
 
 
  <!-- Navigation -->
@@ -51,6 +45,12 @@
             <div class="row">
                <div class="col-xl-1 col-lg-1"></div>
                 <div class="col-xl-10 col-lg-10">
+                	@if (Session::has('success'))
+                        <div class="alert alert-success text-center">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <p>{{ Session::get('success') }}</p>
+                        </div>
+                    @endif
                     @forelse($data as $key=>$value)
                     <div class="row">
                         <div class="col-lg-12 mt-4 restaurent-det">

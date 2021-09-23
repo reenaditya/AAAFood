@@ -26,6 +26,7 @@
                 <p>{{ Session::get('error') }}</p>
             </div>
         @endif
+
          <form
             role="form"
             action="{{route('stripe.post')}}"

@@ -40,7 +40,7 @@
 					</li>
 					@endif
 					
-					@if(Auth::check() && Auth::user()->role===2)
+					@if(Auth::check() && Auth::user()->role===2 || Auth::user()->role===1)
 					<li class="sidebar-item {{Request::routeIs('admin.restaurant.*')?'active':''}}">
 						<a data-bs-target="#restaurant" class="sidebar-link {{Request::routeIs('admin.restaurant.*')?'':'collapsed'}}" href="{{ route('admin.restaurant.index') }}">
               			<i class="align-middle" data-feather="archive"></i> <span class="align-middle">Restaurant</span>

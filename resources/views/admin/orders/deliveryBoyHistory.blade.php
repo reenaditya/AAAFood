@@ -32,6 +32,7 @@
 									<th>Amount</th>
 									<th>Order Status</th>
 									<th>Date</th>
+									<th width="10%">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -56,6 +57,9 @@
 										</td>
 										<td>
 											{{ date("D d-M-Y",strtotime($value->created_at)) }}
+										</td>
+										<td>
+											<a href="{{url('admin/order-details/'.$value->order->id)}}" class="btn btn-info">Details</a>
 										</td>
 									</tr>
 								@endforeach

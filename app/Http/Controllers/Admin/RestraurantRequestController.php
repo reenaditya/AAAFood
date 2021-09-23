@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RestraurantRequest;
+use App\Notifications\BusinessAccountApproved;
 use DB;
+
 class RestraurantRequestController extends Controller
 {
     
@@ -104,8 +106,12 @@ class RestraurantRequestController extends Controller
         try {
             $this->data = $this->data->where('id',$id)->first();
 
-            $this->props($request)
-            ->save();   
+            if($this->props($request)
+            ->save()){
+                if ($request->status) {
+                    $this->data->notify(new BusinessAccountApproved());
+                }
+            }   
             
             DB::commit();
             

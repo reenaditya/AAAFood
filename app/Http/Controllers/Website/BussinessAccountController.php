@@ -76,6 +76,7 @@ class BussinessAccountController extends Controller
         $this->data->food_type = $request->food_type;
         $this->data->restaurant_address = $request->restaurant_address;
         $this->data->comments= $request->comments;
+        $this->data->status= false;
         return $this;
     }
     private function save()
