@@ -61,7 +61,7 @@
                    
                 </div>
              </div> 
-             <div class="col-md-4"><a href="javascript:void(0)" class="btn33 mt-4"><i class="fa fa-users"></i> Start a group order</a></div> 
+             <div class="col-md-4">{{-- <a href="javascript:void(0)" class="btn33 mt-4"><i class="fa fa-users"></i> Start a group order</a> --}}</div> 
             </div>
         </div>
     </div>
@@ -219,12 +219,12 @@
                         <div class="card">
                             <div class="card-header padding-15 fw-700">
                             <h3 class="pull-left mb-0">Order Cart</h3>
-                            <a href="javascript:void(0)" class="pull-right wdt11"><i class="fa fa-users"></i>Create Group Order</a> 
+                            {{-- <a href="javascript:void(0)" class="pull-right wdt11"><i class="fa fa-users"></i>Create Group Order</a>  --}}
                            
                            <div class="delivery-info">
                              <div class="info-group">
                                <span class="pull-left tlt">{{ $restaurant->name ?? '' }}</span>
-                               <span class="pull-right">(what's this?)</span>
+                               {{-- <span class="pull-right">(what's this?)</span> --}}
                              </div>
 
                              <div class="info-group">

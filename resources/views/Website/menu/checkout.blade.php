@@ -52,7 +52,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Name <span class="required">*</span></label>
-                                    <input type="text" name="name" class="form-control" value="{{Auth::user()->name ?? ''}}">
+                                    <input type="text" name="name" class="form-control" value="{{ old('name',Auth::user()->name) ?? ''}}">
                                 </div>
                                 @error('name')
                                     <span class="text-danger">{{$message}} </span>
@@ -61,7 +61,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Email Address <span class="required">*</span></label>
-                                    <input type="email" class="form-control" name="email"  value="{{Auth::user()->email ?? ''}}">
+                                    <input type="email" class="form-control" name="email"  value="{{ old('email',Auth::user()->email) ?? ''}}">
                                     @error('email')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
@@ -70,7 +70,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Phone <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="phone">
+                                    <input type="text" class="form-control" name="phone" value="{{old('phone')}}">
                                     @error('phone')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
@@ -80,7 +80,7 @@
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <label>Address <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="address">
+                                    <input type="text" class="form-control" name="address" value="{{old('address')}}">
                                     @error('address')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
@@ -91,7 +91,7 @@
                                 <div class="form-group">
                                     <label>Country <span class="required">*</span></label>
                                     <select class="form-control" name="country">
-                                        <option value="{{$restaurant->country ?? ''}}">{{$restaurant->country ?? ''}}</option>
+                                        <option value="{{$restaurant->country ?? ''}}" #@if(old('country')==$restaurant->country) selected="" @endif>{{$restaurant->country ?? ''}}</option>
                                     </select>
                                     @error('country')
                                         <span class="text-danger">{{$message}} </span>
@@ -101,7 +101,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>City <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="city" value="{{ $restaurant->city ?? '' }}">
+                                    <input type="text" class="form-control" name="city" value="{{ old('city',$restaurant->city) ?? '' }}">
                                     @error('city')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
@@ -110,7 +110,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>State<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="state" value="{{ $restaurant->state ?? '' }}">
+                                    <input type="text" class="form-control" name="state" value="{{ old('state',$restaurant->state) ?? '' }}">
                                     @error('state')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
@@ -119,7 +119,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Postcode / Zip <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="postalcode">
+                                    <input type="text" class="form-control" name="postalcode" value="{{old('postalcode')}}">
                                     @error('postalcode')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
@@ -127,7 +127,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-control"></textarea>
+                                    <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-control">{{old('notes')}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -194,8 +194,8 @@
                                        </div>
                                     </div>
                                     <div class='form-row row'>
-                                       <div class='col-md-12 error form-group d-none'>
-                                          <div class='alert-danger alert'>
+                                       <div class='col-md-12 carderror form-group d-none'>
+                                          <div class='alert-danger alert card-alert'>
                                           </div>
                                        </div>
                                     </div>    
@@ -233,7 +233,7 @@
                         'textarea'
                     ].join(', '),
                     $inputs = $form.find('.required').find(inputSelector),
-                    $errorMessage = $form.find('div.error'),
+                    $errorMessage = $form.find('div.carderror'),
                     valid = true;
                 $errorMessage.addClass('d-none');
                 $('.has-error').removeClass('has-error');
@@ -259,9 +259,9 @@
         });
         function stripeResponseHandler(status, response) {
             if (response.error) {
-                $('.error')
+                $('.carderror')
                     .removeClass('d-none')
-                    .find('.alert')
+                    .find('.card-alert')
                     .text(response.error.message);
             } else {
                 /* token contains id, last4, and card type */

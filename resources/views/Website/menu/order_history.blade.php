@@ -29,7 +29,7 @@
                             </div>
                         </div> 
                         <div class="col-md-4">
-                            <a href="#" class="btn33 mt-4"><i class="fa fa-users"></i> Start a group order</a>
+                            {{-- <a href="#" class="btn33 mt-4"><i class="fa fa-users"></i> Start a group order</a> --}}
                         </div> 
                     </div>
                 </div>

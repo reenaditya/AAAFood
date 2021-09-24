@@ -10,23 +10,23 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                            <!-- <li class="nav-item active">
-                                <a class="nav-link" href="#">Home</a>
-                            </li> -->
-                            <li class="nav-item">
+                            <li class="nav-item @if(request()->is('/')) active @endif">
+                                <a class="nav-link" href="{{url('/')}}">Home</a>
+                            </li>
+                            <li class="nav-item @if(request()->routeIs('webiste.aboutus')) active @endif">
                                 <a class="nav-link" href="{{route('webiste.aboutus')}}">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Buy the AAAdining Club Card</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @if(request()->routeIs('webiste.bussiness.account')) active @endif">
                                 <a class="nav-link" href="{{route('webiste.bussiness.account')}}">Create a business account</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @if(request()->routeIs('webiste.delivery.account')) active @endif">
                                 <a class="nav-link" href="{{route('webiste.delivery.account')}}">Create a Delivery account</a>
                             </li>
                             @if(Auth::check() && Auth::user()->role ===4)
-                            <li class="nav-item">
+                            <li class="nav-item @if(request()->routeIs('webiste.order.history')) active @endif">
                                 <a class="nav-link" href="{{route('webiste.order.history')}}">Your Orders</a>
                             </li>
                             @endif

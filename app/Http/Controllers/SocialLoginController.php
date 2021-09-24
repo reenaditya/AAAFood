@@ -7,6 +7,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Exception;
+use Cache;
 
 class SocialLoginController extends Controller
 {
@@ -19,13 +20,19 @@ class SocialLoginController extends Controller
     public function loginWithFacebook()
     {
         try {
-    
+            
+            $url = '/';
+            if(Cache::has('checkout_url')){
+                $url = Cache::get('checkout_url');
+            }
+
             $user = Socialite::driver('facebook')->user();
             $isUser = User::where('fb_id', $user->id)->first();
      
             if($isUser){
                 Auth::login($isUser);
-                return redirect('admin/dashboard');
+                Cache::forget('checkout_url');
+                return redirect($url);
             }else{
                 $createUser = User::create([
                     'name' => $user->name,
@@ -35,7 +42,8 @@ class SocialLoginController extends Controller
                 ]);
     
                 Auth::login($createUser);
-                return redirect('admin/dashboard');
+                Cache::forget('checkout_url');
+                return redirect($url);
             }
     
         } catch (Exception $exception) {
@@ -61,7 +69,12 @@ class SocialLoginController extends Controller
     public function handleGoogleCallback()
     {
         try {
-      
+            
+            $url = '/';
+            if(Cache::has('checkout_url')){
+                $url = Cache::get('checkout_url');
+            }
+                 
             $user = Socialite::driver('google')->user();
        
             $finduser = User::where('google_id', $user->id)->first();
@@ -69,8 +82,9 @@ class SocialLoginController extends Controller
             if($finduser){
        
                 Auth::login($finduser);
-      
-                return redirect('admin/dashboard');
+                Cache::forget('checkout_url');
+                
+                return redirect($url);
        
             }else{
                 $newUser = User::create([
@@ -81,8 +95,9 @@ class SocialLoginController extends Controller
                 ]);
       
                 Auth::login($newUser);
-      
-                return redirect('admin/dashboard');
+                Cache::forget('checkout_url');
+                
+                return redirect($url);
             }
       
         } catch (Exception $e) {

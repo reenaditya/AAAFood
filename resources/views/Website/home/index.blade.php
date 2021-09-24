@@ -308,10 +308,6 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <p class="text-black">{{ Settings::get('general_setting_popular_country_text') }}</p>
-                <div class="search-links">
-                    <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a><a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a> | <a href="#">Australia</a> | <a href="#">Brasil</a> | <a href="#">Canada</a> | <a href="#">Chile</a> | <a href="#">Czech Republic</a> | <a href="#">India</a> | <a href="#">Indonesia</a> | <a href="#">Ireland</a> | <a href="#">New Zealand</a> | <a href="#">United Kingdom</a> | <a href="#">Turkey</a> | <a href="#">Philippines</a> | <a href="#">Sri Lanka</a>
-                </div>
                 <p class="mt-4 text-black">{{ Settings::get('general_setting_popular_food_text') }}</p>
                 <div class="search-links">
                     @if(!$data['cuisine']->isEmpty())
@@ -363,7 +359,7 @@
         </div>
     </div>
 
-<section class="pt-5 pb-5 bg-white">
+{{-- <section class="pt-5 pb-5 bg-white">
 <div class="container">
     <div class="section-header-center text-center">
                         <h3 class="text-light-black header-title">{{ Settings::get('general_setting_join_online_class') }}</h3>
@@ -413,7 +409,7 @@
             </ul>
         </div>
 </div>
-</section>
+</section> --}}
 @endsection
 @push('style')
     <style type="text/css">

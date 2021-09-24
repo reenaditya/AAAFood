@@ -67,7 +67,7 @@
 					</li>
 					@endif
 
-					@if(Auth::check() && Auth::user()->role==1 || Auth::user()->role==3)
+					@if(Auth::check() && Auth::user()->role==1 || Auth::user()->role==3 || Auth::user()->role==2)
 					
 					<li class="sidebar-item {{Request::routeIs('admin.order.*')?'active':''}}">
 						<a data-bs-target="#orders" data-bs-toggle="collapse" class="sidebar-link collapsed">
