@@ -244,4 +244,55 @@ $(function() {
 		}
 	});
 
+
+	$("button.delivery-verify-email").on("click",function () {
+		var user_id = $(this).attr("data-userid");
+		
+		if (user_id) {
+			  	
+			  	$.ajax({
+			        url: base_url+'/admin/user/delivery-boy-verify-email',
+			        type: 'POST',
+			        dataType:'json',
+			        cache: false,             
+			        data: {'user_id':user_id},
+			        success: function(result)
+			        {
+			          	if (result.status) {
+			            	 Swal.fire({
+			            	 	title: 'Verify your Email!',
+							  	text: "Link send to your email address!",
+							  	icon: 'success',
+							}).then((result) => {
+			  					if (result.isConfirmed) {		
+			            			window.location.reload();
+			  					}
+			  				});
+			        	}
+			        	else{
+				            Swal.fire({
+			            	 	title: 'Sorry!',
+							  	text: "Something went wrong!",
+							  	icon: 'error',
+							}).then((result) => {
+			  					if (result.isConfirmed) {		
+			            			window.location.reload();
+			  					}
+			  				});
+			        	}
+
+			        },
+			        error: function(data)
+			        {
+			            Swal.fire({
+		            	 	title: 'Sorry!',
+						  	text: "Something went wrong!",
+						  	icon: 'error',
+						});
+			        }
+		    	});
+
+		}
+	});
+
 });

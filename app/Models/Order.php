@@ -63,12 +63,20 @@ class Order extends Model
         //role==3 will be delivery
         if (Auth::user()->role===3) 
         {
-            $deliveryBoy = Auth::user()->deliveryBoyLocation;
-            if ($deliveryBoy->is_busy) {
-                $query->whereIn('order_status',[2,3,4])->where('delivery_user_id',Auth::id());
-            }else{
-                $city = $deliveryBoy && $deliveryBoy->status==1 ? $deliveryBoy->city: 'no city found';
-                $query->whereIn('order_status',[2,3])->where('address','LIKE','%'.$city.'%')->whereNull('delivery_user_id');
+            if (Auth::user()->email_verified_at) 
+            {
+                    
+                $deliveryBoy = Auth::user()->deliveryBoyLocation;
+                if ($deliveryBoy->is_busy) {
+                    $query->whereIn('order_status',[2,3,4])->where('delivery_user_id',Auth::id());
+                }else{
+                    $city = $deliveryBoy && $deliveryBoy->status==1 ? $deliveryBoy->city: 'no city found';
+                    $query->whereIn('order_status',[2,3])->where('address','LIKE','%'.$city.'%')->whereNull('delivery_user_id');
+                }
+            }
+            else
+            {
+                $query->limit(0);
             }
         }
         elseif (Auth::user()->role===1) 

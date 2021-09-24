@@ -36,14 +36,13 @@
 									<th>Order number</th>
 									@if(Auth::check() && Auth::user()->role===3)
 									<th>Restaurant name</th>
-									<th>Delivery address</th>
 									@endif
 									<th>Amount</th>
 									@if(Auth::check() && Auth::user()->role===1)
 									<th>Payment Status</th>
 									@endif
 									<th>Order Status</th>
-									<th width="10%">Action</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -53,21 +52,9 @@
 										
 										<td>
 											{{ $value->order_number ?? '' }}
-											
-											{{-- @if(!$value->orderItem->isEmpty())
-											@foreach($value->orderItem as $kii=>$val)
-												{{++$kii}}. {{ $val->menuItem->name ?? '' }}
-												<br><strong>Unit: {{$val->unit ?? ''}}&nbsp;&nbsp;
-												Quantity: {{$val->quantity ?? ''}}</strong><br>
-											@endforeach
-											@endif --}}
 										</td>
 										@if(Auth::check() && Auth::user()->role===3)
 										<td>{{ $value->restaurant->name ?? '' }}</td>
-										<td>
-											{{ $value->address ?? '' }}<br>
-											<b>Phone:</b> {{ $value->mobile ?? '' }}
-										</td>
 										@endif
 										<td>${{ $value->grand_total ?? '' }} </td>
 										@if(Auth::check() && Auth::user()->role===1)
@@ -102,7 +89,7 @@
 										@endif
 										
 										<td>
-											<a href="{{url('admin/order-details/'.$value->order->id)}}" class="btn btn-info">Details</a>
+											<a href="{{url('admin/order-details/'.$value->id)}}" class="btn btn-info">Details</a>
 											
 										</td>
 									</tr>

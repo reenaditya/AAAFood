@@ -1,6 +1,13 @@
 @extends('Website.layouts.app')
 @section('content')
 @php
+    if (Auth::check()) {
+        $name = Auth::user()->name;
+        $email = Auth::user()->email;
+    }else{
+        $name = '';
+        $email ='';
+    }
 @endphp
 <!-- restaurent top -->
 <div class="page-banner p-relative smoothscroll" id="menu">
@@ -52,16 +59,17 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Name <span class="required">*</span></label>
-                                    <input type="text" name="name" class="form-control" value="{{ old('name',Auth::user()->name) ?? ''}}">
+                                    <input type="text" name="name" class="form-control" value="{{ old('name',$name) ?? ''}}">
                                 </div>
                                 @error('name')
                                     <span class="text-danger">{{$message}} </span>
                                 @enderror
                             </div>
+
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Email Address <span class="required">*</span></label>
-                                    <input type="email" class="form-control" name="email"  value="{{ old('email',Auth::user()->email) ?? ''}}">
+                                    <input type="email" class="form-control" name="email"  value="{{ old('email',$email) ?? ''}}">
                                     @error('email')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror

@@ -27,8 +27,7 @@
 							<thead>
 								<tr>
 									<th width="2%">S.No</th>
-									<th>Order item</th>
-									<th>Deliver to</th>
+									<th>Order number</th>
 									<th>Amount</th>
 									<th>Order Status</th>
 									<th>Date</th>
@@ -41,15 +40,8 @@
 										<td>{{ ++$key }} </td>
 										
 										<td>
-											@if(!$value->order->orderItem->isEmpty())
-											@foreach($value->order->orderItem as $kii=>$val)
-												{{++$kii}}. {{ $val->menuItem->name ?? '' }}
-												<br><strong>Unit: {{$val->unit ?? ''}}&nbsp;&nbsp;
-												Quantity: {{$val->quantity ?? ''}}</strong><br>
-											@endforeach
-											@endif
+											{{ $value->order->order_number ?? '' }}
 										</td>
-										<td>{{ $value->order->address ?? '' }}</td>
 										<td>${{ $value->order->grand_total ?? '' }} </td>
 										
 										<td>

@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 /*===  RUN COMMAND ======*/
 Route::get('/clear', function() {
    Artisan::call('config:clear');
-   /*Artisan::call('config:cache');
-   Artisan::call('view:clear');
+   /*Artisan::call('view:clear');
+   Artisan::call('config:cache');
    Artisan::call('cache:clear');*/
    return "Cleared!";
 });
@@ -69,7 +69,12 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 	/*Create Restaurant link*/
 	Route::get('/bussiness-account/restaurant/add','RestaurantController@index');
 	Route::post('/bussiness-account/restaurant/add','RestaurantController@store');
+
+
 });
+
+/*Verify email link*/
+Route::get('user/verify/email','Admin\OrderController@deliveryBoyLinkEmailVerify');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -120,5 +125,6 @@ Route::group([
 
 	Route::post('user/change-delivery-boy-status','OrderController@deliveryBoyStatus');
 	Route::post('user/delivery-boy-order-accept-status','OrderController@deliveryBoyOrderAccept');
+	Route::post('user/delivery-boy-verify-email','OrderController@deliveryBoyVerifyEmail');
 
 });

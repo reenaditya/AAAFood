@@ -16,6 +16,14 @@
 
 		<div class="navbar-collapse collapse">
 			<ul class="navbar-nav navbar-align">
+				
+				@if(Auth::check() && Auth::user()->role==3 && Auth::user()->email_verified_at==null)
+				<li class="nav-item dropdown" style="margin-right: 20px;">
+					<button class="btn btn-danger delivery-verify-email" data-userid="{{Auth::id()}}" type="button">
+						Verify Email
+					</button>
+				</li>
+				@endif
 				@if(Auth::check() && Auth::user()->role==3 && Auth::user()->deliveryBoyLocation && Auth::user()->deliveryBoyLocation->status==1)
 				<li class="nav-item dropdown" style="margin-right: 20px;">
 					<button class="btn btn-success change-delivery-boy-status" data-userid="{{Auth::id()}}" type="button">

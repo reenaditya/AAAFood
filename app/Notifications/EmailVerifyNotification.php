@@ -7,18 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BusinessAccountApproved extends Notification
+class EmailVerifyNotification extends Notification
 {
     use Queueable;
+    
+    protected  $firstLine;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($firstLine)
     {
-        //
+        $this->firstLine = $firstLine;
     }
 
     /**
@@ -40,11 +42,10 @@ class BusinessAccountApproved extends Notification
      */
     public function toMail($notifiable)
     {
-        $name = $notifiable->fname.' '.$notifiable->lname;
-        $url = url('/bussiness-account/restaurant/add').'?restaurant_name='.$notifiable->restaurant_name.'&name='.$name.'&email='.$notifiable->email;
+        $url = url('user/verify/email').'?token='.$notifiable->remember_token;
         return (new MailMessage)
-                    ->line('Your request is approved please fill your restourant details.')
-                    ->action('Add Restaurant', $url)
+                    ->line($this->firstLine)
+                    ->action('Verify Email', $url)
                     ->line('Thank you for using our application!');
     }
 

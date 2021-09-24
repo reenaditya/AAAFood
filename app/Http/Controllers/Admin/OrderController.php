@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Notifications\EmailVerifyNotification;
 use App\Notifications\OrderStatusNotification;
 use App\Models\DeliveryBoyLocation;
 use App\Models\DeliveryBoyHistory;
@@ -295,4 +296,66 @@ class OrderController extends Controller
         $data = $id;
         return view('admin.orders.details',compact('data'));
     }
+
+    
+    public function deliveryBoyVerifyEmail(Request $request)
+    {
+        $cid = $request->user_id;
+        $response = [];
+
+        if(empty($cid))
+        {
+            $response['status'] = false;
+        }
+        else
+        {
+            DB::beginTransaction();
+            
+            $token = csrf_token();
+            $data = User::where('id',$cid)->first();
+            $data->remember_token = $token;
+            
+            if ($data->update()) 
+            {
+                $this->verifyEmailNotification($data);           
+                DB::commit();
+                $response['status'] = true;
+            }
+            else
+            {
+                DB::rollback();
+                $response['status'] = false;
+            }
+        }
+        return response()->json($response);
+    }
+
+    public function verifyEmailNotification($data)
+    {
+        $firstLine = "Please click on the button to verify your email.";
+        User::where('id',$data->id)->first()->notify(new EmailVerifyNotification($firstLine));
+        return $this;        
+    }
+
+    public function deliveryBoyLinkEmailVerify(Request $request)
+    {
+        if ($request['token']) 
+        {
+            $checkToken = User::where('remember_token',$request->token)->first();
+            dd($checkToken);
+            if (!$checkToken==null) 
+            {
+                $checkToken->email_verified_at = date("Y-m-d H:i:s");
+                if ($checkToken->update()) {
+                    return redirect('admin/dashboard');    
+                }
+            }
+        }
+        else
+        {
+            return redirect()->back();
+        }        
+    }
+
+
 }
