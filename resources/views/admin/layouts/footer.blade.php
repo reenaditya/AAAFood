@@ -30,7 +30,7 @@
 
 	<script src="js/app.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+	<script type="text/javascript" src="{{asset('js/admin/admin.js')}}"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			// Bar chart
