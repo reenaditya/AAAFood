@@ -25,7 +25,7 @@ Route::get('/clear', function() {
 
 Route::get('/migrate', function() {
    Artisan::call('migrate');
-   /*Artisan::call('migrate:refresh --path=/database/migrations/2021_08_16_162921_create_activities_table.php');*/
+   /*Artisan::call('migrate:refresh --path=/database/migrations/2021_09_01_180930_create_restraurant_requests_table.php');*/
    return "Migrated!";
 });
 

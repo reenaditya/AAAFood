@@ -6,13 +6,13 @@
         <div class="container-fluid">
             <div class="row no-gutters">
                
-                <div class="slide__pizza">
+                <div class="slide__pizza spining-ball">
                     <img src="assets/img/slider-pizza.png" alt="pizza images">
                 </div>
                <div class="col-md-3"> <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('storage/'.Settings::get('general_setting_website_logo')) ??'assets/img/logo.png'}}" class="img-fluid" alt="Logo"></a></div>
                 <div class="col-md-6 text-center">
                     <div class="section-2 main-page section-2-bg main-padding">
-                         <img src="assets/img/1s.png" alt="" style="max-width: 340px;">
+                         <img src="assets/img/1s.png" alt="" style="max-width: 280px;">
                          <h1 class="text-light-black fw-700">{{ Settings::get('general_setting_header_title') }}</h1>
                          <a href="{{route('webiste.restaurant.list.categ')}}?category=dine-in" class="btn11">Dine-in</a>
                          <a href="{{route('webiste.restaurant.list.categ')}}?category=delivery" class="btn22">Delivery</a>
@@ -430,6 +430,11 @@
         {
           border-radius: 0px;
           background-color: #ec2229;
+        }
+        @media all and (max-width: 768px) {
+          .spining-ball{display: none;}
+          .search11{width: 100% !important;}
+          .suggest{bottom: 28px;width: 79%;left: 36px;}
         }
 
     </style>

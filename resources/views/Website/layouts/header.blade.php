@@ -11,23 +11,23 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item @if(request()->is('/')) active @endif">
-                                <a class="nav-link" href="{{url('/')}}">Home</a>
+                                <a class="nav-link" href="{{url('/')}}">{{ Settings::get('general_setting_top_header_home') }}</a>
                             </li>
                             <li class="nav-item @if(request()->routeIs('webiste.aboutus')) active @endif">
-                                <a class="nav-link" href="{{route('webiste.aboutus')}}">About</a>
+                                <a class="nav-link" href="{{route('webiste.aboutus')}}">{{ Settings::get('general_setting_top_header_about') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Buy the AAAdining Club Card</a>
+                                <a class="nav-link" href="#">{{ Settings::get('general_setting_top_header_aaadining_club') }}</a>
                             </li>
                             <li class="nav-item @if(request()->routeIs('webiste.bussiness.account')) active @endif">
-                                <a class="nav-link" href="{{route('webiste.bussiness.account')}}">Create a business account</a>
+                                <a class="nav-link" href="{{route('webiste.bussiness.account')}}">{{ Settings::get('general_setting_top_header_restaurant_account') }}</a>
                             </li>
                             <li class="nav-item @if(request()->routeIs('webiste.delivery.account')) active @endif">
-                                <a class="nav-link" href="{{route('webiste.delivery.account')}}">Create a Delivery account</a>
+                                <a class="nav-link" href="{{route('webiste.delivery.account')}}">{{ Settings::get('general_setting_top_header_catering_acc') }}</a>
                             </li>
                             @if(Auth::check() && Auth::user()->role ===4)
                             <li class="nav-item @if(request()->routeIs('webiste.order.history')) active @endif">
-                                <a class="nav-link" href="{{route('webiste.order.history')}}">Your Orders</a>
+                                <a class="nav-link" href="{{route('webiste.order.history')}}">{{ Settings::get('general_setting_top_header_order_history') }}</a>
                             </li>
                             @endif
                         </ul>

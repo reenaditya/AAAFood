@@ -12,7 +12,7 @@
 	<div class="container-fluid p-0">
 		<div class="row no-gutters">
 	        <div class="col-md-6">
-	          <div class="main-banner" style="height: 120vh;">
+	          <div class="main-banner" style="height: 140vh;">
 	            <img src="assets/img/banner/banner-1.jpg" class="img-fluid full-width main-img" alt="banner">
 	            
 	            <img src="assets/img/banner/burger.png" class="footer-img" alt="footer-img">
@@ -23,9 +23,14 @@
 	            <div class="login-sec" style="position: static;transform: inherit;">
 	              <div class="login-box" style="max-width: 85%;">
 	              	  <div class="row">
-	                	<div class="col-md-10 text-success">
+	                	<div class="col-md-10">
 		                	@if (Session::has('success'))
-		                		{{ Session::get('success')}}
+		              	  	<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 15px;letter-spacing: 1px;">
+							  <strong>Success</strong> {{ Session::get('success')}}
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    <span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
 		                	@endif
 	                	</div>
 	                  </div>
@@ -71,15 +76,6 @@
 	                  	</div>
 	                  	<div class="col-md-6">
 	                      <div class="form-group">
-	                        <label class="text-light-white fs-14">Restaurant Name<span class="text-danger">*</span></label>
-	                        <input type="text" name="restaurant_name" value="{{old('restaurant_name')}} " class="form-control form-control-submit" required>
-	                        @error('restaurant_name')
-	                        	<span class="text-danger">{{$message}} </span>
-	                        @enderror
-	                      </div>
-	                  	</div>
-	                  	<div class="col-md-6">
-	                      <div class="form-group">
 	                        <label class="text-light-white fs-14">Types of Food<span class="text-danger">*</span></label>
 	                        <input type="text" name="food_type" value="{{old('food_type')}} " class="form-control form-control-submit" required>
 	                        @error('food_type')
@@ -89,9 +85,45 @@
 	                  	</div>
 	                  	<div class="col-md-6">
 	                      <div class="form-group">
-	                        <label class="text-light-white fs-14">Restaurant Address<span class="text-danger">*</span></label>
-	                        <input type="text" name="restaurant_address" value="{{old('restaurant_address')}} " class="form-control form-control-submit" required>
-	                        @error('restaurant_address')
+	                        <label class="text-light-white fs-14">Restaurant Name<span class="text-danger">*</span></label>
+	                        <input type="text" name="restaurant_name" value="{{old('restaurant_name')}} " class="form-control form-control-submit" required>
+	                        @error('restaurant_name')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Zipcode<span class="text-danger">*</span></label>
+	                        <input type="text" name="zipcode" value="{{old('zipcode')}} " class="form-control form-control-submit" required>
+	                        @error('zipcode')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-12">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">Address<span class="text-danger">*</span></label>
+	                        <input type="text" name="address" value="{{old('address')}} " class="form-control form-control-submit" required>
+	                        @error('address')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">City<span class="text-danger">*</span></label>
+	                        <input type="text" name="city" value="{{old('city')}} " class="form-control form-control-submit" required>
+	                        @error('city')
+	                        	<span class="text-danger">{{$message}} </span>
+	                        @enderror
+	                      </div>
+	                  	</div>
+	                  	<div class="col-md-6">
+	                      <div class="form-group">
+	                        <label class="text-light-white fs-14">State<span class="text-danger">*</span></label>
+	                        <input type="text" name="state" value="{{old('state')}} " class="form-control form-control-submit" required>
+	                        @error('state')
 	                        	<span class="text-danger">{{$message}} </span>
 	                        @enderror
 	                      </div>
@@ -100,7 +132,7 @@
 	                      <div class="form-group">
 	                        <label class="text-light-white fs-14">Comments or Notes</label>
 	                        <textarea name="comments" rows="3" class="form-control form-control-submit">{{old('comments')}}</textarea>
-	                        @error('restaurant_address')
+	                        @error('comments')
 	                        	<span class="text-danger">{{$message}} </span>
 	                        @enderror
 	                      </div>

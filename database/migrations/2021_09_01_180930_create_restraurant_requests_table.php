@@ -21,7 +21,11 @@ class CreateRestraurantRequestsTable extends Migration
             $table->string('phone_number',25);
             $table->string('restaurant_name',250);
             $table->string('food_type',250)->nullable();
-            $table->string('restaurant_address',255)->nullable();
+            $table->string('address',255)->nullable();
+            $table->string('city',255)->nullable();
+            $table->string('state',255)->nullable();
+            $table->string('zipcode',255)->nullable();
+            $table->string('relation',255)->nullable();
             $table->text('comments')->nullable();
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->timestamps();

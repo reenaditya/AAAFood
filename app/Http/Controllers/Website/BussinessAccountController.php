@@ -61,7 +61,10 @@ class BussinessAccountController extends Controller
             'phone_number' => ["required","min:8","max:20"],
             'restaurant_name' => ['required','min:2','max:255'],
             'food_type' => ['required','min:2','max:255'],
-            'restaurant_address' => ['required','min:2','max:255'],
+            'address' => ['required','min:2','max:255'],
+            'city' => ['required','min:2','max:255'],
+            'state' => ['required','min:2','max:255'],
+            'zipcode' => ['required','min:2','max:255'],
         ]);
         return $this;
     }
@@ -74,7 +77,10 @@ class BussinessAccountController extends Controller
         $this->data->phone_number = $request->phone_number;
         $this->data->restaurant_name = $request->restaurant_name;
         $this->data->food_type = $request->food_type;
-        $this->data->restaurant_address = $request->restaurant_address;
+        $this->data->address = $request->address;
+        $this->data->city = $request->city;
+        $this->data->state = $request->state;
+        $this->data->zipcode = $request->zipcode;
         $this->data->comments= $request->comments;
         $this->data->status= false;
         return $this;

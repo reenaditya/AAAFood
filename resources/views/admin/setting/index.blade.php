@@ -33,6 +33,37 @@
 												</div>
 											</div>
 										</div>
+										{{-- <div class="mb-4 col-md-4">
+											<label class="form-label" >Header</label>
+											<input type="text" name="general_setting_header" class="form-control" value="{{old('general_setting_header',Settings::get('general_setting_header'))}}">
+										</div> --}}
+										<hr>
+										<div class="mb-4 col-md-12"><strong><h4>Header</h4></strong></div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Home</label>
+											<input type="text" name="general_setting_top_header_home" class="form-control" value="{{old('general_setting_top_header_home',Settings::get('general_setting_top_header_home'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">About</label>
+											<input type="text" name="general_setting_top_header_about" class="form-control" value="{{old('general_setting_top_header_about',Settings::get('general_setting_top_header_about'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">AAAdining Club</label>
+											<input type="text" name="general_setting_top_header_aaadining_club" class="form-control" value="{{old('general_setting_top_header_aaadining_club',Settings::get('general_setting_top_header_aaadining_club'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Restaurant Account</label>
+											<input type="text" name="general_setting_top_header_restaurant_account" class="form-control" value="{{old('general_setting_top_header_restaurant_account',Settings::get('general_setting_top_header_restaurant_account'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Catering Account</label>
+											<input type="text" name="general_setting_top_header_catering_acc" class="form-control" value="{{old('general_setting_top_header_catering_acc',Settings::get('general_setting_top_header_catering_acc'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Order History</label>
+											<input type="text" name="general_setting_top_header_order_history" class="form-control" value="{{old('general_setting_top_header_order_history',Settings::get('general_setting_top_header_order_history'))}}">
+										</div>
+										<hr>
 										<div class="mb-4 col-md-4">
 											<label class="form-label" >Header Title</label>
 											<input type="text" name="general_setting_header_title" class="form-control" value="{{old('general_setting_header_title',Settings::get('general_setting_header_title'))}}">
