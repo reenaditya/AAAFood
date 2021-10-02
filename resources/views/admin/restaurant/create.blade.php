@@ -118,7 +118,7 @@
 								</div>
 								<div class="mb-4 col-md-6">
 									<label class="form-label">Sale Tax(%)</label>
-									<input type="number" name="sale_tax" class="form-control" placeholder="The sales tax to charge for each order eg: 5"  value="{{ old('sale_tax') }}">
+									<input type="number" step=".01" name="sale_tax" class="form-control" placeholder="The sales tax to charge for each order eg: 5"  value="{{ old('sale_tax') }}">
 									@error('sale_tax')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
@@ -276,6 +276,13 @@
 									@enderror
 								</div>
 								<div class="mb-4 col-md-6">
+									<label class="form-label">AAAdining club max discount in ($)</label>
+									<input type="number" min="0" name="ac_max_discount" class="form-control" placeholder=""  value="{{ old('ac_max_discount') }}">
+									@error('ac_max_discount')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-6">
 									<fieldset class="mb-3">
 										<div class="row">
 											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">Do you want to participate in our AAAdining club ? *</label>
@@ -320,12 +327,12 @@
 										@foreach($aaadining_club as $kii=>$val)
 										<label class="form-check m-0">
 								            <input type="checkbox" value="{{$kii}}" class="form-check-input" name="ac_terms_condition[]">
-								            <span class="form-check-label">{{$val}}</span>
+								            <span class="form-check-label @if($kii==1) append-max-discount-price @endif">{{$val}}</span>
 							            </label>
 							            @endforeach
 									</div>
 								</div>
-								<div class="mb-4 col-md-6">
+								{{-- <div class="mb-4 col-md-6">
 									<fieldset class="mb-3">
 										<div class="row">
 											<label class="col-form-label col-sm-8 text-sm-right pt-sm-0">
@@ -353,7 +360,7 @@
 							            </label>
 							            @endforeach
 									</div>
-								</div>
+								</div> --}}
 								<div class="mb-4 col-md-6">
 									<fieldset class="mb-3">
 										<div class="row">

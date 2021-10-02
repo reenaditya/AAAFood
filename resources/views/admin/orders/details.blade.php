@@ -192,6 +192,10 @@
 									<p class="mb-1">{{ $data->deliveryUser->deliveryBoyLocation->city ?? '' }}</p>
 								</dd>
 
+								<dt class="col-4 col-xxl-3">Phone Number</dt>
+								<dd class="col-8 col-xxl-9">
+									<p class="mb-1">{{ $data->deliveryUser->mobile ?? '' }}</p>
+								</dd>
 							</dl>
 						</div>
 					</div>
@@ -222,6 +226,36 @@
 					</div>	
 				</div>
 
+				<div class="col-lg-12 col-xxl-12"><h4>Admin Comment</h4></div>
+				@if(Auth::check() && Auth::user()->role==2)
+				<div class="col-lg-12 col-xxl-12">
+					<form action="{{url('admin/order/post-comment')}}" method="post">
+						@csrf
+						@if(Session::has('error'))
+						<div class="alert alert-warning alert-dismissible fade show p-2" role="alert">
+						  <strong>Error! </strong> {{ Session::get('error') }}
+						</div>
+						@endif
+						@if(Session::has('success'))
+						<div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+						  <strong>Success! </strong>{{Session::get('success')}}
+						</div>
+						@endif
+
+						<input type="hidden" name="order_id" value="{{$data->id ?? ''}}">
+						<div class="form-group">
+							<textarea name="admin_comment" class="form-control" id="admin_comment" placeholder="add comment here...">{!! $data->admin_comment ?? '' !!}</textarea>
+						</div>
+						<div class="form-group mt-2">
+							<button type="submit" class="btn btn-info">Post comment</button>
+						</div>
+					</form>
+				</div>
+				@else
+				<div class="col-lg-12 col-xxl-12">
+					{!! $data->admin_comment ?? '' !!}
+				</div>
+				@endif
 			</div>
 
 		</div>
@@ -229,4 +263,8 @@
 
 @endsection
 @push('script')
+	<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+	<script>
+        CKEDITOR.replace( 'admin_comment' );
+	</script>
 @endpush

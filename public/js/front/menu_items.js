@@ -9,9 +9,8 @@ $(function() {
 	itemAddToCart();
 	let restro_id = $('input.restro_id').val();
 	emptyCartRestroMatchFail(restro_id);
+	countProduct();
 });
-
-
 
 $(document).on("click",".add-cart-btn",function () {
 	var thisdata = $(this);
@@ -79,6 +78,7 @@ function removeProduct(productId){
     let storageProducts = JSON.parse(localStorage.getItem('products'));
     let products = storageProducts.filter(product => product.id !== productId );
     localStorage.setItem('products', JSON.stringify(products));
+    countProduct();
 }
 
 function itemAddToCart() {
@@ -131,6 +131,7 @@ function calculateFeestaxes(subTotal) {
 		tax = tax.toFixed(2);
 		localStorage.setItem('tax_amount',tax);
 		$("span.tax-amount").text(tax);
+		$("span.sale-tax").text(' ('+sale_tax+'%)');
 	}else{
 		localStorage.setItem('tax_amount',0);
 		$("span.tax-amount").text('0.00');
@@ -139,6 +140,7 @@ function calculateFeestaxes(subTotal) {
 
 
 function deliveryAvailability(subTotal) {
+	vipactive();
 	if (subTotal >= minimum_delivery_amount) {
 		proceedToCheckoutLink(true);
 		$('div.show-erroe').text('');
@@ -146,7 +148,7 @@ function deliveryAvailability(subTotal) {
 		proceedToCheckoutLink(false);
 		$('div.show-erroe').text('Minimum delivery amount should be $'+minimum_delivery_amount)
 	}
-	
+	countProduct();
 }
 
 function getTotalAmount(subTotal) {
@@ -171,6 +173,7 @@ $(document).on('click','.empty-cart',function () {
 	emptyCart();
 	refreshCart();
 	proceedToCheckoutLink(false);
+	countProduct();
 });
 
 $(document).on('click','.delete-btn',function () {
@@ -234,5 +237,24 @@ function proceedToCheckoutLink(argument) {
 	}else{
 		var url = 'javascript:void(0)';
 		$('.checkout-btn').attr("href",url);
+	}
+}
+
+/*WHEN VIP MEMBER IS ACTIVE*/
+function vipactive() {
+	var isvipuser = 'NO';
+	if (parseInt(isvip)==1 && vipcoupen==usercopon) {
+		isvipuser = 'YES';
+		minimum_delivery_amount = 0;
+		$("span.minimum-delivery-am").text('No Min. (VIP)');
+	}
+}
+
+function countProduct() {
+	var prod = JSON.parse(localStorage.getItem('products'));
+	if (parseInt(prod.length)>=1) {
+		proceedToCheckoutLink(true);
+	}else{
+		proceedToCheckoutLink(false);
 	}
 }

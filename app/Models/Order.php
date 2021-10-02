@@ -83,6 +83,10 @@ class Order extends Model
         {
             $query->whereIn('order_status',[1,2,3,4])->where('vendor_id',Auth::id());
         }
+        elseif (Auth::user()->role===2) 
+        {
+            $query->whereIn('order_status',[1,2,3,4]);
+        }
     }
 
     public function scopeFilterCompletedOrder($query)
@@ -94,6 +98,10 @@ class Order extends Model
         elseif (Auth::user()->role===1) 
         {
             $query->whereIn('order_status',[7])->where('vendor_id',Auth::id());
+        }
+        elseif (Auth::user()->role===2) 
+        {
+            $query->whereIn('order_status',[7]);
         }
     }
 }

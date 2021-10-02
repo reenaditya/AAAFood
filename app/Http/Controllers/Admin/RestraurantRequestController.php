@@ -84,7 +84,7 @@ class RestraurantRequestController extends Controller
      * @param  \App\Models\RestraurantRequest  $data
      * @return \Illuminate\Http\Response
      */
-    public function edit ($id)
+    public function edit($id)
     {
         
         $data = $this->data->where('id',$id)->first();
@@ -146,7 +146,7 @@ class RestraurantRequestController extends Controller
             'phone_number' => ["required","min:8","max:20"],
             'restaurant_name' => ['required','min:2','max:255'],
             'food_type' => ['required','min:2','max:255'],
-            'restaurant_address' => ['required','min:2','max:255'],
+            'address' => ['required','min:2','max:255'],
         ]);
         return $this;
     }
@@ -158,7 +158,11 @@ class RestraurantRequestController extends Controller
         $this->data->phone_number = $request->phone_number;
         $this->data->restaurant_name = $request->restaurant_name;
         $this->data->food_type = $request->food_type;
-        $this->data->restaurant_address = $request->restaurant_address;
+        $this->data->relation = $request->relation;
+        $this->data->address = $request->address;
+        $this->data->city = $request->city;
+        $this->data->state = $request->state;
+        $this->data->zipcode = $request->zipcode;
         $this->data->comments= $request->comments;
         $this->data->status= $request->status;
         return $this;

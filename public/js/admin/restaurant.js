@@ -19,4 +19,10 @@ $(function(){
 			$(".aaading_club_offer").addClass('d-none');
 		}
 	});
+
+	$("input[name='ac_max_discount']").on('change',function(){
+		var val = $(this).val();
+		$(".append-max-discount-price").append('$'+val);
+	});
+	
 });

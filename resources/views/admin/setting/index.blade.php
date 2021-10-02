@@ -10,8 +10,7 @@
 					<div class="tab">
 						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item"><a class="nav-link active" href="#tab-1" data-bs-toggle="tab" role="tab"><i class="fa fa-home"></i> Home page</a></li>
-							{{-- <li class="nav-item"><a class="nav-link" href="#tab-2" data-bs-toggle="tab" role="tab">test2</a></li>
-							<li class="nav-item"><a class="nav-link" href="#tab-3" data-bs-toggle="tab" role="tab">test1</a></li> --}}
+							<li class="nav-item"><a class="nav-link" href="#tab-2" data-bs-toggle="tab" role="tab"><i class="fa fa-cogs"></i> General setting</a></li>
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab-1" role="tabpanel">
@@ -137,12 +136,26 @@
 								</form>
 
 							</div>
-							{{-- <div class="tab-pane" id="tab-2" role="tabpanel">
-								
+							<div class="tab-pane" id="tab-2" role="tabpanel">
+							
+								<h4 class="tab-title">Website general setting</h4>
+
+								<form action="{{ route('admin.setting.store') }}" method="post" enctype="multipart/form-data">
+									@csrf
+									
+									<div class="row">
+										
+										<div class="mb-4 col-md-4">
+											<label class="form-label">VIP coupon code</label>
+											<input type="text" name="general_setting_vip_coupon_code" class="form-control" value="{{old('general_setting_vip_coupon_code',Settings::get('general_setting_vip_coupon_code'))}}">
+										</div>
+
+									</div>
+									
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</form>
+	
 							</div>
-							<div class="tab-pane" id="tab-3" role="tabpanel">
-								
-							</div> --}}
 						</div>
 					</div>
 				</div>

@@ -25,7 +25,7 @@ class CreateRestraurantRequestsTable extends Migration
             $table->string('city',255)->nullable();
             $table->string('state',255)->nullable();
             $table->string('zipcode',255)->nullable();
-            $table->string('relation',255)->nullable();
+            $table->tinyInteger('relation')->default(4)->comment("1=Owner, 2=President, 3=Manager, 4=Other")->nullable();
             $table->text('comments')->nullable();
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->timestamps();

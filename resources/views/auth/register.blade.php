@@ -53,6 +53,9 @@
                           <label class="text-light-white fs-14">Coupon code </label>
                           <div class="form-group">
                             <input type="text" name="coupen" value="{{old('coupen')}} " class="form-control form-control-submit" placeholder="coupon code" >
+                            @error('coupenk')
+                              <span class="text-danger">{{"Coupen code invalid"}} </span>
+                            @enderror
                           </div>
                         </div>
                       </div>

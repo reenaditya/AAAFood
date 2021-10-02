@@ -240,7 +240,7 @@
                              <div class="info-group rdt">
                                <span class="pull-left wdt12">Minimum Order:</span>
                                <span class="pull-none">$</span>
-                               <span class="pull-right">{{ number_format($restaurant->minimum_delivery_amount) ?? '' }}</span>
+                               <span class="pull-right minimum-delivery-am">{{ number_format($restaurant->minimum_delivery_amount) ?? '' }}</span>
                              </div>
 
                              <div class="info-group rdt">
@@ -271,7 +271,7 @@
                                <span class="pull-right delivery-fees">0.00</span>
                              </div>
                              <div class="info-group">
-                               <span class="pull-left wdt12">Fees and Taxes:</span>
+                               <span class="pull-left wdt12">Fees and Taxes:<span class="sale-tax"></span></span>
                                <span class="pull-none">$</span>
                                <span class="pull-right tax-amount">0.00</span>
                              </div>
@@ -309,13 +309,21 @@
     
 @endsection
 @push('script')
-<script type="text/javascript" src="{{asset('js/front/menu_items.js')}}"></script>
 <script type="text/javascript">
+        var vipcoupen ='';
+        var isvip = 'NO';
+        var usercopon = ''; 
 		var authCheck = '{{$authCheck ?? ''}}';
         var free_delivery_amount = '{{ $restaurant->free_delivery_amount ?? 0 }}';
         var delivery_fee = '{{ $restaurant->delivery_fee ?? 0 }}';
         var minimum_delivery_amount = '{{$restaurant->minimum_delivery_amount ?? 0}}';
         var sale_tax = '{{$restaurant->sale_tax ?? 0}}';
         var restro_slug = '{{ $restaurant->slug ?? '' }}'
+        if (authCheck) {
+             vipcoupen = '{{Settings::get('general_setting_vip_coupon_code')}}';
+             usercopon = '{{Auth::user()->coupen ?? ''}}';
+             isvip = '{{Auth::user()->vip ?? ''}}';
+        }
 </script>
+<script type="text/javascript" src="{{asset('js/front/menu_items.js')}}"></script>
 @endpush

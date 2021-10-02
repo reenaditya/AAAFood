@@ -33,6 +33,7 @@ class CreateOrdersTable extends Migration
             $table->string('mobile');
             $table->string('email')->nullable();
             $table->text('note')->nullable();
+            $table->text('admin_comment')->nullable();
             $table->tinyInteger('payment_status')->default(1)->comment("1=pending, 2=Completed,3=Failed,4=Refunded");
             $table->tinyInteger('order_status')->default(1)->comment("1=pending, 2=Prepare,3=Packed,4:On the Way,5:Delivered,6:Canceled,7:Completed,8:Refunded");
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");

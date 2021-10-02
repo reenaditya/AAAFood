@@ -1,5 +1,8 @@
 @extends("admin.layouts.app")
 @section('content')
+@php
+	$relationship_roll = Config::get('constant.relationship_roll');
+@endphp
 <main class="content">
 	<div class="container-fluid p-0">
 
@@ -71,10 +74,51 @@
 			                      </div>
 			                  	</div>
 			                  	<div class="col-md-6 mt-4">
+			                  		<div class="form-group">
+			                  			<label class="text-light-white fs-14">Relationship(your roll)</label>
+			                  			<select class="form-control" name="relation">
+			                  				@foreach($relationship_roll as $kii=> $val)
+			                  				<option value="{{$kii}}" @if($data->relation==$kii) selected="" @endif>{{$val}}</option>
+			                  				@endforeach
+			                  			</select>
+			                  		</div>
+			                  	</div>
+
+			                  	<div class="col-md-6 mt-4">
 			                      <div class="form-group">
-			                        <label class="text-light-white fs-14">Restaurant Address<span class="text-danger">*</span></label>
-			                        <input type="text" name="restaurant_address" value="{{old('restaurant_address',$data->restaurant_address)}} " class="form-control form-control-submit" required>
-			                        @error('restaurant_address')
+			                        <label class="text-light-white fs-14">Address<span class="text-danger">*</span></label>
+			                        <input type="text" name="address" value="{{old('address',$data->address)}} " class="form-control form-control-submit" required>
+			                        @error('address')
+			                        	<span class="text-danger">{{$message}} </span>
+			                        @enderror
+			                      </div>
+			                  	</div>
+
+			                  	<div class="col-md-6 mt-4">
+			                      <div class="form-group">
+			                        <label class="text-light-white fs-14">City<span class="text-danger">*</span></label>
+			                        <input type="text" name="city" value="{{old('city',$data->city)}} " class="form-control form-control-submit" required>
+			                        @error('city')
+			                        	<span class="text-danger">{{$message}} </span>
+			                        @enderror
+			                      </div>
+			                  	</div>
+
+			                  	<div class="col-md-6 mt-4">
+			                      <div class="form-group">
+			                        <label class="text-light-white fs-14">State<span class="text-danger">*</span></label>
+			                        <input type="text" name="state" value="{{old('state',$data->state)}} " class="form-control form-control-submit" required>
+			                        @error('state')
+			                        	<span class="text-danger">{{$message}} </span>
+			                        @enderror
+			                      </div>
+			                  	</div>
+
+			                  	<div class="col-md-6 mt-4">
+			                      <div class="form-group">
+			                        <label class="text-light-white fs-14">Zipcode<span class="text-danger">*</span></label>
+			                        <input type="text" name="zipcode" value="{{old('zipcode',$data->zipcode)}} " class="form-control form-control-submit" required>
+			                        @error('zipcode')
 			                        	<span class="text-danger">{{$message}} </span>
 			                        @enderror
 			                      </div>

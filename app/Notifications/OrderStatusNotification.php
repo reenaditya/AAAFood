@@ -12,15 +12,17 @@ class OrderStatusNotification extends Notification implements ShouldQueue
     use Queueable;
 
     protected  $firstLine;
+    protected  $url;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($firstLine)
+    public function __construct($firstLine,$url)
     {
         $this->firstLine = $firstLine;
+        $this->url = $url;
     }
 
     /**
@@ -43,9 +45,9 @@ class OrderStatusNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->firstLine)
-                    ->action('Track Your Order', url('order/history'))
-                    ->line('Thank you for using our application!');
+            ->line($this->firstLine)
+            ->action('Order Detail', $this->url)
+            ->line('Thank you for using our application!');
     }
 
     /**

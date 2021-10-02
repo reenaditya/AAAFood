@@ -7,12 +7,13 @@
 	$aaadining_club = Config::get('constant.aaadining_club');
 	$days = Config::get('constant.days');
 	$time = Config::get('constant.time');
+	$relationship_roll = Config::get('constant.relationship_roll');
 @endphp
 <main class="content">
 	<div class="container-fluid p-0">
 		<div class="row no-gutters">
 	        <div class="col-md-6">
-	          <div class="main-banner" style="height: 140vh;">
+	          <div class="main-banner" style="height: 160vh;">
 	            <img src="assets/img/banner/banner-1.jpg" class="img-fluid full-width main-img" alt="banner">
 	            
 	            <img src="assets/img/banner/burger.png" class="footer-img" alt="footer-img">
@@ -23,7 +24,7 @@
 	            <div class="login-sec" style="position: static;transform: inherit;">
 	              <div class="login-box" style="max-width: 85%;">
 	              	  <div class="row">
-	                	<div class="col-md-10">
+	                	<div class="col-md-12">
 		                	@if (Session::has('success'))
 		              	  	<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 15px;letter-spacing: 1px;">
 							  <strong>Success</strong> {{ Session::get('success')}}
@@ -75,6 +76,16 @@
 	                      </div>
 	                  	</div>
 	                  	<div class="col-md-6">
+	                  		<div class="form-group">
+	                  			<label class="text-light-white fs-14">Relationship(your roll)</label>
+	                  			<select class="form-control" name="relation">
+	                  				@foreach($relationship_roll as $kii=> $val)
+	                  				<option value="{{$kii}}">{{$val}}</option>
+	                  				@endforeach
+	                  			</select>
+	                  		</div>
+	                  	</div>
+	                  	<div class="col-md-12">
 	                      <div class="form-group">
 	                        <label class="text-light-white fs-14">Types of Food<span class="text-danger">*</span></label>
 	                        <input type="text" name="food_type" value="{{old('food_type')}} " class="form-control form-control-submit" required>

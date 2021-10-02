@@ -77,6 +77,7 @@ class BussinessAccountController extends Controller
         $this->data->phone_number = $request->phone_number;
         $this->data->restaurant_name = $request->restaurant_name;
         $this->data->food_type = $request->food_type;
+        $this->data->relation = $request->relation;
         $this->data->address = $request->address;
         $this->data->city = $request->city;
         $this->data->state = $request->state;

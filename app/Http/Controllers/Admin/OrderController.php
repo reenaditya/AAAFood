@@ -162,28 +162,43 @@ class OrderController extends Controller
     private function sendNotification($data,$deliver=false)
     {
         if ($deliver) {
-            $firstLine = 'Your order is accepted by deliver boy, will reach soon';
-            User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine));
+            $firstLine = 'Delivery boy assigned and will be delivering your food soon!';
+            $url = url('order/history');
+            User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
         }
         else{
 
             if ($data->order_status==2) 
             {
                 $firstLine = 'Your order is accepted by restaurant and prepare';
-                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine));
+                $url = url('order/history');
+                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
             }
             if ($data->order_status==4) 
             {
-                $firstLine = 'Your order is on the way our delivery partner will reach you soon.';
-                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine));
+                $firstLine = 'Food has left our kitchen and should arrive within minutes.';
+                $url = url('order/history');
+                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
+            }
+            if ($data->order_status==5) 
+            {
+                $firstLine = 'Delivery boy arrived please pick your order.';
+                $url = url('order/history');
+                User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
+                $firstLine = 'Delivery boy arrived.';
+                $url = url('admin/order-new');
+                User::where('id',$data->vendor_id)->first()->notify((new OrderStatusNotification($firstLine,$url)));
             }
             if ($data->order_status==7) 
             {
                 $nowTimeDate = Carbon::now();
                 $delay = Carbon::now()->addMinutes(1);
                 $firstLine = 'Your order is completed thank you.';
-                User::where('id',$data->user_id)->first()->notify((new OrderStatusNotification($firstLine))->delay($delay));
-                User::where('id',$data->vendor_id)->first()->notify((new OrderStatusNotification($firstLine))->delay($delay));
+                $url = url('order/history');
+                User::where('id',$data->user_id)->first()->notify((new OrderStatusNotification($firstLine,$url))->delay($delay));
+                $firstLine = 'Order completed thank you.';
+                $url = url('admin/order-completed');
+                User::where('id',$data->vendor_id)->first()->notify((new OrderStatusNotification($firstLine,$url))->delay($delay));
             }
         }
 
@@ -357,5 +372,23 @@ class OrderController extends Controller
         }        
     }
 
+
+    /*
+    * Post Comment
+    */
+    public function postComment(Request $request)
+    {
+        DB::beginTransaction();
+        if(Order::where('id',$request->order_id)->update(['admin_comment'=>$request->admin_comment]))
+        {
+            DB::commit();
+            return redirect()->back()->withSuccess("Comment posted successfully!");
+        }
+        else
+        {
+            DB::rollback();
+            return redirect()->back()->withError("sometimes Went Wrong!");
+        }
+    }
 
 }

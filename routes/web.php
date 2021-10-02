@@ -122,6 +122,7 @@ Route::group([
 	Route::get('order-completed','OrderController@completedOrder')->name('order.completed');
 	Route::get('order-details/{id}','OrderController@detailsOrder')->name('order.details');
 	Route::get('delivery-boy-order-history','OrderController@deliveryBoyOrderHistory')->name('order.db.history');
+	Route::post('order/post-comment','OrderController@postComment');
 
 	Route::post('user/change-delivery-boy-status','OrderController@deliveryBoyStatus');
 	Route::post('user/delivery-boy-order-accept-status','OrderController@deliveryBoyOrderAccept');

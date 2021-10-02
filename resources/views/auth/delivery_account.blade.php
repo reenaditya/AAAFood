@@ -44,7 +44,14 @@
                           <span class="text-danger">{{$message}} </span>
                         @enderror
                       </div>
-                    
+                      <div class="form-group">
+                        <label class="text-light-white fs-14">Mobile number</label>
+                        <input type="text" name="mobile" class="form-control form-control-submit" required value="{{old('mobile')}} " >
+                        @error('mobile')
+                          <span class="text-danger">{{$message}} </span>
+                        @enderror
+                      </div>
+                      
                       <div class="form-group">
                         <label class="text-light-white fs-14">Password (8 character minimum)</label>
                         <input type="password" id="password-field" name="password" class="form-control form-control-submit" value="password" placeholder="Password" required>

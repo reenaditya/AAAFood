@@ -7,10 +7,11 @@ return[
         4 => 'Customer',
     ],
     'reservation_system' => [
-        1 => 'Grub Hub',
-        2 => 'Uber Eats',
-        3 => 'In House',
-        4 => 'Other',
+        1 => 'Open Table',
+        2 => 'Yelp',
+        3 => 'Table Agent',
+        4 => 'Spot On',
+        5 => 'Other',
     ],
     'us_states' => [
         "CA"=>"California",
@@ -76,7 +77,7 @@ return[
         8 => "Only one offer per table", 
     ],
     'aaadining_club' => [
-        1 => "Maximum discount is $10.00",
+        1 => "Maximum discount is ",
         2 => "Dine in only",
         3 => "Dine in only with purchase of Two drinks of any kind", 
         4 => "Not valid with any other offer", 
@@ -105,7 +106,7 @@ return[
         2 => 'Prepare',
         3 => 'Packed',
         4 => 'On the way',
-        5 => 'Delivered',
+        5 => 'Arrived',
         6 => 'Canceled',
         7 => 'Completed',
         8 => 'Refunded',
@@ -122,5 +123,11 @@ return[
         2 => 'Completed',
         3 => 'Failed',
         4 => 'Refunded',
+    ],
+    'relationship_roll' =>[
+        1 => 'Owner',
+        2 => 'President',
+        3 => 'Manager',
+        4 => 'Other',
     ],
 ];

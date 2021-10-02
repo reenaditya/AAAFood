@@ -44,6 +44,7 @@ class CreateRestaurantsTable extends Migration
             $table->integer('delivery_extra_time')->nullable();
             $table->tinyInteger('delivery_service')->default(0)->comment("1=Yes, 0=No");
             $table->string('participate_file',255)->nullable();
+            $table->string('ac_max_discount',255)->nullable();
             $table->tinyInteger('aaadining_club')->default(0)->comment("1=Yes, 0=No");
             $table->tinyInteger('birthday_club')->default(0)->comment("1=Yes, 0=No");
             $table->time('mf_from')->nullable();

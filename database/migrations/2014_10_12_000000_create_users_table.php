@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('vip')->default(0)->comment('1=Yes,0=No')->nullable();
             $table->string('coupen',50)->nullable();
             $table->integer('role')->default(4)->comment("1=Vendor,2=Admin,3=Delivery,4=Customer");
+            $table->string('mobile',20)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('two_factor_secret')->nullable();

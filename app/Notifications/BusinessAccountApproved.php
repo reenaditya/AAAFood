@@ -43,7 +43,7 @@ class BusinessAccountApproved extends Notification
         $name = $notifiable->fname.' '.$notifiable->lname;
         $url = url('/bussiness-account/restaurant/add').'?restaurant_name='.$notifiable->restaurant_name.'&name='.$name.'&email='.$notifiable->email;
         return (new MailMessage)
-                    ->line('Your request is approved please fill your restourant details.')
+                    ->line('Your request is approved please fill your restaurant details.')
                     ->action('Add Restaurant', $url)
                     ->line('Thank you for using our application!');
     }

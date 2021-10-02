@@ -222,8 +222,9 @@ class RestaurantController extends Controller
         if ($request->hasFile('participate_file')) {        
             $this->restaurant->participate_file = $request->participate_file->store('upload/restaurant','public');
         }
+        $this->restaurant->ac_max_discount = $request->ac_max_discount;
         $this->restaurant->aaadining_club = $request->aaadining_club;
-        $this->restaurant->birthday_club = $request->birthday_club;
+        //$this->restaurant->birthday_club = $request->birthday_club;
         $this->restaurant->mf_from = $request->mf_from;
         $this->restaurant->mf_to = $request->mf_to;
         $this->restaurant->sat_from = $request->sat_from;
