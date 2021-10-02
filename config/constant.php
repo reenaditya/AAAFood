@@ -112,6 +112,7 @@ return[
         8 => 'Refunded',
     ],
     'del_order_status' =>[
+        5 => 'Arrived',
         7 => 'Completed',
     ],
     'pay_mode' =>[

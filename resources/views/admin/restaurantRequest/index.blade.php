@@ -9,7 +9,7 @@
 			<div class="col-12">
 				<div class="card">
 					
-					<div class="card-body">
+					<div class="table-responsive card-body">
 						<table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
 							<thead>
 								<tr>

@@ -116,64 +116,12 @@
                                     </div>
                                 </div>
                                 @endforeach
-                            </div>
-                        </div>
 
-          
-                   
-                  
-
-                        {{-- <div class="col-lg-12">
-                            <div class="section-header-left">
-                                <h3 class="text-light-black header-title title">Specials</h3>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="product-box mb-xl-20">
-                                        <div class="product-img">
-                                            <a href="#">
-                                               <img src="assets/img/restaurants/255x150/shop-23.jpg" class="img-fluid full-width" alt="product-img">
-                                            </a>
-                                            <div class="overlay">
-                                                <div class="product-tags padding-10"> 
-                                                    <span class="circle-tag">
-                                                        <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-                                                    </span> 
-                                                    <div class="custom-tag"> 
-                                                        <span class="text-custom-white rectangle-tag bg-gradient-red">10%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-caption">
-                                            <div class="title-box">
-                                                <h6 class="product-title"><a href="#" class="text-light-black "> Joe’s Favorite</a></h6>
-                                                <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
-                                                </div>
-                                            </div>
-                                            <p class="text-light-white">American, Fast Food</p>
-                                            <div class="product-details">
-                                                <div class="price-time"> 
-                                                    <span class="text-light-black time">30-40 min</span>
-                                                    <span class="text-light-white price">$10 min</span>
-                                                </div>
-                                                <div class="rating"> 
-                                                    <span>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                    </span>
-                                                    <span class="text-light-white text-right">4225 ratings</span>
-                                                </div>
-                                            </div>
-                                            <a href="#" class="btn44 mt-4">Order again</a>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-12 mt-1 d-flex">
+                                    <strong class="text-success">Offer </strong> &nbsp;&nbsp;&nbsp;{!! $value->admin_comment ?? '' !!}
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     @empty
                     <div class="">

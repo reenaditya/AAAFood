@@ -68,7 +68,7 @@ class Order extends Model
                     
                 $deliveryBoy = Auth::user()->deliveryBoyLocation;
                 if ($deliveryBoy->is_busy) {
-                    $query->whereIn('order_status',[2,3,4])->where('delivery_user_id',Auth::id());
+                    $query->whereIn('order_status',[2,3,4,5])->where('delivery_user_id',Auth::id());
                 }else{
                     $city = $deliveryBoy && $deliveryBoy->status==1 ? $deliveryBoy->city: 'no city found';
                     $query->whereIn('order_status',[2,3])->where('address','LIKE','%'.$city.'%')->whereNull('delivery_user_id');

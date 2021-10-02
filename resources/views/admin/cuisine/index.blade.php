@@ -9,7 +9,7 @@
 			<div class="col-12">
 				<div class="card">
 					
-					<div class="card-body">
+					<div class="table-responsive card-body">
 						<a href="{{ route('admin.cuisine.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add Cuisine</a>
 						<table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
 							<thead>
