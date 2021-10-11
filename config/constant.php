@@ -77,7 +77,7 @@ return[
         8 => "Only one offer per table", 
     ],
     'aaadining_club' => [
-        1 => "Maximum discount is ",
+        1 => "Maximum discount is <span></span>",
         2 => "Dine in only",
         3 => "Dine in only with purchase of Two drinks of any kind", 
         4 => "Not valid with any other offer", 

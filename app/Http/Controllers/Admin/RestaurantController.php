@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Notifications\BusinessAccountApproved;
 use App\Models\CuisineRestaurant;
 use App\Models\Restaurant;
 use App\Models\Cuisine;
 use App\Models\RestaurantOffer;
+use App\Models\RestraurantRequest;
 use App\Models\User;
 use DB;
 use Str;
@@ -165,8 +167,7 @@ class RestaurantController extends Controller
     private function validation(Request $request)
     {
     	$request->validate([
-            'user_id' => ["required"],
-        	'name' => ["required","min:2","max:100"],
+            'name' => ["required","min:2","max:100"],
             'location' => ['required','min:2'],
             'address' => ['required','min:2','max:255'],
         	'address2' => ['required','min:2','max:255'],
@@ -177,8 +178,7 @@ class RestaurantController extends Controller
             'seating_capacity_indoor' => ['required'],
             'seating_capacity_outdoor' => ['required'],
             'status' => ["sometimes","boolean"],
-        	'image' => ["nullable","image"],
-            'description' => ['required','min:2','max:500'],
+        	'description' => ['required','min:2','max:500'],
         ]);
         return $this;
     }
@@ -240,6 +240,13 @@ class RestaurantController extends Controller
         $this->restaurant->trending = $request->trending?true:false;
         $this->restaurant->new = $request->new?true:false;
         $this->restaurant->top_rated = $request->top_rated?true:false;
+        
+        $this->restaurant->draft = $request->draft?true:false;
+        $this->restaurant->restro_request_id = isset($request->restro_request_id) ? $request->restro_request_id:null;
+        if ($request->draft && isset($request->restro_request_id) && $request->restro_request_id) {
+            RestraurantRequest::where('id',$request->restro_request_id)->first()->notify(new BusinessAccountApproved());
+        }
+
         $this->restaurant->status = $request->status?true:false;
         return $this;
     }

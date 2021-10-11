@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RestraurantRequest;
+use App\Models\Restaurant;
+use App\Models\Cuisine;
 use App\Notifications\BusinessAccountApproved;
 use DB;
 
@@ -86,9 +88,10 @@ class RestraurantRequestController extends Controller
      */
     public function edit($id)
     {
-        
+        $cuisine = Cuisine::select('id','name')->where('status',1)->get();
         $data = $this->data->where('id',$id)->first();
-        return view('admin.restaurantRequest.edit',compact('data'));
+        $restaurant = Restaurant::where('restro_request_id',$data->id)->where('draft',1)->first();
+        return view('admin.restaurantRequest.edit',compact('data','restaurant','cuisine'));
     }
 
     /**

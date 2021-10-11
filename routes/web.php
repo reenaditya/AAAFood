@@ -69,6 +69,7 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 	/*Create Restaurant link*/
 	Route::get('/bussiness-account/restaurant/add','RestaurantController@index');
 	Route::post('/bussiness-account/restaurant/add','RestaurantController@store');
+	Route::put('/bussiness-account/restaurant/update/{id}','RestaurantController@update');
 
 
 });

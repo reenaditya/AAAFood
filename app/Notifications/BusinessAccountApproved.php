@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Crypt;
 
 class BusinessAccountApproved extends Notification
 {
@@ -40,8 +41,7 @@ class BusinessAccountApproved extends Notification
      */
     public function toMail($notifiable)
     {
-        $name = $notifiable->fname.' '.$notifiable->lname;
-        $url = url('/bussiness-account/restaurant/add').'?restaurant_name='.$notifiable->restaurant_name.'&name='.$name.'&email='.$notifiable->email;
+        $url = url('/bussiness-account/restaurant/add/').'?req_id='.Crypt::encrypt($notifiable->id);
         return (new MailMessage)
                     ->line('Your request is approved please fill your restaurant details.')
                     ->action('Add Restaurant', $url)

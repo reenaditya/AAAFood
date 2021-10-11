@@ -62,6 +62,10 @@ class CreateRestaurantsTable extends Migration
             $table->tinyInteger('trending')->default(0)->comment("1=yes, 0=no");
             $table->tinyInteger('new')->default(0)->comment("1=yes, 0=no");
             $table->tinyInteger('top_rated')->default(0)->comment("1=yes, 0=no");
+            
+            $table->tinyInteger('draft')->default(0)->nullable()->comment("1=yes, 0=no");
+            $table->bigInteger('restro_request_id')->nullable();
+
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->timestamps();
         });

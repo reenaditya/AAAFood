@@ -34,6 +34,11 @@ class Restaurant extends Model
         return $this->hasMany(MenuItem::class,'restaurant_id','id');
     }
 
+    public function restroReq()
+    {
+        return $this->hasOne(RestraurantRequest::class,'id','restro_request_id');
+    }
+
     /*
     * Search restaurant data > Using for home search page
     */

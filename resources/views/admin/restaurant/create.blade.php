@@ -327,7 +327,7 @@
 										@foreach($aaadining_club as $kii=>$val)
 										<label class="form-check m-0">
 								            <input type="checkbox" value="{{$kii}}" class="form-check-input" name="ac_terms_condition[]">
-								            <span class="form-check-label @if($kii==1) append-max-discount-price @endif">{{$val}}</span>
+								            <span class="form-check-label @if($kii==1) append-max-discount-price @endif">{!! $val !!}</span>
 							            </label>
 							            @endforeach
 									</div>

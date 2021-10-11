@@ -1,6 +1,0 @@
-ALTER TABLE `orders` ADD `admin_comment` TEXT NULL DEFAULT NULL AFTER `note`;
-ALTER TABLE `users` ADD `mobile` VARCHAR(20) NULL DEFAULT NULL AFTER `role`;
-ALTER TABLE `restraurant_requests` CHANGE `relation` `relation` TINYINT NULL DEFAULT '4' COMMENT '1=Owner, 2=President, 3=Manager, 4=Other';
-ALTER TABLE `restaurants` ADD `ac_max_discount` VARCHAR(250) NULL DEFAULT NULL AFTER `participate_file`;
-
-

@@ -354,7 +354,7 @@
 										@foreach($aaadining_club as $kii=>$val)
 										<label class="form-check m-0">
 								            <input type="checkbox" value="{{$kii}}" class="form-check-input" @if(isset($ac_terms_condition) && !empty($ac_terms_condition) && in_array($kii, $ac_terms_condition) ) checked="" @endif name="ac_terms_condition[]">
-								            <span class="form-check-label @if($kii==1) append-max-discount-price @endif">{{$val}}</span>
+								            <span class="form-check-label @if($kii==1) append-max-discount-price @endif">{!! $val !!}</span>
 							            </label>
 							            @endforeach
 									</div>
@@ -516,6 +516,7 @@
 										<img style="width:auto;height: 100px" src="{{asset("storage/$restaurant->banner_img")}}">
 									</div>
 								</div>
+								@if(Auth::check() && Auth::user()->role==2)
 								<div class="mb-4 col-md-4">
 									<label class="form-label" >Status</label>
 									<select class="form-control" name="status" >
@@ -527,6 +528,7 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
+								@endif
 								<div class="mb-4 col-md-4">
 									<label class="form-label">Starting meal(price)</label>
 									<input type="number" name="meal_starting" class="form-control" value="{{$restaurant->meal_starting ?? ''}}">

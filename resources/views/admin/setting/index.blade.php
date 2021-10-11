@@ -63,6 +63,36 @@
 											<input type="text" name="general_setting_top_header_order_history" class="form-control" value="{{old('general_setting_top_header_order_history',Settings::get('general_setting_top_header_order_history'))}}">
 										</div>
 										<hr>
+										<div class="col-md-6 mb-4">
+											<label class="form-label" >Website Header Image</label>
+											<div class="text-center">
+												<img src="{{asset('storage/'.Settings::get('general_setting_website_head_image'))}}" style="max-width:130px;">
+											</div>
+											<input type="file" name="general_setting_website_head_image" class="form-control">
+										</div>
+										<div class="col-md-6 mb-4">
+											<label class="form-label" >Website Spining Plate Image</label>
+											<div class="text-center">
+												<img src="{{asset('storage/'.Settings::get('general_setting_website_spining_plate'))}}" style="max-width:130px;">
+											</div>
+											<input type="file" name="general_setting_website_spining_plate" class="form-control">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Dine In</label>
+											<input type="text" name="general_setting_top_header_dine_in" class="form-control" value="{{old('general_setting_top_header_dine_in',Settings::get('general_setting_top_header_dine_in'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Delivery</label>
+											<input type="text" name="general_setting_top_header_delivery" class="form-control" value="{{old('general_setting_top_header_delivery',Settings::get('general_setting_top_header_delivery'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Catering</label>
+											<input type="text" name="general_setting_top_header_catering" class="form-control" value="{{old('general_setting_top_header_catering',Settings::get('general_setting_top_header_catering'))}}">
+										</div>
+										<div class="mb-4 col-md-4">
+											<label class="form-label">Pick Up</label>
+											<input type="text" name="general_setting_top_header_pickup" class="form-control" value="{{old('general_setting_top_header_pickup',Settings::get('general_setting_top_header_pickup'))}}">
+										</div>
 										<div class="mb-4 col-md-4">
 											<label class="form-label" >Header Title</label>
 											<input type="text" name="general_setting_header_title" class="form-control" value="{{old('general_setting_header_title',Settings::get('general_setting_header_title'))}}">

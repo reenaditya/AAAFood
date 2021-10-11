@@ -22,7 +22,7 @@ $(function(){
 
 	$("input[name='ac_max_discount']").on('change',function(){
 		var val = $(this).val();
-		$(".append-max-discount-price").append('$'+val);
+		$(".append-max-discount-price span").html('$'+val);
 	});
 	
 });

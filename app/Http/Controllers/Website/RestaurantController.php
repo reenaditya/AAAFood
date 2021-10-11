@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use App\Models\CuisineRestaurant;
 use App\Models\Restaurant;
@@ -25,10 +26,15 @@ class RestaurantController extends Controller
     /*
     * business account view page
     */
-    public function index()
+    public function index(Request $request)
     {
-        $cuisine = Cuisine::where('status',1)->get();
-        return view('Website.bussinessAccount.createRestro',compact('cuisine'));
+        $reqId = Crypt::decrypt($request->req_id);
+        $restaurant = $this->restaurant->where('restro_request_id',$reqId)->where('draft',1)->first();
+        if ($restaurant!=null) {
+            $cuisine = Cuisine::select('id','name')->where('status',1)->get();
+            return view('Website.bussinessAccount.createRestro',compact('cuisine','restaurant'));
+        }
+        return back();
     }
 
 
@@ -79,6 +85,59 @@ class RestaurantController extends Controller
             return back()->withError($e->getMessage());
         }
     }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Restaurant  $restaurant
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+            
+        $this->validation($request);
+
+        DB::beginTransaction();
+        try {
+            $this->restaurant = $this->restaurant->where('id',$id)->first();
+            $user = User::where('email',$request->user_email)->first();
+            if ($user==null) {
+                $user = new User;
+                $user->name = $request->user_name;
+                $user->email = $request->user_email;
+                $user->role = 1;
+                $user->password = Hash::make($request->password);
+                $user->save();
+                Auth::login($user);
+            }
+            $userId = $user->id;
+
+            
+            $this->props($request,$userId)
+            ->save();
+
+            $id = $this->restaurant->id;
+            $cuisine = $request->cuisines;
+            
+            $this->removeCusinRestro($id);
+            $this->addCusinRestro($id,$cuisine);
+            $this->updateRestaurantOffer($id,$request);
+            
+            DB::commit();
+            
+            return redirect('admin/dashboard')->withSuccess("Restaurant updated");
+
+
+        } catch (Exception $e) {
+            
+            DB::rollback();
+
+            return back()->withError($e->getMessage());
+        }
+    }
+
 
     private function validation(Request $request)
     {
@@ -147,7 +206,7 @@ class RestaurantController extends Controller
         }
         $this->restaurant->ac_max_discount = $request->ac_max_discount;
         $this->restaurant->aaadining_club = $request->aaadining_club;
-        $this->restaurant->birthday_club = $request->birthday_club;
+        /*$this->restaurant->birthday_club = $request->birthday_club;*/
         $this->restaurant->mf_from = $request->mf_from;
         $this->restaurant->mf_to = $request->mf_to;
         $this->restaurant->sat_from = $request->sat_from;
@@ -156,7 +215,7 @@ class RestaurantController extends Controller
         $this->restaurant->sun_to = $request->sun_to;
         $this->restaurant->description = $request->description;
         $this->restaurant->serve = $request->serve?true:false;
-        $this->restaurant->status = $request->status?true:false;
+        $this->restaurant->status = false;
         return $this;
     }
     private function save()
@@ -195,6 +254,47 @@ class RestaurantController extends Controller
         }
         $add->status = false;
         $add->save();
+        return $this;
+    }
+
+
+    private function removeCusinRestro($id)
+    {
+        CuisineRestaurant::where('restaurant_id',$id)->delete();
+        return 1;
+    }
+
+    private function updateRestaurantOffer($restoId,$request){
+        $getAllId = $request->rest_offer_id;
+        if ($getAllId==null) {
+            $oftype = 'AADINING_CLUB';
+            $this->addRestaurantOffer($restoId,$request,$oftype);
+            /*$oftype = 'BIRTHDAY_CLUB';
+            $this->addRestaurantOffer($restoId,$request,$oftype);*/
+        }else{
+            if($request->ac_offer_type!=null){
+                $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->first(); 
+                if ($request->hasFile('ac_image')) {        
+                    $getAaaData->file =$request->ac_image->store('upload/restaurant','public');  
+                }
+                $getAaaData->offer_valid_day = !empty($request->ac_days)? json_encode($request->ac_days) :'';
+                $getAaaData->offer_valid_from = $request->offer_valid_from!=null?$request->offer_valid_from :null;
+                $getAaaData->offer_valid_to = $request->offer_valid_to!=null?$request->offer_valid_to :null;
+                $getAaaData->terms_condition = !empty($request->ac_terms_condition) ? json_encode($request->ac_terms_condition):'';
+                $getAaaData->status = false;
+                $getAaaData->update();    
+            }else{
+                $getAaaData = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','AADINING_CLUB')->update(['status'=>false]);
+            }
+            if ($request->bc_offer_type!=null) {
+                $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->first();
+                $getAaaData1->terms_condition = !empty($request->bc_terms_condition) ? json_encode($request->bc_terms_condition):'';
+                $getAaaData1->status = false;
+                $getAaaData1->update();
+            }else{
+                $getAaaData1 = RestaurantOffer::whereIn('id',$getAllId)->where('offer_type','BIRTHDAY_CLUB')->update(['status'=>false]);
+            }
+        }
         return $this;
     }
 }
