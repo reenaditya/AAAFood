@@ -181,6 +181,61 @@
 										</div>
 
 									</div>
+
+									<h4 class="tab-title">Custumize website email message</h4>
+									<div class="row">
+										
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Business Account Activation</label>
+											<input type="text" name="email_message_business_acc_activation" class="form-control" value="{{old('email_message_business_acc_activation',Settings::get('email_message_business_acc_activation'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Verify Email</label>
+											<input type="text" name="email_message_verify_delivery_boy_email" class="form-control" value="{{old('email_message_verify_delivery_boy_email',Settings::get('email_message_verify_delivery_boy_email'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Delivery boy assigend</label>
+											<input type="text" name="email_message_delivery_boy_assign" class="form-control" value="{{old('email_message_delivery_boy_assign',Settings::get('email_message_delivery_boy_assign'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Order accepted by restaurant</label>
+											<input type="text" name="email_message_order_accepted" class="form-control" value="{{old('email_message_order_accepted',Settings::get('email_message_order_accepted'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Food left kitchen</label>
+											<input type="text" name="email_message_food_left_kitchen" class="form-control" value="{{old('email_message_food_left_kitchen',Settings::get('email_message_food_left_kitchen'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Order arrived to Customer</label>
+											<input type="text" name="email_message_order_arrived" class="form-control" value="{{old('email_message_order_arrived',Settings::get('email_message_order_arrived'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Order arrived to Vendor</label>
+											<input type="text" name="email_message_order_arrived_vendor" class="form-control" value="{{old('email_message_order_arrived_vendor',Settings::get('email_message_order_arrived_vendor'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Order completed to Customer</label>
+											<input type="text" name="email_message_order_completed_cust" class="form-control" value="{{old('email_message_order_completed_cust',Settings::get('email_message_order_completed_cust'))}}">
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Order completed to Vendor</label>
+											<input type="text" name="email_message_order_completed_vendor" class="form-control" value="{{old('email_message_order_completed_vendor',Settings::get('email_message_order_completed_vendor'))}}">
+										</div>
+ 
+										<div class="mb-4 col-md-6">
+											<label class="form-label">Email footer text</label>
+											<input type="text" name="email_message_footer_text" class="form-control" value="{{old('email_message_footer_text',Settings::get('email_message_footer_text'))}}">
+										</div>
+
+									</div>
 									
 									<button type="submit" class="btn btn-primary">Submit</button>
 								</form>

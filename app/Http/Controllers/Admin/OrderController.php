@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Order;
 use DB;
 use Carbon\Carbon;
+use Settings;
 
 class OrderController extends Controller
 {
@@ -162,7 +163,7 @@ class OrderController extends Controller
     private function sendNotification($data,$deliver=false)
     {
         if ($deliver) {
-            $firstLine = 'Delivery boy assigned and will be delivering your food soon!';
+            $firstLine = Settings::get('email_message_delivery_boy_assign');
             $url = url('order/history');
             User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
         }
@@ -170,22 +171,22 @@ class OrderController extends Controller
 
             if ($data->order_status==2) 
             {
-                $firstLine = 'Your order is accepted by restaurant and prepare';
+                $firstLine = Settings::get('email_message_order_accepted');
                 $url = url('order/history');
                 User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
             }
             if ($data->order_status==4) 
             {
-                $firstLine = 'Food has left our kitchen and should arrive within minutes.';
+                $firstLine = Settings::get('email_message_food_left_kitchen');
                 $url = url('order/history');
                 User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
             }
             if ($data->order_status==5) 
             {
-                $firstLine = 'Delivery boy arrived please pick your order.';
+                $firstLine = Settings::get('email_message_order_arrived');
                 $url = url('order/history');
                 User::where('id',$data->user_id)->first()->notify(new OrderStatusNotification($firstLine,$url));
-                $firstLine = 'Delivery boy arrived.';
+                $firstLine = Settings::get('email_message_order_arrived_vendor');
                 $url = url('admin/order-new');
                 User::where('id',$data->vendor_id)->first()->notify((new OrderStatusNotification($firstLine,$url)));
             }
@@ -193,10 +194,10 @@ class OrderController extends Controller
             {
                 $nowTimeDate = Carbon::now();
                 $delay = Carbon::now()->addMinutes(1);
-                $firstLine = 'Your order is completed thank you.';
+                $firstLine = Settings::get('email_message_order_completed_cust');
                 $url = url('order/history');
                 User::where('id',$data->user_id)->first()->notify((new OrderStatusNotification($firstLine,$url))->delay($delay));
-                $firstLine = 'Order completed thank you.';
+                $firstLine = Settings::get('email_message_order_completed_vendor');
                 $url = url('admin/order-completed');
                 User::where('id',$data->vendor_id)->first()->notify((new OrderStatusNotification($firstLine,$url))->delay($delay));
             }
@@ -347,7 +348,7 @@ class OrderController extends Controller
 
     public function verifyEmailNotification($data)
     {
-        $firstLine = "Please click on the button to verify your email.";
+        $firstLine = Settings::get('email_message_verify_delivery_boy_email');
         User::where('id',$data->id)->first()->notify(new EmailVerifyNotification($firstLine));
         return $this;        
     }

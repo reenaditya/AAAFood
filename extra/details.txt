@@ -1,0 +1,27 @@
+1. get all restro details on admin > restaurant_request page
+2. make details fillable for restaurant
+3. Maximum discount field issue fixed
+4. send email link with fillable restaurant details to vendor.
+5. when vendor submit and verify all data then we create there account.
+6. Vendor restaurant will visible on front side when admin approved there restaurant.
+7. All order process message changed as per mentioned in points.
+
+8. Add VIP Field to users in admin 
+9. add new functionality customer pick-up option : New field added in DB named delivery_type (Which has 2 option Home delivery and pickup)
+10. if pickup selected billing details will be hide.
+11. on orders listing show delivery type(Home delivery and pickup)
+12. on delivery boy panel we dont show order if order is pickup.
+13. add restaurant name in order listing.
+14. delivery type add in order detail page 
+15. add chat functionality for customer and delivery boy
+    15.1 Create Database for chat
+    15.2 Impliment it on both side Customer and delivery boy
+    15.3 Create Customer Chat design panel
+    15.4 Impliment both chat process 
+
+16. Customize email message this feature is add into admin > setting.
+17. impliment all the email message into email template.
+18. email fotter text also set at admin > setting.
+19. add dropdown to header signout
+20. add home page sortcut on admin side
+21. HOME PAGE : cuisine replaced by participant meal image from restaurant

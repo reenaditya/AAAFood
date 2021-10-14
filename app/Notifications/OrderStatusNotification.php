@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Settings;
 
 class OrderStatusNotification extends Notification implements ShouldQueue 
 {
@@ -47,7 +48,7 @@ class OrderStatusNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->line($this->firstLine)
             ->action('Order Detail', $this->url)
-            ->line('Thank you for using our application!');
+            ->line(Settings::get('email_message_footer_text'));
     }
 
     /**

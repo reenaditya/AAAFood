@@ -10,7 +10,7 @@
 				<div class="card">
 					
 					<div class="table-responsive card-body">
-						<table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
 							<thead>
 								<tr>
 									<th>S.No</th>
@@ -58,31 +58,13 @@
 @endsection
 @push('script')
 	<script>
-		
-		// DataTables with Column Search by Select Inputs
 		document.addEventListener("DOMContentLoaded", function() {
-			$('#datatables-column-search-select-inputs').DataTable({
-				initComplete: function() {
-					this.api().columns().every(function() {
-						var column = this;
-						var select = $('<select class="form-control"><option value=""></option></select>')
-							.appendTo($(column.footer()).empty())
-							.on('change', function() {
-								var val = $.fn.dataTable.util.escapeRegex(
-									$(this).val()
-								);
-								column
-									.search(val ? '^' + val + '$' : '', true, false)
-									.draw();
-							});
-						column.data().unique().sort().each(function(d, j) {
-							select.append('<option value="' + d + '">' + d + '</option>')
-						});
-					});
-				}
+			// Datatables Responsive
+			$("#datatables-reponsive").DataTable({
+				responsive: true
 			});
 		});
-
+		
 		function destroy(id){
 
 			Swal.fire({

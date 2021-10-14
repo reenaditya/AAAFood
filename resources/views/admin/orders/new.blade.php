@@ -26,9 +26,7 @@
 								<tr>
 									<th width="2%">S.No</th>
 									<th>Order number</th>
-									@if(Auth::check() && Auth::user()->role===3)
 									<th>Restaurant name</th>
-									@endif
 									<th>Amount</th>
 									@if(Auth::check() && Auth::user()->role===1)
 									<th>Payment Status</th>
@@ -45,9 +43,7 @@
 										<td>
 											{{ $value->order_number ?? '' }}
 										</td>
-										@if(Auth::check() && Auth::user()->role===3)
 										<td>{{ $value->restaurant->name ?? '' }}</td>
-										@endif
 										<td>${{ $value->grand_total ?? '' }} </td>
 										@if(Auth::check() && Auth::user()->role===1)
 										<td>

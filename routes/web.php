@@ -45,6 +45,10 @@ Route::post('stripe','StripeController@stripePost')->name('stripe.post');
 /*Route::post('placeorder/cod','StripeController@codPost')->name('placeorder.cod');*/
 /*END*/
 
+/*Chats*/
+Route::post('chats/message','ChatController@chatMessage')->name('chat.message');
+/*END*/
+
 Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');

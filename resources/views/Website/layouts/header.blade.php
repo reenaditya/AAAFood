@@ -39,8 +39,22 @@
                         @endguest
                         @auth
                         <div class="my-2 my-lg-0">
-                            <a href="javascript:;"  onclick="document.getElementById('logout').submit()" class="btn my-2 my-sm-0">Sign Out</a>
-                            <form action="{{ route('logout') }}" method="post" id="logout">@csrf</form>
+
+                            <div class="dropdown show">
+                              <a class="btn my-2 my-sm-0 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ Auth::user()->name ?? 'User' }}
+                              </a>
+
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                @if(Auth::user()->role==4)
+                                    <a class="dropdown-item" href="{{route('webiste.order.history')}}">Orders</a>
+                                @else
+                                    <a class="dropdown-item" href="{{route('admin.dashboard.index')}}">Dashboard</a>
+                                @endif
+                                <a class="dropdown-item" href="javascript:;"  onclick="document.getElementById('logout').submit()">Sign Out</a>
+                                <form action="{{ route('logout') }}" method="post" id="logout">@csrf</form>
+                              </div>
+                            </div>
                         </div>
                         @endauth
                     </div>

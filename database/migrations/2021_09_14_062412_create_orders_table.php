@@ -36,6 +36,7 @@ class CreateOrdersTable extends Migration
             $table->text('admin_comment')->nullable();
             $table->tinyInteger('payment_status')->default(1)->comment("1=pending, 2=Completed,3=Failed,4=Refunded");
             $table->tinyInteger('order_status')->default(1)->comment("1=pending, 2=Prepare,3=Packed,4:On the Way,5:Delivered,6:Canceled,7:Completed,8:Refunded");
+            $table->tinyInteger('delivery_type')->default(1)->comment("1=Home, 2=Pick up");
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

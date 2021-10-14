@@ -23,11 +23,12 @@
 					<div class="table-responsive card-body">
 						<br>
 						
-						<table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
 							<thead>
 								<tr>
 									<th width="2%">S.No</th>
 									<th>Order number</th>
+									<th>Restaurant name</th>
 									<th>Amount</th>
 									<th>Payment Status</th>
 									<th>Order Status</th>
@@ -41,15 +42,9 @@
 										
 										<td>
 											{{ $value->order_number ?? '' }}
-											
-											{{-- @if(!$value->orderItem->isEmpty())
-											@foreach($value->orderItem as $kii=>$val)
-												{{++$kii}}. {{ $val->menuItem->name ?? '' }}
-												<br><strong>Unit: {{$val->unit ?? ''}}&nbsp;&nbsp;
-												Quantity: {{$val->quantity ?? ''}}</strong><br>
-											@endforeach
-											@endif --}}
 										</td>
+										<td>{{ $value->restaurant->name ?? '' }}</td>
+
 										<td>${{ $value->grand_total ?? '' }} </td>
 										<td>
 											<select class="form-control" name="payment_status" data-id="{{ $value->id }}" @if($disabled) disabled="" @endif>
@@ -75,12 +70,6 @@
 							</tbody>
 							<tfoot>
 								<tr>
-									{{-- <th></th> --}}
-									{{-- <th>Name</th>
-									<th>Email</th>
-									<th>Phone</th>
-									<th>City</th>
-									<th>Zipcode</th> --}}
 									
 								</tr>
 							</tfoot>
@@ -96,53 +85,13 @@
 @push('script')
 	<script type="text/javascript" src="{{asset('js/admin/orders.js')}}"></script>
 	<script>
-		// DataTables with Column Search by Text Inputs
 		document.addEventListener("DOMContentLoaded", function() {
-			// Setup - add a text input to each footer cell
-			$('#datatables-column-search-text-inputs tfoot th').each(function() {
-				var title = $(this).text();
-				if (title) {
-					$(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');	
-				}
-				
-			});
-			// DataTables
-			var table = $('#datatables-column-search-text-inputs').DataTable();
-			// Apply the search
-			table.columns().every(function() {
-				var that = this;
-				$('input', this.footer()).on('keyup change clear', function() {
-					if (that.search() !== this.value) {
-						that
-							.search(this.value)
-							.draw();
-					}
-				});
+			// Datatables Responsive
+			$("#datatables-reponsive").DataTable({
+				responsive: true
 			});
 		});
-		// DataTables with Column Search by Select Inputs
-		document.addEventListener("DOMContentLoaded", function() {
-			$('#datatables-column-search-select-inputs').DataTable({
-				initComplete: function() {
-					this.api().columns().every(function() {
-						var column = this;
-						var select = $('<select class="form-control"><option value=""></option></select>')
-							.appendTo($(column.footer()).empty())
-							.on('change', function() {
-								var val = $.fn.dataTable.util.escapeRegex(
-									$(this).val()
-								);
-								column
-									.search(val ? '^' + val + '$' : '', true, false)
-									.draw();
-							});
-						column.data().unique().sort().each(function(d, j) {
-							select.append('<option value="' + d + '">' + d + '</option>')
-						});
-					});
-				}
-			});
-		});
+		
 		function destroy(id){
 
 			Swal.fire({

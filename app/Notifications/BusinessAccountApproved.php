@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Crypt;
+use Settings;
 
 class BusinessAccountApproved extends Notification
 {
@@ -43,9 +44,9 @@ class BusinessAccountApproved extends Notification
     {
         $url = url('/bussiness-account/restaurant/add/').'?req_id='.Crypt::encrypt($notifiable->id);
         return (new MailMessage)
-                    ->line('Your request is approved please fill your restaurant details.')
+                    ->line(Settings::get('email_message_business_acc_activation'))
                     ->action('Add Restaurant', $url)
-                    ->line('Thank you for using our application!');
+                    ->line(Settings::get('email_message_footer_text'));
     }
 
     /**

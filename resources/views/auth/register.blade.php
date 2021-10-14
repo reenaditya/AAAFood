@@ -4,7 +4,7 @@
     <div class="container-fluid no-padding">
       <div class="row no-gutters overflow-auto">
         <div class="col-md-6">
-          <div class="main-banner" style="height: 140vh;">
+          <div class="main-banner" style="height: 170vh;">
             <img src="assets/img/banner/banner-1.jpg" class="img-fluid full-width main-img" alt="banner">
             
             <img src="assets/img/banner/burger.png" class="footer-img" alt="footer-img">
@@ -50,7 +50,7 @@
                           </div>    
                         </div>
                         <div class="col-6">
-                          <label class="text-light-white fs-14">Coupon code </label>
+                          <label class="text-light-white fs-14">Your VIP Number?</label>
                           <div class="form-group">
                             <input type="text" name="coupen" value="{{old('coupen')}} " class="form-control form-control-submit" placeholder="coupon code" >
                             @error('coupenk')
@@ -59,7 +59,13 @@
                           </div>
                         </div>
                       </div>
-                      
+                      <div class="form-group">
+                        <label class="text-light-white fs-14">Mobile number</label>
+                        <input type="number" min="999999" max="99999999999" name="mobile" class="form-control form-control-submit" placeholder="" required>
+                        @error('mobile')
+                          <span class="text-danger">{{$message}} </span>
+                        @enderror
+                      </div>
                       <div class="form-group">
                         <label class="text-light-white fs-14">Password (8 character minimum)</label>
                         <input type="password" id="password-field" name="password" class="form-control form-control-submit" value="password" placeholder="Password" required>

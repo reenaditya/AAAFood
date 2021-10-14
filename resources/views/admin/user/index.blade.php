@@ -18,13 +18,14 @@
 						</div>			
 						<br>
 						
-						<table id="datatables-column-search-text-inputs" class="table table-striped" style="width:100%">
+						<table id="datatables-reponsive" class="table table-striped" style="width:100%">
 							<thead>
 								<tr>
 									<th width="2%">S.No</th>
 									<th>Name</th>
 									<th>Email</th>
 									<th>Role</th>
+									<th>VIP</th>
 									<th>Status</th>
 									<th width="10%">Action</th>
 								</tr>
@@ -39,6 +40,13 @@
 											<span class="badge badge-soft-success">
 												{{ Config::get('constant.role')[$value->role] ?? ''}}
 											</span>
+										</td>
+										<td>
+											@if($value->vip==1)
+											<span class="badge badge-soft-info">VIP</span>
+											@else
+											<span class="badge badge-soft-danger">NA</span>
+											@endif
 										</td>
 										<td><button class="btn btn-{{$value->status?'success':'danger'}} ">
 											{{$value->status? 'Active':'Inactive'}}
@@ -57,10 +65,10 @@
 							</tbody>
 							<tfoot>
 								<tr>
-									<th></th>
+									{{-- <th></th>
 									<th>Name</th>
 									<th>Email</th>
-									<th>Phone</th>
+									<th>Phone</th> --}}
 									
 								</tr>
 							</tfoot>
@@ -74,53 +82,13 @@
 @endsection
 @push('script')
 	<script>
-		// DataTables with Column Search by Text Inputs
 		document.addEventListener("DOMContentLoaded", function() {
-			// Setup - add a text input to each footer cell
-			$('#datatables-column-search-text-inputs tfoot th').each(function() {
-				var title = $(this).text();
-				if (title) {
-					$(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');	
-				}
-				
-			});
-			// DataTables
-			var table = $('#datatables-column-search-text-inputs').DataTable();
-			// Apply the search
-			table.columns().every(function() {
-				var that = this;
-				$('input', this.footer()).on('keyup change clear', function() {
-					if (that.search() !== this.value) {
-						that
-							.search(this.value)
-							.draw();
-					}
-				});
+			// Datatables Responsive
+			$("#datatables-reponsive").DataTable({
+				responsive: true
 			});
 		});
-		// DataTables with Column Search by Select Inputs
-		document.addEventListener("DOMContentLoaded", function() {
-			$('#datatables-column-search-select-inputs').DataTable({
-				initComplete: function() {
-					this.api().columns().every(function() {
-						var column = this;
-						var select = $('<select class="form-control"><option value=""></option></select>')
-							.appendTo($(column.footer()).empty())
-							.on('change', function() {
-								var val = $.fn.dataTable.util.escapeRegex(
-									$(this).val()
-								);
-								column
-									.search(val ? '^' + val + '$' : '', true, false)
-									.draw();
-							});
-						column.data().unique().sort().each(function(d, j) {
-							select.append('<option value="' + d + '">' + d + '</option>')
-						});
-					});
-				}
-			});
-		});
+		
 		function destroy(id){
 
 			Swal.fire({

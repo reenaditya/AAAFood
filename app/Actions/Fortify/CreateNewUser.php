@@ -44,6 +44,7 @@ class CreateNewUser implements CreatesNewUsers
         if ($role==4 && $vip==1 && $coupen!=Settings::get('general_setting_vip_coupon_code')) {
             Validator::make($input, [
                 'coupenk' => ['required'],
+                'mobile' => ['required'],
             ])->validate();
         }
 

@@ -120,7 +120,15 @@ function calculateDeliveryFees(subTotal) {
 	}else{
 		localStorage.setItem('delivery_fee',delivery_fee);
 		$("span.delivery-fees").text(delivery_fee);
-	}	
+	}
+
+	/*On change delivery type*/
+	getDeliveryType();
+	var delType = localStorage.getItem('delivery_type');
+	if (delType==2) {
+		localStorage.setItem('delivery_fee',0);
+		$("span.delivery-fees").text('0.00');
+	}
 }
 
 function calculateFeestaxes(subTotal) {
@@ -246,7 +254,7 @@ function vipactive() {
 	if (parseInt(isvip)==1 && vipcoupen==usercopon) {
 		isvipuser = 'YES';
 		minimum_delivery_amount = 0;
-		$("span.minimum-delivery-am").text('No Min. (VIP)');
+		$("span.minimum-delivery-am").text('0 (VIP)');
 	}
 }
 
@@ -257,4 +265,15 @@ function countProduct() {
 	}else{
 		proceedToCheckoutLink(false);
 	}
+}
+
+
+$(document).on("change","input[name='delivery_type']",function () {
+	getDeliveryType();
+	itemAddToCart();
+});
+
+function getDeliveryType() {
+	var delivery_type = $("input[name='delivery_type']:checked").val();
+	localStorage.setItem('delivery_type',delivery_type);
 }

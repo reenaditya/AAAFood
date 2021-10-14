@@ -6,6 +6,7 @@ $(function() {
 	});
 
 	productDetails();	
+	deliveryType();
 
 });
 
@@ -96,3 +97,15 @@ $(document).on("change","input[name='radio_group']",function () {
 	}
 
 });
+
+function deliveryType() {
+	var deliveryType = localStorage.getItem('delivery_type');
+	$("input[name='delivery_type']").val(deliveryType);
+	  
+	if (deliveryType==1) {
+		$(".other-biling-det").show();
+	}
+	if (deliveryType==2) {
+		$(".other-biling-det").hide();
+	}
+}

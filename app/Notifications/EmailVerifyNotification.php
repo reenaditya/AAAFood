@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Settings;
 
 class EmailVerifyNotification extends Notification
 {
@@ -46,7 +47,7 @@ class EmailVerifyNotification extends Notification
         return (new MailMessage)
                     ->line($this->firstLine)
                     ->action('Verify Email', $url)
-                    ->line('Thank you for using our application!');
+                    ->line(Settings::get('email_message_footer_text'));
     }
 
     /**

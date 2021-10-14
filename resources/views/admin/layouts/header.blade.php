@@ -49,8 +49,8 @@
 						{{-- <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
 						<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="pages-settings.html">Settings & Privacy</a>
-						<a class="dropdown-item" href="#">Help</a> --}}
+						<a class="dropdown-item" href="pages-settings.html">Settings & Privacy</a> --}}
+						<a class="dropdown-item" href="{{url('/')}}">Home</a>
 						<a class="dropdown-item" href="javascript:;" onclick="document.getElementById('logout').submit()">Sign out</a>
 						<form action="{{ route('logout') }}" method="post" id="logout">@csrf
 						</form>

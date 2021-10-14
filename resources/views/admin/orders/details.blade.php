@@ -118,7 +118,7 @@
 							<h5>Customer Mobile Number</h5>
 
 							<p class="text-muted">
-								{{ $data->mobile ?? '' }}
+								<a href="tel:{{ $data->mobile ?? '' }}">{{ $data->mobile ?? '' }}</a>
 							</p>
 
 
@@ -175,6 +175,7 @@
 
 							<hr />
 							<h5 class="card-title mb-3">Delivery Boy Details</h5>
+							@if($data->delivery_type==1)
 							<dl class="row">
 								<dt class="col-4 col-xxl-3 mb-0">Name</dt>
 								<dd class="col-8 col-xxl-9 mb-0">
@@ -194,9 +195,12 @@
 
 								<dt class="col-4 col-xxl-3">Phone Number</dt>
 								<dd class="col-8 col-xxl-9">
-									<p class="mb-1">{{ $data->deliveryUser->mobile ?? '' }}</p>
+									<p class="mb-1"> <a href="tel:{{ $data->deliveryUser->mobile ?? '' }}">{{ $data->deliveryUser->mobile ?? '' }}</a> </p>
 								</dd>
 							</dl>
+							@else
+							<div class="badge bg-info">Order Pick by Customer</div>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -226,6 +230,75 @@
 					</div>	
 				</div>
 
+				@if(Auth::user()->role==3 && $data->deliveryUser)
+				<div class="col-lg-12 col-xxl-12">
+					<h1 class="h3 mb-3">Messages</h1>
+
+					<div class="card">
+						<div class="row g-0">
+							<div class="col-12 col-lg-12 col-xl-12">
+								<div class="py-2 px-4 border-bottom d-none d-lg-block">
+									<div class="d-flex align-items-start align-items-center py-1">
+										<div class="position-relative">
+											<img src="img/avatars/avatar-3.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
+										</div>
+										<div class="flex-grow-1 ps-3">
+											<strong>{{ $data->user->name ?? ''}}</strong>
+										</div>
+										
+									</div>
+								</div>
+
+								<div class="position-relative">
+									<div class="chat-messages p-4">
+										@if($data->chats!=null && !$data->chats->isEmpty())
+										@foreach($data->chats as $key=>$val)
+											@if($val->sender_id==Auth::id())
+											<div class="chat-message-right pb-4">
+												<div>
+													<img src="img/avatars/avatar.jpg" class="rounded-circle me-1" alt="Chris Wood" width="40" height="40">
+												</div> 	
+												<div class="flex-shrink-1 border rounded py-2 px-3 me-3">
+													<div class="fw-bold mb-1">You</div>
+													{{ $val->message ?? '' }}
+												</div>
+											</div>
+											@else
+												<div class="chat-message-left pb-4">
+													<div>
+														<img src="img/avatars/avatar-3.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
+													</div>
+													<div class="flex-shrink-1 bg-light rounded py-2 px-3 ms-3">
+														<div class="fw-bold mb-1">{{ $data->user->name ?? '' }}</div>{!! $val->message ?? '' !!}
+													</div>
+												</div>
+											@endif
+										@endforeach
+										@endif
+
+
+									</div>
+								</div>
+
+								<div class="flex-grow-0 py-3 px-4 border-top">
+									<form action="{{route('chat.message')}}" method="post">
+									@csrf
+									<div class="input-group">
+										<input type="text" name="message" class="form-control" placeholder="Type your message" required="">
+										<input type="hidden" name="sender_id" value="{{Auth::id() ?? ''}}">
+										<input type="hidden" name="reciver_id" value="{{$data->user_id ?? ''}}">
+										<input type="hidden" name="order_id" value="{{$data->id ?? ''}}">
+										<button class="btn btn-primary">Send</button>
+									</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				@endif
 				<div class="col-lg-12 col-xxl-12"><h4>Admin Comment</h4></div>
 				@if(Auth::check() && Auth::user()->role==2)
 				<div class="col-lg-12 col-xxl-12">

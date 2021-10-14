@@ -91,17 +91,28 @@ class StripeController extends Controller
 
     private function validation(Request $request)
     {
-        $request->validate([
-            'name' => ["required","min:2","max:255"],
-            'email' => ["required"],
-            'phone' => ["required"],
-            'address' => ["required"],
-            'country' => ["required"],
-            'city' => ["required"],
-            'state' => ["required"],
-            'postalcode' => ["required"],
-            'radio_group' => ["required"],
-        ]);
+        if($request->delivery_type==2){
+            $request->validate([
+                'name' => ["required","min:2","max:255"],
+                'email' => ["required"],
+                'phone' => ["required"],
+                'radio_group' => ["required"],
+            ]);
+        }
+        else{
+            $request->validate([
+                'name' => ["required","min:2","max:255"],
+                'email' => ["required"],
+                'phone' => ["required"],
+                'address' => ["required"],
+                'country' => ["required"],
+                'city' => ["required"],
+                'state' => ["required"],
+                'postalcode' => ["required"],
+                'radio_group' => ["required"],
+            ]);
+        }
+
         return $this;
     }
 
@@ -136,7 +147,12 @@ class StripeController extends Controller
 
     private function createOrder($request,$payMode,$type,$grandTotal)
     {
-        $address = $request->name.', '.$request->address.', '.$request->city.', '.$request->state.', '.$request->country.', '.$request->postalcode;
+        if ($request->delivery_type==1) {
+            $address = $request->name.', '.$request->address.', '.$request->city.', '.$request->state.', '.$request->country.', '.$request->postalcode;
+        }
+        else{
+            $address = $request->name.', '.$request->address.', '.$request->phone;
+        }
         
         $order_number =  date('ymd').rand(100000,9999999);
 
@@ -155,6 +171,7 @@ class StripeController extends Controller
         $data->mobile = $request->phone;
         $data->email = $request->email;
         $data->note = $request->notes;
+        $data->delivery_type = $request->delivery_type;
         $data->order_status = 1;
         $data->save();
         $orderId = $data->id;

@@ -293,8 +293,23 @@
                            <div class="card-footer padding-15"> 
                                 <div class="show-erroe text-danger"></div>
                                 <a href="javascript:void(0)" class="ds11 wdt14 fw-500 lnk empty-cart">Empty Cart</a>
+                                <div>
+                                <label class="text-light-white fs-14">Delivery Type? </label>
+                                    <div class="form-group d-flex">
+                                        <label class="custom-checkbox mb-0 mr-3">
+                                          <input type="radio" name="delivery_type" value="1" checked=""> 
+                                          <span class="checkmark"></span> Home Delivery
+                                        </label>
+                                        <label class="custom-checkbox mb-0">
+                                          <input type="radio" name="delivery_type" value="2" @if(!Auth::check()) disabled="" @elseif(Auth::check() && Auth::user()->vip==0) disabled="" @endif> 
+                                          <span class="checkmark"></span> I Will Pick Up
+                                        </label>
+                                    </div>  
+                                </div>
                                 {{-- <a href="javascript:void(0)" class="ds11 wdt14 fw-500 lnk">View Full Cart</a> --}}
-                                {{-- <a href="javascript:void(0)" class="ds11 wdt14 fw-500 lnk">Enter Coupon</a> --}}
+                                @if(!Auth::check())
+                                <span class="fw-500 lnk"><strong>NOTE* </strong> If you are VIP member. Please <strong><a href="{{route('login')}}">LOGIN</a></strong> to access VIP Facility.</span>
+                                @endif
                                 <a href="javascript:void(0)" class="mt-4 btn-first green-btn text-custom-white full-width fw-500 checkout-btn">Proceed to Checkout</a>
                             </div>
                         </div>

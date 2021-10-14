@@ -4,9 +4,11 @@
     if (Auth::check()) {
         $name = Auth::user()->name;
         $email = Auth::user()->email;
+        $mobile = Auth::user()->mobile;
     }else{
         $name = '';
         $email ='';
+        $mobile = '';
     }
 @endphp
 <!-- restaurent top -->
@@ -45,6 +47,8 @@
             @csrf
             <input type="hidden" name="restaurant_id" value="{{ $restaurant->id ?? '' }}">
             <input type="hidden" name="vendor_id" value="{{ $restaurant->user_id ?? '' }}">
+            <input type="hidden" name="delivery_type" value="">
+            
             <div class="row">
                 <div class="col-lg-8 col-md-12">
                     @if(!Auth::check())
@@ -53,7 +57,7 @@
                         <span>Returning customer? <a href="{{url('login')}}">Click here to login</a></span>
                     </div>
                     @endif
-                    <div class="billing-details">
+                    <div class="billing-details ">
                         <h3 class="title">Billing Details</h3>
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
@@ -78,64 +82,66 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Phone <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="phone" value="{{old('phone')}}">
+                                    <input type="text" class="form-control" name="phone" value="{{old('phone',$mobile)}}">
                                     @error('phone')
                                         <span class="text-danger">{{$message}} </span>
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-lg-12 col-md-12">
-                                <div class="form-group">
-                                    <label>Address <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="address" value="{{old('address')}}">
-                                    @error('address')
-                                        <span class="text-danger">{{$message}} </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label>Country <span class="required">*</span></label>
-                                    <select class="form-control" name="country">
-                                        <option value="{{$restaurant->country ?? ''}}" #@if(old('country')==$restaurant->country) selected="" @endif>{{$restaurant->country ?? ''}}</option>
-                                    </select>
-                                    @error('country')
-                                        <span class="text-danger">{{$message}} </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label>City <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="city" value="{{ old('city',$restaurant->city) ?? '' }}">
-                                    @error('city')
-                                        <span class="text-danger">{{$message}} </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label>State<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="state" value="{{ old('state',$restaurant->state) ?? '' }}">
-                                    @error('state')
-                                        <span class="text-danger">{{$message}} </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label>Postcode / Zip <span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="postalcode" value="{{old('postalcode')}}">
-                                    @error('postalcode')
-                                        <span class="text-danger">{{$message}} </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="form-group">
-                                    <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-control">{{old('notes')}}</textarea>
+                            <div class="col-lg-12 col-md-12 other-biling-det">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label>Address <span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="address" value="{{old('address')}}">
+                                            @error('address')
+                                                <span class="text-danger">{{$message}} </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Country <span class="required">*</span></label>
+                                            <select class="form-control" name="country">
+                                                <option value="{{$restaurant->country ?? ''}}" #@if(old('country')==$restaurant->country) selected="" @endif>{{$restaurant->country ?? ''}}</option>
+                                            </select>
+                                            @error('country')
+                                                <span class="text-danger">{{$message}} </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>City <span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="city" value="{{ old('city',$restaurant->city) ?? '' }}">
+                                            @error('city')
+                                                <span class="text-danger">{{$message}} </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>State<span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="state" value="{{ old('state',$restaurant->state) ?? '' }}">
+                                            @error('state')
+                                                <span class="text-danger">{{$message}} </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Postcode / Zip <span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="postalcode" value="{{old('postalcode')}}">
+                                            @error('postalcode')
+                                                <span class="text-danger">{{$message}} </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-control">{{old('notes')}}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
