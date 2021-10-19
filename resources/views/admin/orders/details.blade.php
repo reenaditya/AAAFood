@@ -232,7 +232,7 @@
 
 				@if(Auth::user()->role==3 && $data->deliveryUser)
 				<div class="col-lg-12 col-xxl-12">
-					<h1 class="h3 mb-3">Messages</h1>
+					<h1 class="h3 mb-3">Messages to customer</h1>
 
 					<div class="card">
 						<div class="row g-0">

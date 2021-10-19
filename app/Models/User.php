@@ -71,4 +71,9 @@ class User extends Authenticatable
         return $this->hasOne(DeliveryBoyLocation::class,'user_id');
     }
 
+    public function aaadiningPurchase()
+    {
+        return $this->hasOne(AaadiningPurchase::class,'user_id');
+    }
+
 }

@@ -180,6 +180,11 @@
 											<input type="text" name="general_setting_vip_coupon_code" class="form-control" value="{{old('general_setting_vip_coupon_code',Settings::get('general_setting_vip_coupon_code'))}}">
 										</div>
 
+										<div class="mb-4 col-md-4">
+											<label class="form-label">AAADining Club Card Charges($)</label>
+											<input type="text" name="general_setting_aaadining_club_charges" class="form-control" value="{{old('general_setting_aaadining_club_charges',Settings::get('general_setting_aaadining_club_charges'))}}">
+										</div>
+
 									</div>
 
 									<h4 class="tab-title">Custumize website email message</h4>

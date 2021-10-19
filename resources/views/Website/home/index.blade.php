@@ -149,12 +149,13 @@
                 <div class="col-12">
                     <div class="category-slider swiper-container">
                         <div class="swiper-wrapper">
-                            @if(!$data['cuisine']->isEmpty())
-                            @foreach($data['cuisine'] as $val)
+                            @if(!$data['1by2meal']->isEmpty())
+                            @foreach($data['1by2meal'] as $val)
                             <div class="swiper-slide">
-                                <a href="{{route('webiste.restaurant.list',$val->id)}}" class="categories">
-                                    <div class="icon icon-parent text-custom-white bg-light-green"> @if($val->image) <img src="{{ asset('storage/'.$val->image) }}" class="rounded-circle" alt="categories"> @else<i class="fas fa-map-marker-alt"></i>@endif
-                                    </div> <span class="text-light-black cat-name">{{ $val->name ?? '' }}</span>
+                                <a @if(Auth::check() && Auth::user()->aaadiningPurchase!=null) href="{{route('webiste.menu.index',$val->slug)}}" @else href="{{route('stripe.buycard.post')}}" @endif class="categories">
+                                    <div class="icon icon-parent text-custom-white parent bg-light-green"> @if($val->participate_file) <img src="{{ asset('storage/'.$val->participate_file) }}" class="rounded-circle child" alt="categories"> @else<i class="fas fa-map-marker-alt"></i>@endif
+                                        <span>2for1 Meals</span>
+                                    </div>
                                 </a>
                             </div>
                             @endforeach
@@ -435,6 +436,54 @@
           .spining-ball{display: none;}
           .search11{width: 100% !important;}
           .suggest{bottom: 28px;width: 79%;left: 36px;}
+        }
+
+        .parent {
+              margin: 20px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .child {
+            -webkit-transition: all .5s;
+            -moz-transition: all .5s;
+            -o-transition: all .5s;
+            transition: all .5s;
+        }
+
+        .parent span {
+            display: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff !important;
+            text-align: center;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 50px;
+            cursor: pointer;
+            /*text-decoration: none;*/
+        }
+
+        .parent:hover .child, .parent:focus .child {
+            -ms-transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        .parent:hover .child:before, .parent:focus .child:before {
+            display: block;
+        }
+
+        .parent:hover span, .parent:focus span {
+            display: block;
         }
 
     </style>

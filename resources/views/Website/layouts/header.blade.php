@@ -16,9 +16,18 @@
                             <li class="nav-item @if(request()->routeIs('webiste.aboutus')) active @endif">
                                 <a class="nav-link" href="{{route('webiste.aboutus')}}">{{ Settings::get('general_setting_top_header_about') }}</a>
                             </li>
+                            @auth
+                            @if(Auth::user()->aaadiningPurchase==null)
                             <li class="nav-item">
-                                <a class="nav-link" href="#">{{ Settings::get('general_setting_top_header_aaadining_club') }}</a>
+                                <a class="nav-link @if(request()->routeIs('stripe.buycard.post')) active @endif" href="{{route('stripe.buycard.post')}}">{{ Settings::get('general_setting_top_header_aaadining_club') }}</a>
                             </li>
+                            @endif
+                            @endauth
+                            @if(!Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('login')}}">{{ Settings::get('general_setting_top_header_aaadining_club') }}</a>
+                            </li>
+                            @endif
                             <li class="nav-item @if(request()->routeIs('webiste.bussiness.account')) active @endif">
                                 <a class="nav-link" href="{{route('webiste.bussiness.account')}}">{{ Settings::get('general_setting_top_header_restaurant_account') }}</a>
                             </li>

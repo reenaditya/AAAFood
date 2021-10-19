@@ -25,3 +25,6 @@
 19. add dropdown to header signout
 20. add home page sortcut on admin side
 21. HOME PAGE : cuisine replaced by participant meal image from restaurant
+
+
+ALTER TABLE `aaadining_purchases` ADD `end_at` DATETIME NULL DEFAULT NULL AFTER `purchase_at`;

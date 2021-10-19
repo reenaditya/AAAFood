@@ -43,6 +43,9 @@ Route::get('auth/facebook/callback', 'SocialLoginController@loginWithFacebook');
 Route::get('stripe','StripeController@stripe');
 Route::post('stripe','StripeController@stripePost')->name('stripe.post');
 /*Route::post('placeorder/cod','StripeController@codPost')->name('placeorder.cod');*/
+
+Route::get('stripe/buycard','StripeBuyAAACardController@stripe')->name('stripe.buycard.post');
+Route::post('stripe/buycard','StripeBuyAAACardController@stripePost');
 /*END*/
 
 /*Chats*/
