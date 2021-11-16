@@ -14,8 +14,8 @@ class LoginResponse implements LoginResponseContract
     public function toResponse($request)
     {
         $url = '/';
-        if(Cache::has('checkout_url')){
-            $url = Cache::get('checkout_url');
+        if(Cache::has('redirect_url')){
+            $url = Cache::get('redirect_url');
         }
 
     	switch (auth()->user()->role) {
@@ -33,7 +33,7 @@ class LoginResponse implements LoginResponseContract
     			$home = $url;
     			break;
     	}
-        Cache::forget('checkout_url');
+        Cache::forget('redirect_url');
         return redirect()->intended($home);
     }
 }

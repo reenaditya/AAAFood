@@ -137,10 +137,12 @@ class OrderController extends Controller
             
             if ($status==7) 
             {
-                $dbl = DeliveryBoyLocation::where('user_id',$data->delivery_user_id)->first();
-                $dbl->is_busy = 0;
-                $dbl->total_delivery = $dbl->total_delivery+1;
-                $dbl->update();
+                if ($data->delivery_user_id) {
+                    $dbl = DeliveryBoyLocation::where('user_id',$data->delivery_user_id)->first();
+                    $dbl->is_busy = 0;
+                    $dbl->total_delivery = $dbl->total_delivery+1;
+                    $dbl->update();
+                }
                 $data->payment_status = 2;
             }
             
@@ -222,13 +224,24 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function completedOrder()
+    public function completedOrder(Request $request)
     {
-        $data = $this->data->filterCompletedOrder()->latest()->get();
+        $data = $this->data->filterCompletedOrder($request)->latest()->get();
         return view('admin.orders.completed',compact('data'));
     }
 
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function payonaccOrders(Request $request)
+    {
+        $data = $this->data->filterCompletedOrder($request)->latest()->get();
+        return view('admin.orders.completed',compact('data'));
+    }
+    
     /**
      * Display a listing of the resource.
      *

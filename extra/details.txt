@@ -1,30 +1,58 @@
-1. get all restro details on admin > restaurant_request page
-2. make details fillable for restaurant
-3. Maximum discount field issue fixed
-4. send email link with fillable restaurant details to vendor.
-5. when vendor submit and verify all data then we create there account.
-6. Vendor restaurant will visible on front side when admin approved there restaurant.
-7. All order process message changed as per mentioned in points.
+1. admin can add menu for retaurant
+2. cusine edit part issue fixed
+3. Delivery charges add in backend so admin can change 15% or  5$ which is greater.
+4. 15%, or 5$ which is greater will be delivery charges.
+5. From retaurant remove both image aading image and Participate Meal
+6. add new field in menu item special(only for aadining club)
+7. show special menu item on front and add validation on them .
+8. special menu item will show to all user but only aaadining memeber will buy this.
+    -> this done on home page.
+    -> also done on restaurant menu item page.
+9. apply benefits of aaadining memeber on price
+10. cod will be hide when we select pickup
+11. Chat opiton show for vendor also(pending)
+12. add aaadining members list to admin panel
+14. add new btn in admin users for login into their account
+15. add new btn in admin restaurent for login into their account
 
-8. Add VIP Field to users in admin 
-9. add new functionality customer pick-up option : New field added in DB named delivery_type (Which has 2 option Home delivery and pickup)
-10. if pickup selected billing details will be hide.
-11. on orders listing show delivery type(Home delivery and pickup)
-12. on delivery boy panel we dont show order if order is pickup.
-13. add restaurant name in order listing.
-14. delivery type add in order detail page 
-15. add chat functionality for customer and delivery boy
-    15.1 Create Database for chat
-    15.2 Impliment it on both side Customer and delivery boy
-    15.3 Create Customer Chat design panel
-    15.4 Impliment both chat process 
-
-16. Customize email message this feature is add into admin > setting.
-17. impliment all the email message into email template.
-18. email fotter text also set at admin > setting.
-19. add dropdown to header signout
-20. add home page sortcut on admin side
-21. HOME PAGE : cuisine replaced by participant meal image from restaurant
+1. Chat option changes will implimented both end vendor,delivery dashboard and customer order history(pending)
+2. new payment option "Pay on account "
+3. order biling management for Pay on account show it on both side admin and vendor 
 
 
-ALTER TABLE `aaadining_purchases` ADD `end_at` DATETIME NULL DEFAULT NULL AFTER `purchase_at`;
+
+new points 
+1. 37.58 change 2for 1 meal process to : if retro have aaadining then show them here else not to show
+2. Add new option dine in at retro menu 
+3. Add new option pay on account option
+4. when subscribed user first time buy from retro so restro get 10$ make DB and listing 
+7. in chat option vendor also message user and delivery boy
+5. 33.55 when user is not subscribed and he click on vip item then we redirect to page where all details and offer is listed of related retro.
+8. before expire one m add cron job to send email to membrs that there memebership expiored
+9. add restro name at aaadinnig members list
+10. when a member register generate unique code for user and send email and invoice. send 2 email welcom and invoice 
+
+comleted
+1. onclick 2for1 option redirect to restro
+2. Add new option dine in at retro menu 
+3. if dine in billing details will hide 
+4. add new "total discount" option in checkout (cart total).
+5. redirect to retro page when click on "only for vip" from menu page.
+6. new payment option "Pay on account "
+7. make separate panel for completed orders of pay on account for both vendor and admin.
+8. when subscribed user first time buy from retro so restro get 10$ make DB and listing
+9. pay to vendors -> change payment status.
+10. new panel from where you can add new vendor directly from admin panel. 
+11. option to add restro for vendor.
+12. in chat option vendor also message user and delivery boy.
+14. About us page admin setup at setting
+15. about us page make content dynamic at front.
+16. before expire one m add cron job to send email to membrs that there memebership expiored and also when membership expired send email.
+17. email template content are dynamic , we can change them from admin > setting page
+18. add restro name at aaadinnig members list
+19. when a member register generate unique code for user and send email and invoice. send 2 email welcom and invoice 
+
+
+extra point
+1. pay to vendors -> change payment status -> need to send notification to user and vendor
+2. Need to mange all type of system user separate

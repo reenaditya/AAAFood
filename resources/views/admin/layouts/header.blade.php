@@ -37,6 +37,11 @@
 						</button>
 					</li>
 				@endif
+				@if(session()->has('previous_user_id'))
+					<li class="nav-item dropdown" style="margin-right: 20px;">
+						<a href="{{ route('admin.user.login',session()->get('previous_user_id')) }}" class="btn btn-warning">Back to Admin Panel</a>
+					</li>
+				@endif
 				<li class="nav-item dropdown">
 					<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
 						<i class="align-middle" data-feather="settings"></i>

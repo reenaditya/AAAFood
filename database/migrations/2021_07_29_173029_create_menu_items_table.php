@@ -24,6 +24,7 @@ class CreateMenuItemsTable extends Migration
             $table->integer('discount');
             $table->tinyInteger('discount_type')->comment("1=Price, 2=Percent");;
             $table->text('desc')->nullable();
+            $table->tinyInteger('special')->default(0)->comment("1=Yes, 0=No");
             $table->tinyInteger('status')->default(1)->comment("1=Active, 0=Inactive");
             $table->timestamps();
             

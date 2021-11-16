@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
+use App\Models\MemberFirstPurchase;
 use Session;
 use Stripe;
 use DB;
@@ -91,7 +92,7 @@ class StripeController extends Controller
 
     private function validation(Request $request)
     {
-        if($request->delivery_type==2){
+        if($request->delivery_type==2 || $request->delivery_type==3){
             $request->validate([
                 'name' => ["required","min:2","max:255"],
                 'email' => ["required"],
@@ -139,6 +140,10 @@ class StripeController extends Controller
     {
         $payMode = 1;
         $type = 1;
+        if ($request->radio_group && $request->radio_group=="poa") {
+            $payMode = 3;
+            $type = 3;
+        }
         $grandTotal = $request->grand_total;
 
         $this->createOrder($request,$payMode,$type,$grandTotal);
@@ -166,6 +171,7 @@ class StripeController extends Controller
         $data->tax = $request->tax;
         $data->shiping = $request->shiping;
         $data->total = $request->total;
+        $data->discount = $request->total_discount;
         $data->grand_total = $grandTotal;
         $data->address = $address;
         $data->mobile = $request->phone;
@@ -177,6 +183,7 @@ class StripeController extends Controller
         $orderId = $data->id;
         $this->createOrderDet($request,$orderId);
         $this->createTransaction($request,$orderId,$payMode,$type,$grandTotal);
+        $this->createMemberFisrtPurchase($request,$orderId);
 
         return $this;
     }
@@ -213,6 +220,21 @@ class StripeController extends Controller
         $data->save();  
 
         return $this; 
-    }    
+    }   
+
+    private function createMemberFisrtPurchase($request,$orderId)
+    {
+        if (MemberFirstPurchase::where('user_id',Auth::id())->count() == 0) {
+            $data = new MemberFirstPurchase;
+            $data->user_id = Auth::id();
+            $data->order_id = $orderId;
+            $data->vendor_id = $request->vendor_id;
+            $data->restaurant_id = $request->restaurant_id;
+            $data->paid_to_vendor = 10;
+            $data->payment_status = 0;
+            $data->save();  
+        }
+        return $this; 
+    }
 
 }

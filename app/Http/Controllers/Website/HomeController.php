@@ -22,7 +22,7 @@ class HomeController extends Controller
         $userId = Auth::id();
 
         $data['cuisine'] = Cuisine::where('status',1)->get();
-        $data['1by2meal'] = Restaurant::select('participate_file','id','slug')->where('aaadining_club',1)->where('status',1)->get();
+        $data['1by2meal'] = MenuItem::where('special',1)->where('status',1)->get();
         $data['menu_item'] = MenuItem::with('menu_price')->where('status',1)->get();
         $data['restro'] = Restaurant::with(['cuisin','wishlist'=> function ($query) use($userId)
         {

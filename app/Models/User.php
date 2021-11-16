@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function aaadiningPurchase()
     {
-        return $this->hasOne(AaadiningPurchase::class,'user_id');
+        return $this->hasOne(AaadiningPurchase::class,'user_id')->latest('purchase_at');
     }
 
 }

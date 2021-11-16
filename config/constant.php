@@ -118,6 +118,7 @@ return[
     'pay_mode' =>[
         1 => 'Cash',
         2 => 'Card',
+        3 => 'Pay on Account',
     ], 
     'transaction_status' =>[
         1 => 'Pending',
@@ -130,5 +131,14 @@ return[
         2 => 'President',
         3 => 'Manager',
         4 => 'Other',
+    ],
+    'delivery_type' =>[
+        1 => 'Home Delivery',
+        2 => 'Pickup',
+        3 => 'Dine In',
+    ],
+    'payment_status' =>[
+        1 => 'Paid',
+        0 => 'Unpaid',
     ],
 ];

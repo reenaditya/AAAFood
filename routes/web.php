@@ -29,8 +29,6 @@ Route::get('/migrate', function() {
    return "Migrated!";
 });
 
-
-
 /*SOCIAL MEDIA LOGIN */
 Route::get('auth/google', 'SocialLoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'SocialLoginController@handleGoogleCallback');
@@ -95,6 +93,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 |-----------------------------------------------------------------------------
 |
 */
+Route::get('admin/user/login/{id}', 'Admin\UserManagementController@loginasUser')->name('admin.user.login');
 Route::group([
 	'namespace' => 'Admin',
 	'as'=>'admin.',
@@ -105,6 +104,8 @@ Route::group([
 	Route::get('dashboard','DashboardController@index')->name('dashboard.index');
 	
 	Route::resource('user', 'UserManagementController');
+	
+	Route::resource('aaadining_memeber', 'AAADiningMemberController');
 	
 	Route::resource('cuisine', 'CuisineController');
 	
@@ -131,9 +132,13 @@ Route::group([
 	Route::get('order-details/{id}','OrderController@detailsOrder')->name('order.details');
 	Route::get('delivery-boy-order-history','OrderController@deliveryBoyOrderHistory')->name('order.db.history');
 	Route::post('order/post-comment','OrderController@postComment');
+	Route::get('order-completed/payonacc','OrderController@payonaccOrders')->name('order.completed.payonacc');
 
 	Route::post('user/change-delivery-boy-status','OrderController@deliveryBoyStatus');
 	Route::post('user/delivery-boy-order-accept-status','OrderController@deliveryBoyOrderAccept');
 	Route::post('user/delivery-boy-verify-email','OrderController@deliveryBoyVerifyEmail');
 
+	Route::resource('vendor_payment','VendorPaymentController');
+	Route::post('vendor_payment/payment/status','VendorPaymentController@paymentStatus');
+	
 });

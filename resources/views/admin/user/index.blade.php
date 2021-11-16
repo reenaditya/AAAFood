@@ -12,7 +12,7 @@
 							<div class="col-md-10"></div>
 							
 							<div class="col-md-2">
-								{{-- <a href="{{ route('admin.user.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add user</a> --}}
+								<a href="{{ route('admin.user.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add user</a>
 							</div>
 
 						</div>			
@@ -58,6 +58,9 @@
 												@csrf
 												@method('DELETE')
 											</form>
+											@if($value->id && $value->id != Auth::id())
+												<a href="{{ route('admin.user.login',$value->id) }}" class="btn btn-warning">Login</a>
+											@endif
 										</td>
 									</tr>
 								@endforeach

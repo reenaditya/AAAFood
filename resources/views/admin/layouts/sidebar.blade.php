@@ -43,54 +43,12 @@
 					@if(Auth::check() && Auth::user()->role===2 || Auth::user()->role===1)
 					<li class="sidebar-item {{Request::routeIs('admin.restaurant.*')?'active':''}}">
 						<a data-bs-target="#restaurant" class="sidebar-link {{Request::routeIs('admin.restaurant.*')?'':'collapsed'}}" href="{{ route('admin.restaurant.index') }}">
-              			<i class="align-middle" data-feather="archive"></i> <span class="align-middle">Restaurant</span>
+              			<i class="align-middle" data-feather="command"></i> <span class="align-middle">Restaurant</span>
               	
             			</a>
 					</li>
 					@endif
 
-					@if(Auth::check() && Auth::user()->role===2)
-					<li class="sidebar-item {{Request::routeIs('admin.restaurant_request.*')?'active':''}}">
-						<a class="sidebar-link {{Request::routeIs('admin.restaurant_request.*')?'':'collapsed'}}" href="{{ route('admin.restaurant_request.index') }}">
-              			<i class="align-middle" data-feather="bell"></i> <span class="align-middle">Restaurant Request</span>
-              	
-            			</a>
-					</li>
-					@endif
-
-					@if(Auth::check() && Auth::user()->role===2)
-					<li class="sidebar-item {{Request::routeIs('admin.setting.*')?'active':''}}">
-						<a class="sidebar-link {{Request::routeIs('admin.setting.*')?'':'collapsed'}}" href="{{ route('admin.setting.index') }}">
-              			<i class="align-middle" data-feather="settings"></i> <span class="align-middle">Setting</span>
-              	
-            			</a>
-					</li>
-					@endif
-
-					@if(Auth::check() && Auth::user()->role==1 || Auth::user()->role==3 || Auth::user()->role==2)
-					
-					<li class="sidebar-item {{Request::routeIs('admin.order.*')?'active':''}}">
-						<a data-bs-target="#orders" data-bs-toggle="collapse" class="sidebar-link collapsed">
-              <i class="align-middle" data-feather="archive"></i> <span class="align-middle">Manage Orders</span>
-            </a>
-						<ul id="orders" class="sidebar-dropdown list-unstyled collapse {{Request::routeIs('admin.order.*') ? 'show':''}}" data-bs-parent="#sidebar">
-							
-							<li class="sidebar-item {{Request::routeIs('admin.order.new')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.new')}}">Pending orders</a></li>
-							
-							@if(Auth::check() && Auth::user()->role==1)		
-							<li class="sidebar-item {{Request::routeIs('admin.order.index')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.index')}}">All orders</a></li>
-							@endif
-
-							<li class="sidebar-item {{Request::routeIs('admin.order.completed')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.completed')}}">Completed orders</a></li>
-
-							@if(Auth::check() && Auth::user()->role==3)		
-							<li class="sidebar-item {{Request::routeIs('admin.order.db.history')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.db.history')}}">Orders history</a></li>
-							@endif
-
-						</ul>
-					</li>
-
-					@endif
 
 					@if(Auth::check() && Auth::user()->role===1)
 
@@ -110,6 +68,67 @@
 							{{-- <li class="sidebar-item {{Request::routeIs('admin.menu_item_price_quantity.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item_price_quantity.index')}}">Menu item price on quantity group</a></li> --}}
 
 						</ul>
+					</li>
+					@endif
+
+
+					@if(Auth::check() && Auth::user()->role===2)
+					<li class="sidebar-item {{Request::routeIs('admin.restaurant_request.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.restaurant_request.*')?'':'collapsed'}}" href="{{ route('admin.restaurant_request.index') }}">
+              			<i class="align-middle" data-feather="bell"></i> <span class="align-middle">Restaurant Request</span>
+              	
+            			</a>
+					</li>
+					<li class="sidebar-item {{Request::routeIs('admin.vendor_payment.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.vendor_payment.*')?'':'collapsed'}}" href="{{ route('admin.vendor_payment.index') }}">
+              			<i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Pay to Vendors</span>
+              	
+            			</a>
+					</li>
+					@endif
+
+
+					@if(Auth::check() && Auth::user()->role==1 || Auth::user()->role==3 || Auth::user()->role==2)
+					
+					<li class="sidebar-item {{Request::routeIs('admin.order.*')?'active':''}}">
+						<a data-bs-target="#orders" data-bs-toggle="collapse" class="sidebar-link collapsed">
+              <i class="align-middle" data-feather="archive"></i> <span class="align-middle">Manage Orders</span>
+            </a>
+						<ul id="orders" class="sidebar-dropdown list-unstyled collapse {{Request::routeIs('admin.order.*') ? 'show':''}}" data-bs-parent="#sidebar">
+							
+							<li class="sidebar-item {{Request::routeIs('admin.order.new')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.new')}}">Pending orders</a></li>
+							
+							@if(Auth::check() && Auth::user()->role==1)		
+							<li class="sidebar-item {{Request::routeIs('admin.order.index')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.index')}}">All orders</a></li>
+							@endif
+
+							<li class="sidebar-item {{Request::routeIs('admin.order.completed')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.completed')}}">Completed orders</a></li>
+
+							<li class="sidebar-item {{Request::routeIs('admin.order.completed.payonacc') ?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.completed.payonacc')}}?paymode=poa">Pay on Account</a></li>
+
+							@if(Auth::check() && Auth::user()->role==3)		
+							<li class="sidebar-item {{Request::routeIs('admin.order.db.history')?'active':''}}"><a class="sidebar-link" href="{{route('admin.order.db.history')}}">Orders history</a></li>
+							@endif
+
+						</ul>
+					</li>
+
+					@endif
+
+					@if(Auth::check() && Auth::user()->role===2 || Auth::user()->role===1)
+					<li class="sidebar-item {{Request::routeIs('admin.aaadining_memeber.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.aaadining_memeber.*')?'':'collapsed'}}" href="{{ route('admin.aaadining_memeber.index') }}">
+              	<i class="align-middle" data-feather="users"></i> <span class="align-middle">AAAdining Members</span>
+            </a>
+					</li>
+					@endif
+
+					@if(Auth::check() && Auth::user()->role===2)
+					<li class="sidebar-item {{Request::routeIs('admin.setting.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.setting.*')?'':'collapsed'}}" href="{{ route('admin.setting.index') }}">
+              			<i class="align-middle" data-feather="settings"></i> <span class="align-middle">Setting</span>
+              	
+            			</a>
 					</li>
 					@endif
 

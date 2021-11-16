@@ -26,10 +26,10 @@
 												<th width="2%">S.No</th>
 												<th>Item Name</th>
 												<th>Menu Group</th>
-												<th>Restaurant</th>
-												<th>User</th>
+												{{-- <th>Restaurant</th>
+												<th>User</th> --}}
 												<th>Status</th>
-												<th width="10%">Action</th>
+												<th width="20%">Action</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -38,8 +38,8 @@
 													<td>{{ ++$key }} </td>
 													<td>{{$val->name ?? ''}} </td>
 													<td>{{ $val->menu_group->name ?? ''}} </td>
-													<td>{{ $val->restaurant->name ?? ''}} </td>
-													<td>{{$val->user->name ?? ''}} </td>
+													{{-- <td>{{ $val->restaurant->name ?? ''}} </td>
+													<td>{{$val->user->name ?? ''}} </td> --}}
 													<td><button class="btn btn-{{$val->status?'success':'danger'}} ">
 														{{$val->status? 'Active':'Inactive'}}
 													</button> </td>
@@ -56,12 +56,12 @@
 											
 										</tbody>
 										<tfoot>
-											<tr>
+											{{-- <tr>
 												<th></th>
 												<th>Name</th>
 												<th>Restaurant Name</th>
 												<th>User Name</th>
-											</tr>
+											</tr> --}}
 										</tfoot>
 									</table>
 								</div>

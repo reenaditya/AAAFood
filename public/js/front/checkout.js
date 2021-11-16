@@ -7,6 +7,7 @@ $(function() {
 
 	productDetails();	
 	deliveryType();
+	activepayOnAcc();
 
 });
 
@@ -22,6 +23,7 @@ function productDetails() {
           	subTotal = subTotal+val.price;
         	
         });
+        totalDiscount();
         calculateDeliveryFees(subTotal);
         calculateFeestaxes(subTotal);
         getTotalAmount(subTotal);
@@ -86,13 +88,22 @@ $(document).on("click",".proceedcheckout-btn",function () {
 
 $(document).on("change","input[name='radio_group']",function () {
 	var value = $(this).val();
-	if (value=='stripe') {
+	$("button.place-order-btn").attr('type','submit');
+
+	if (value=='stripe') 
+	{
 		$(".card-details").removeClass('d-none');
-		$("button.place-order-btn").attr('type','submit');
-	}else if(value=='cod'){
+	}
+	else if(value=='cod')
+	{
 		$(".card-details").addClass('d-none');
-		$("button.place-order-btn").attr('type','submit');
-	}else{
+	}
+	else if(value=='poa')
+	{
+		$(".card-details").addClass('d-none');
+	}
+	else
+	{
 		$("button.place-order-btn").attr('type','button');
 	}
 
@@ -105,7 +116,31 @@ function deliveryType() {
 	if (deliveryType==1) {
 		$(".other-biling-det").show();
 	}
-	if (deliveryType==2) {
+	if (deliveryType==2 || deliveryType==3) {
 		$(".other-biling-det").hide();
+		deliveryTypeIsPickup();
 	}
+}
+
+function totalDiscount() {
+	var membershipDiscount = localStorage.getItem('ac_max_discount');
+	var total = membershipDiscount;
+	$(".total-discount").text('-$'+total);
+	$("input[name='total_discount']").val(total);
+}
+
+function deliveryTypeIsPickup() {
+	$("div.card-details").removeClass('d-none');
+	$("#card").attr("checked",true);
+	$("#cash-on-delivery").parent().addClass('d-none');
+	$("button.place-order-btn").attr('type','submit');
+}
+
+function activepayOnAcc() {
+	
+	if (aaadininngMember) {
+        $("#poa").attr("disabled",false);
+    }else{
+        $("#poa").attr("disabled",true);
+    }
 }

@@ -9,8 +9,10 @@
 				<div class="col-12 col-lg-12">
 					<div class="tab">
 						<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item"><a class="nav-link active" href="#tab-1" data-bs-toggle="tab" role="tab"><i class="fa fa-home"></i> Home page</a></li>
-							<li class="nav-item"><a class="nav-link" href="#tab-2" data-bs-toggle="tab" role="tab"><i class="fa fa-cogs"></i> General setting</a></li>
+							<li class="nav-item"><a class="nav-link active" href="#tab-1" data-bs-toggle="tab" role="tab"><i class="fa fa-home"></i>&nbsp; Home page</a></li>
+							<li class="nav-item"><a class="nav-link" href="#tab-2" data-bs-toggle="tab" role="tab"><i class="fa fa-cogs"></i>&nbsp; General setting</a></li>
+							<li class="nav-item"><a class="nav-link" href="#tab-3" data-bs-toggle="tab" role="tab"><i class="fa fa-info"></i>&nbsp; About us</a></li>
+							<li class="nav-item"><a class="nav-link" href="#tab-4" data-bs-toggle="tab" role="tab"><i class="fa fa-envelope"></i>&nbsp; Email text</a></li>
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab-1" role="tabpanel">
@@ -166,6 +168,7 @@
 								</form>
 
 							</div>
+							
 							<div class="tab-pane" id="tab-2" role="tabpanel">
 							
 								<h4 class="tab-title">Website general setting</h4>
@@ -175,14 +178,23 @@
 									
 									<div class="row">
 										
-										<div class="mb-4 col-md-4">
+										<div class="mb-4 col-md-3">
 											<label class="form-label">VIP coupon code</label>
 											<input type="text" name="general_setting_vip_coupon_code" class="form-control" value="{{old('general_setting_vip_coupon_code',Settings::get('general_setting_vip_coupon_code'))}}">
 										</div>
 
-										<div class="mb-4 col-md-4">
+										<div class="mb-4 col-md-3">
 											<label class="form-label">AAADining Club Card Charges($)</label>
 											<input type="text" name="general_setting_aaadining_club_charges" class="form-control" value="{{old('general_setting_aaadining_club_charges',Settings::get('general_setting_aaadining_club_charges'))}}">
+										</div>
+
+										<div class="mb-4 col-md-3">
+											<label class="form-label">Delivery charges(%)</label>
+											<input type="text" name="general_setting_delivery_charges_percent" class="form-control" value="{{old('general_setting_delivery_charges_percent',Settings::get('general_setting_delivery_charges_percent'))}}">
+										</div>
+										<div class="mb-4 col-md-3">
+											<label class="form-label">Delivery charges($)</label>
+											<input type="text" name="general_setting_delivery_charges_dollar" class="form-control" value="{{old('general_setting_delivery_charges_dollar',Settings::get('general_setting_delivery_charges_dollar'))}}">
 										</div>
 
 									</div>
@@ -246,6 +258,197 @@
 								</form>
 	
 							</div>
+
+							<div class="tab-pane" id="tab-3" role="tabpanel">
+							
+								<h4 class="tab-title">About us page</h4>
+
+								<form action="{{ route('admin.setting.store') }}" method="post" enctype="multipart/form-data">
+									@csrf
+									
+									<div class="row">
+										<div class="mb-4 col-md-12">
+											<div class="row">
+												<div class="mb-4 col-md-4"></div>
+												<div class="mb-4 col-md-4">
+													<label class="form-label">Banner Image</label>
+													<div class="text-center">
+														<img src="{{asset('storage/'.Settings::get('setting_about_us_page_banner_image'))}}" style="max-width:130px;">
+													</div>
+													<input type="file" name="setting_about_us_page_banner_image" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="mb-4 col-md-3">
+											<label class="form-label">About us title</label>
+											<input type="text" name="setting_about_us_page_main_title" class="form-control" value="{{old('setting_about_us_page_main_title',Settings::get('setting_about_us_page_main_title'))}}">
+										</div>
+
+										<div class="mb-4 col-md-3">
+											<label class="form-label">Sub title</label>
+											<input type="text" name="setting_about_us_page_sub_title" class="form-control" value="{{old('setting_about_us_page_sub_title',Settings::get('setting_about_us_page_sub_title'))}}">
+										</div>
+										<div class="mb-4 col-md-12">
+											<label class="form-label">Description</label>
+											<textarea name="setting_about_us_page_description" class="form-control">{{old('setting_about_us_page_description',Settings::get('setting_about_us_page_description'))}}</textarea>
+										</div>
+
+										<div class="row">
+											<div class="mb-4 col-md-4">
+												<div class="row">
+													<div class="col-md-4">
+														<label class="form-label" >1st image Size*(255x200)</label>
+														<div class="text-center">
+															<img src="{{asset('storage/'.Settings::get('setting_about_us_page_image1'))}}" style="max-width:130px;">
+														</div>
+														<input type="file" name="setting_about_us_page_image1" class="form-control">
+													</div>
+												</div>
+											</div>
+											<div class="mb-4 col-md-4">
+												<div class="row">
+													<div class="col-md-4">
+														<label class="form-label" >2nd image Size*(255x200)</label>
+														<div class="text-center">
+															<img src="{{asset('storage/'.Settings::get('setting_about_us_page_image2'))}}" style="max-width:130px;">
+														</div>
+														<input type="file" name="setting_about_us_page_image2" class="form-control">
+													</div>
+												</div>
+											</div>
+											<div class="mb-4 col-md-4">
+												<div class="row">
+													<div class="col-md-4">
+														<label class="form-label" >3rd image Size*(255x200)</label>
+														<div class="text-center">
+															<img src="{{asset('storage/'.Settings::get('setting_about_us_page_image3'))}}" style="max-width:130px;">
+														</div>
+														<input type="file" name="setting_about_us_page_image3" class="form-control">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br><br>
+									<h4 class="tab-title">About us "Our Process"(How Does It Work)</h4>
+									<div class="row">
+										
+										<div class="mb-4 col-md-6">
+											<div class="row">
+												<div class="form-group">
+													<label class="form-label" >First icon</label>
+													<div class="text-center">
+														<img src="{{asset('storage/'.Settings::get('setting_about_us_page_process_fi'))}}" style="max-width:130px;">
+													</div>
+													<input type="file" name="setting_about_us_page_process_fi" class="form-control">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Title</label>
+													<input type="text" name="setting_about_us_page_process_ftitle" class="form-control" value="{{old('setting_about_us_page_process_ftitle',Settings::get('setting_about_us_page_process_ftitle'))}}">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Description</label>
+													<textarea rows="4" name="setting_about_us_page_process_fdesc" class="form-control">{{old('setting_about_us_page_process_fdesc',Settings::get('setting_about_us_page_process_fdesc'))}}</textarea>
+												</div>
+											</div>
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<div class="row">
+												<div class="form-group">
+													<label class="form-label" >Second icon</label>
+													<div class="text-center">
+														<img src="{{asset('storage/'.Settings::get('setting_about_us_page_process_si'))}}" style="max-width:130px;">
+													</div>
+													<input type="file" name="setting_about_us_page_process_si" class="form-control">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Title</label>
+													<input type="text" name="setting_about_us_page_process_stitle" class="form-control" value="{{old('setting_about_us_page_process_stitle',Settings::get('setting_about_us_page_process_stitle'))}}">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Description</label>
+													<textarea rows="4" name="setting_about_us_page_process_sdesc" class="form-control">{{old('setting_about_us_page_process_sdesc',Settings::get('setting_about_us_page_process_sdesc'))}}</textarea>
+												</div>
+											</div>
+										</div>
+
+										<div class="mb-4 col-md-6">
+											<div class="row">
+												<div class="form-group">
+													<label class="form-label" >Third icon</label>
+													<div class="text-center">
+														<img src="{{asset('storage/'.Settings::get('setting_about_us_page_process_ti'))}}" style="max-width:130px;">
+													</div>
+													<input type="file" name="setting_about_us_page_process_ti" class="form-control">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Title</label>
+													<input type="text" name="setting_about_us_page_process_ttitle" class="form-control" value="{{old('setting_about_us_page_process_ttitle',Settings::get('setting_about_us_page_process_ttitle'))}}">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Description</label>
+													<textarea rows="4" name="setting_about_us_page_process_tdesc" class="form-control">{{old('setting_about_us_page_process_tdesc',Settings::get('setting_about_us_page_process_tdesc'))}}</textarea>
+												</div>
+											</div>
+										</div>
+										<div class="mb-4 col-md-6">
+											<div class="row">
+												<div class="form-group">
+													<label class="form-label" >Fourth icon</label>
+													<div class="text-center">
+														<img src="{{asset('storage/'.Settings::get('setting_about_us_page_process_foi'))}}" style="max-width:130px;">
+													</div>
+													<input type="file" name="setting_about_us_page_process_foi" class="form-control">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Title</label>
+													<input type="text" name="setting_about_us_page_process_fotitle" class="form-control" value="{{old('setting_about_us_page_process_fotitle',Settings::get('setting_about_us_page_process_fotitle'))}}">
+												</div>
+												<div class="form-group">
+													<label class="form-label">Description</label>
+													<textarea rows="4" name="setting_about_us_page_process_fodesc" class="form-control">{{old('setting_about_us_page_process_fodesc',Settings::get('setting_about_us_page_process_fodesc'))}}</textarea>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+									
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</form>
+	
+							</div>
+
+							<div class="tab-pane" id="tab-4" role="tabpanel">
+								<h4 class="tab-title">Email template text</h4>
+
+								<form action="{{ route('admin.setting.store') }}" method="post" enctype="multipart/form-data">
+									@csrf
+									
+									<div class="row">
+										<div class="mb-4 col-md-12">
+											<label class="form-label">Aaadining members before one month expiry notification</label>
+											<textarea name="setting_email_notification_aaadining_member" class="form-control">{{old('setting_email_notification_aaadining_member',Settings::get('setting_email_notification_aaadining_member'))}}</textarea>
+										</div>
+
+										<div class="mb-4 col-md-12">
+											<label class="form-label">Aaadining members after expiry notification</label>
+											<textarea name="setting_email_notification_aaadining_member_on_expire" class="form-control">{{old('setting_email_notification_aaadining_member_on_expire',Settings::get('setting_email_notification_aaadining_member_on_expire'))}}</textarea>
+										</div>
+
+										<div class="mb-4 col-md-12">
+											<label class="form-label">Aaadining member welcome email</label>
+											<textarea name="setting_email_notification_aaadining_member_wlcm_email" class="form-control">{{old('setting_email_notification_aaadining_member_wlcm_email',Settings::get('setting_email_notification_aaadining_member_wlcm_email'))}}</textarea>
+										</div>
+
+									</div>
+									
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</form>
+	
+							</div>						
+
 						</div>
 					</div>
 				</div>

@@ -10,6 +10,10 @@
         $email ='';
         $mobile = '';
     }
+
+    $now = date("Y-m-d H:i:s");
+    $aaadininngMember = isset(Auth::user()->aaadiningPurchase) && Auth::user()->aaadiningPurchase->end_at > $now ? true:false;
+
 @endphp
 <!-- restaurent top -->
 <div class="page-banner p-relative smoothscroll" id="menu">
@@ -155,11 +159,13 @@
                                 <li>Subtotal <span class="sub-total">$0.00</span></li>
                                 <li>Shipping <span class="shiping-charge">$0.00</span></li>
                                 <li>Tax <span class="tax-amount">$0.00</span></li>
-                                <li>Payable Total <span class="pay-total">$0.00</span></li>
+                                <li class="text-danger">Total Discount <span class="total-discount">$0.00</span></li>
+                                <li><strong>Payable Total &nbsp;&nbsp;&nbsp;<span class="pay-total">$0.00</span></strong></li>
                                 <input type="hidden" name="sub_total">
                                 <input type="hidden" name="grand_total">
                                 <input type="hidden" name="shiping">
                                 <input type="hidden" name="tax">
+                                <input type="hidden" name="total_discount">
                                 <div class="add-items"></div>
                             </ul>
                             {{-- <a  class="mt-4 btn-first green-btn text-custom-white full-width fw-500 @if(Auth::check()) proceedcheckout-btn @endif">Proceed to Checkout</a> --}}
@@ -170,6 +176,10 @@
                                 <p>
                                     <input type="radio" id="cash-on-delivery" name="radio_group" value="cod">
                                     <label for="cash-on-delivery">Cash on Delivery</label>
+                                </p>
+                                <p data-toggle="tooltip" data-placement="top" title="Only Available for VIP Members.">
+                                    <input type="radio" id="poa" name="radio_group" value="poa">
+                                    <label for="poa">Pay on Account</label>
                                 </p>
                                 <p>
                                     <input type="radio" id="card" name="radio_group" value="stripe">
@@ -234,7 +244,8 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript" src="{{asset('js/front/checkout.js')}}"></script>
 <script type="text/javascript">
-    
+    var aaadininngMember = '{{$aaadininngMember}}';
+
     $(function() {
         var $form = $(".require-validation");
         $('form.require-validation').bind('submit', function(e) {

@@ -31,7 +31,7 @@ class CuisinePolicy
      */
     public function view(User $user, Cuisine $cuisine)
     {
-        return $user->role === 1;
+        return $user->role ===2;
     }
 
     /**
@@ -54,7 +54,7 @@ class CuisinePolicy
      */
     public function update(User $user, Cuisine $cuisine)
     {
-        return $user->role === 1;
+        return $user->role === 2;
     }
 
     /**
@@ -66,7 +66,7 @@ class CuisinePolicy
      */
     public function delete(User $user, Cuisine $cuisine)
     {
-        return $user->role === 1;
+        return $user->role === 2;
     }
 
     /**
@@ -78,7 +78,7 @@ class CuisinePolicy
      */
     public function restore(User $user, Cuisine $cuisine)
     {
-        return $user->role === 1;
+        return $user->role === 2;
     }
 
     /**

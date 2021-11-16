@@ -80,7 +80,19 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
+
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Special(only for aadining club member)</label>
+									<select class="form-control" name="special" >
+										<option value="1">Yes</option>
+										<option value="0">No</option>
+									</select>
 									
+									@error('special')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+
 							</div>
 							<div class="text-center">
 								<button type="submit" class="btn btn-primary">Submit</button>

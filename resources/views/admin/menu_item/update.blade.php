@@ -35,7 +35,7 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-4">
+								<div class="mb-4 col-md-3">
 									<label class="form-label" >Discount type</label>
 									<select class="form-control" name="discount_type" >
 										<option value="1" @if($menu_item->discount_type==1) selected="" @endif>Price</option>
@@ -47,7 +47,7 @@
 									@enderror
 								</div>
 								
-								<div class="mb-4 col-md-4">
+								<div class="mb-4 col-md-2">
 									<label class="form-label" >Status</label>
 									<select class="form-control" name="status" >
 										<option value="1" @if($menu_item->status==1) selected="" @endif>Active</option>
@@ -59,7 +59,7 @@
 									@enderror
 								</div>
 
-								<div class="mb-4 col-md-4">
+								<div class="mb-4 col-md-3">
 									<label class="form-label">Menu group name</label>
 									<select class="form-control" name="menu_group_id" >
 										<option value="">Select</option>
@@ -68,6 +68,17 @@
 										@endforeach
 									</select>
 									@error('menu_group_id')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+								</div>
+								<div class="mb-4 col-md-4">
+									<label class="form-label">Special(only for aadining club member)</label>
+									<select class="form-control" name="special" >
+										<option value="1" @if($menu_item->special==1) selected="" @endif>Yes</option>
+										<option value="0" @if($menu_item->special==0) selected="" @endif>No</option>
+									</select>
+									
+									@error('special')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>

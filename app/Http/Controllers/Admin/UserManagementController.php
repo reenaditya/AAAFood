@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Session;
 use Hash;
 use DB;
+use Auth;
 
 class UserManagementController extends Controller
 {
@@ -147,7 +149,7 @@ class UserManagementController extends Controller
         $this->data->name = $request->name;
         $this->data->email = $request->email;
         $this->data->role = $request->role;
-        /*$this->data->password = Hash::make($request->password);*/
+        $this->data->password = Hash::make($request->password);
         $this->data->status = $request->status?true:false;
         return $this;
     }
@@ -156,5 +158,19 @@ class UserManagementController extends Controller
     {
         $this->data->save();
         return $this;
+    }
+
+    public function loginasUser(Request $request, $id)
+    {
+        $user_id = Auth::id();
+        if (Auth::user()->role==2) {
+            Session::put('previous_user_id',$user_id);
+        }else{
+            Session::flush('previous_user_id');
+        }
+
+        Auth::loginUsingId($id);
+
+        return redirect()->route('admin.dashboard.index');
     }
 }

@@ -1,9 +1,11 @@
 @extends('Website.layouts.app')
 @section('content')
 @php
+    $now = date("Y-m-d H:i:s");
 	$authCheck = Auth::check();
     $orderTime = $restaurant->order_lead_time+$restaurant->delivery_extra_time;
     $orderExtraTime = $orderTime+5;
+    $aaadininngMember = isset(Auth::user()->aaadiningPurchase) && Auth::user()->aaadiningPurchase->end_at < $now ? true:false;
 @endphp
 <input type="hidden" class="restro_id" value="{{$restaurant->id}}">
 <input type="hidden" class="user_id" @if(Auth::check()) value="{{Auth::id()}}" @endif>
@@ -133,12 +135,22 @@
 	                                            <span class="text-light-white text-right">4225 ratings</span>
 	                                        </div>
 	                                    </div>
+                                        {{-- Auth::check() && Auth::user()->aaadiningPurchase!=null && Auth::user()->aaadiningPurchase->end_at >= $now &&  --}}
+                                        @if($vlu->special==1)
+                                            @if(Auth::check() && Auth::user()->aaadiningPurchase!=null && Auth::user()->aaadiningPurchase->end_at >= $now)
+                                            <a href="javascript:void(0)" class="dsp-inline btn44 mt-4 add-cart-btn">Add to Cart</a>
+                                            @else
+                                            <a @if(Auth::check()) href="{{route('stripe.buycard.post')}}" @else href="{{route('login')}}" @endif class="dsp-inline btn44 mt-4">Only for VIP</a>
+                                            @endif
+                                        @else
 	                                    <a href="javascript:void(0)" class="dsp-inline btn44 mt-4 add-cart-btn">Add to Cart</a>
+                                        @endif
 	                                    <div class="dsp-inline qty mt-4 cart-add-remove-btn d-none">
 	                                        <span class="minus bg-dark">-</span>
 	                                        <input type="number" min="1" class="count" name="qty1" value="1">
 	                                        <span class="plus bg-dark">+</span>
 	                                    </div>
+
 	                                </div>
 	                            </div>
 	                        </div>
@@ -275,11 +287,13 @@
                                <span class="pull-none">$</span>
                                <span class="pull-right tax-amount">0.00</span>
                              </div>
-                            <div class="info-group">
-                               <span class="pull-left wdt12">Gratuity:</span>
-                               <span class="pull-none">$</span>
-                               <span class="pull-right">TBD</span>
-                             </div>
+                             @if(Auth::check() && Auth::user()->aaadiningPurchase!=null && Auth::user()->aaadiningPurchase->end_at >= $now && $restaurant->aaadining_club)
+                                <div class="info-group">
+                                   <span class="pull-left wdt12">AAADining Membership:</span>
+                                   <span class="pull-none">$</span>
+                                   <span class="pull-right ac_max_discount text-primary"></span>
+                                 </div>
+                             @endif
                              <div class="info-group">
                                 <input type="hidden" class="total-amt" value="0">
                                <span class="pull-left tlt wdt12">Total:</span>
@@ -301,15 +315,25 @@
                                           <span class="checkmark"></span> Home Delivery
                                         </label>
                                         <label class="custom-checkbox mb-0">
-                                          <input type="radio" name="delivery_type" value="2" @if(!Auth::check()) disabled="" @elseif(Auth::check() && Auth::user()->vip==0) disabled="" @endif> 
+                                          <input type="radio" name="delivery_type" value="2" @if(!Auth::check()) disabled="" @elseif(Auth::check() && Auth::user()->vip==0 &&  Auth::user()->aaadiningPurchase==null || isset(Auth::user()->aaadiningPurchase) && Auth::user()->aaadiningPurchase->end_at < $now) disabled="" @endif> 
                                           <span class="checkmark"></span> I Will Pick Up
                                         </label>
                                     </div>  
+                                    <label class="custom-checkbox mb-0">
+                                      <input type="radio" name="delivery_type" value="3" @if(!Auth::check()) disabled="" @elseif(Auth::check() && Auth::user()->vip==0 &&  Auth::user()->aaadiningPurchase==null || isset(Auth::user()->aaadiningPurchase) && Auth::user()->aaadiningPurchase->end_at < $now) disabled="" @endif> 
+                                      <span class="checkmark"></span> Dine In
+                                    </label>
                                 </div>
                                 {{-- <a href="javascript:void(0)" class="ds11 wdt14 fw-500 lnk">View Full Cart</a> --}}
+                                
                                 @if(!Auth::check())
                                 <span class="fw-500 lnk"><strong>NOTE* </strong> If you are VIP member. Please <strong><a href="{{route('login')}}">LOGIN</a></strong> to access VIP Facility.</span>
                                 @endif
+                                @if(Auth::check() && Auth::user()->aaadiningPurchase!=null && Auth::user()->aaadiningPurchase->end_at >= $now && $restaurant->aaadining_club)
+                                <span class="fw-500"><strong class="lnk">Membership Offer* </strong>&nbsp;&nbsp;&nbsp; Max discount will be <strong>${{ $restaurant->ac_max_discount ?? '' }}</strong></span>
+                                <input type="hidden" name="ac_max_discount" value="{{$restaurant->ac_max_discount}}">
+                                @endif
+
                                 <a href="javascript:void(0)" class="mt-4 btn-first green-btn text-custom-white full-width fw-500 checkout-btn">Proceed to Checkout</a>
                             </div>
                         </div>
@@ -325,12 +349,14 @@
 @endsection
 @push('script')
 <script type="text/javascript">
+        var aaadininngMember = '{{$aaadininngMember}}';
         var vipcoupen ='';
         var isvip = 'NO';
         var usercopon = ''; 
 		var authCheck = '{{$authCheck ?? ''}}';
         var free_delivery_amount = '{{ $restaurant->free_delivery_amount ?? 0 }}';
-        var delivery_fee = '{{ $restaurant->delivery_fee ?? 0 }}';
+        var delivery_fee = '{{ Settings::get('general_setting_delivery_charges_dollar') ?? 0 }}';
+        var delivery_fee_percent = '{{ Settings::get('general_setting_delivery_charges_percent') ?? 0 }}';
         var minimum_delivery_amount = '{{$restaurant->minimum_delivery_amount ?? 0}}';
         var sale_tax = '{{$restaurant->sale_tax ?? 0}}';
         var restro_slug = '{{ $restaurant->slug ?? '' }}'

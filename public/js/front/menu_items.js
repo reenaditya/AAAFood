@@ -118,6 +118,10 @@ function calculateDeliveryFees(subTotal) {
 		localStorage.setItem('delivery_fee',0);
 		$("span.delivery-fees").text('0.00');
 	}else{
+		var calFees = (parseFloat(subTotal)/100)*delivery_fee_percent;
+		if (calFees >= delivery_fee) {
+			delivery_fee = 	calFees;
+		}
 		localStorage.setItem('delivery_fee',delivery_fee);
 		$("span.delivery-fees").text(delivery_fee);
 	}
@@ -125,7 +129,7 @@ function calculateDeliveryFees(subTotal) {
 	/*On change delivery type*/
 	getDeliveryType();
 	var delType = localStorage.getItem('delivery_type');
-	if (delType==2) {
+	if (delType==2 || delType==3) {
 		localStorage.setItem('delivery_fee',0);
 		$("span.delivery-fees").text('0.00');
 	}
@@ -162,12 +166,21 @@ function deliveryAvailability(subTotal) {
 function getTotalAmount(subTotal) {
 	
 	$(".sub-total").text(subTotal);
+	
+	localStorage.setItem('ac_max_discount',0);
 
 	var delivery_fee = localStorage.getItem('delivery_fee');
 	
 	var tax_amount = localStorage.getItem('tax_amount');
 	
 	var total = Math.round((parseFloat(tax_amount)+parseFloat(delivery_fee)+parseFloat(subTotal)).toFixed(2));
+
+	if ($("input[name='ac_max_discount']").val()) {
+		var ac_max_discount = parseFloat($("input[name='ac_max_discount']").val());
+		total = total-ac_max_discount;
+		$("span.ac_max_discount").text("-"+ac_max_discount);
+		localStorage.setItem('ac_max_discount',ac_max_discount);
+	}
     
     $("input.total-amt").val(total);
 	$(".total-amount").text(total);

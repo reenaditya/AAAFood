@@ -92,15 +92,19 @@
 					<div class="card">
 						<div class="card-header">
 							<h5 class="card-title mb-0">Order Details</h5>
-							@if($data->order_status <=5)
-								<div class="badge bg-info my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
-							@elseif($data->order_status == 7)
-								<div class="badge bg-success my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
-							@elseif($data->order_status == 6)
-								<div class="badge bg-danger my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
-							@else
-								<div class="badge bg-warning my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
-							@endif
+							<div class="d-flex">
+								
+								@if($data->order_status <=5)
+									<div class="badge bg-info my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
+								@elseif($data->order_status == 7)
+									<div class="badge bg-success my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
+								@elseif($data->order_status == 6)
+									<div class="badge bg-danger my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
+								@else
+									<div class="badge bg-warning my-2">Order- {{ Config::get('constant.order_status')[$data->order_status]}}</div>
+								@endif
+								&nbsp;&nbsp;<div class="badge @if($data->transaction->pay_mode==2) bg-success @else bg-warning @endif my-2">Pay Mode- {{ Config::get('constant.pay_mode')[$data->transaction->pay_mode]}}</div>
+							</div>
 						</div>
 						<div class="card-body pt-0">
 							<h5>Customer Email</h5>
@@ -174,8 +178,8 @@
 							</dl>
 
 							<hr />
-							<h5 class="card-title mb-3">Delivery Boy Details</h5>
 							@if($data->delivery_type==1)
+							<h5 class="card-title mb-3">Delivery Boy Details</h5>
 							<dl class="row">
 								<dt class="col-4 col-xxl-3 mb-0">Name</dt>
 								<dd class="col-8 col-xxl-9 mb-0">
@@ -199,7 +203,8 @@
 								</dd>
 							</dl>
 							@else
-							<div class="badge bg-info">Order Pick by Customer</div>
+							<h5 class="card-title mb-3">Order Pick by Customer</h5>
+							<div class="badge bg-info">Delivery type - {{Config::get('constant.delivery_type')[$data->delivery_type]}}</div>
 							@endif
 						</div>
 					</div>
@@ -230,25 +235,13 @@
 					</div>	
 				</div>
 
-				@if(Auth::user()->role==3 && $data->deliveryUser)
 				<div class="col-lg-12 col-xxl-12">
-					<h1 class="h3 mb-3">Messages to customer</h1>
+					<h1 class="h3 mb-3">Chats</h1>
 
 					<div class="card">
 						<div class="row g-0">
 							<div class="col-12 col-lg-12 col-xl-12">
-								<div class="py-2 px-4 border-bottom d-none d-lg-block">
-									<div class="d-flex align-items-start align-items-center py-1">
-										<div class="position-relative">
-											<img src="img/avatars/avatar-3.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
-										</div>
-										<div class="flex-grow-1 ps-3">
-											<strong>{{ $data->user->name ?? ''}}</strong>
-										</div>
-										
-									</div>
-								</div>
-
+								
 								<div class="position-relative">
 									<div class="chat-messages p-4">
 										@if($data->chats!=null && !$data->chats->isEmpty())
@@ -269,7 +262,7 @@
 														<img src="img/avatars/avatar-3.jpg" class="rounded-circle me-1" alt="Bertha Martin" width="40" height="40">
 													</div>
 													<div class="flex-shrink-1 bg-light rounded py-2 px-3 ms-3">
-														<div class="fw-bold mb-1">{{ $data->user->name ?? '' }}</div>{!! $val->message ?? '' !!}
+														<div class="fw-bold mb-1">{{ $val->sender->name ?? '' }}</div>{!! $val->message ?? '' !!}
 													</div>
 												</div>
 											@endif
@@ -288,6 +281,7 @@
 										<input type="hidden" name="sender_id" value="{{Auth::id() ?? ''}}">
 										<input type="hidden" name="reciver_id" value="{{$data->user_id ?? ''}}">
 										<input type="hidden" name="order_id" value="{{$data->id ?? ''}}">
+										{{-- <input type="hidden" name="vendor_id" value="{{$data->vendor_id ?? ''}}"> --}}
 										<button class="btn btn-primary">Send</button>
 									</div>
 									</form>
@@ -298,7 +292,7 @@
 					</div>
 
 				</div>
-				@endif
+				
 				<div class="col-lg-12 col-xxl-12"><h4>Admin Comment</h4></div>
 				@if(Auth::check() && Auth::user()->role==2)
 				<div class="col-lg-12 col-xxl-12">

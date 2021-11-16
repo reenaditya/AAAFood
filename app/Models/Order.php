@@ -45,7 +45,7 @@ class Order extends Model
 
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class,'order_id');
+        return $this->hasOne(Transaction::class,'order_id');
     }
 
     public function scopeFilterOrder($query)
@@ -93,7 +93,7 @@ class Order extends Model
         }
     }
 
-    public function scopeFilterCompletedOrder($query)
+    public function scopeFilterCompletedOrder($query,$request)
     {
         if (Auth::user()->role===3) 
         {
@@ -106,6 +106,12 @@ class Order extends Model
         elseif (Auth::user()->role===2) 
         {
             $query->whereIn('order_status',[7]);
+        }
+        if ($request->paymode=="poa") {
+            $query->whereHas('transaction',function ($query)
+            {
+                $query->where('pay_mode',3)->where('type',3);   
+            });
         }
     }
 }

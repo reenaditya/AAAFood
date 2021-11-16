@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AaadiningPurchase;
+use App\Models\User;
+use App\Notifications\WelcomeAaadingMember;
+use App\Mail\AaadiningMemberInvoiceMail;
 use Session;
 use Stripe;
 use Auth;
 use Settings;
 use DB;
+use Mail;
 
 class StripeBuyAAACardController extends Controller
 {
@@ -55,7 +59,10 @@ class StripeBuyAAACardController extends Controller
                     $add->status = 1;
                     $add->save();
 
-                    Session::flash('success', 'Order placed successful! with paymeny of $'.$pay.'');
+                    $this->welcmEmailNotification($add);
+                    $this->invoceEmailNotification($add);
+
+                    Session::flash('success', 'Payment successful!');
                     DB::commit();   
                     return redirect()->route('webiste.home.index');
                 }
@@ -72,6 +79,20 @@ class StripeBuyAAACardController extends Controller
             return back()->withError($e->getMessage());
         }
    
+    }
+
+    public function welcmEmailNotification($data)
+    {
+        $firstLine = Settings::get('setting_email_notification_aaadining_member_wlcm_email');
+        User::where('id',$data->user_id)->first()->notify(new WelcomeAaadingMember($firstLine));
+        return $this;        
+    }
+
+    public function invoceEmailNotification($data)
+    {
+        $user = User::where('id',$data->user_id)->first();
+        Mail::to($user->email)->send(new AaadiningMemberInvoiceMail($data));
+        return $this;       
     }
 
     public function validation()

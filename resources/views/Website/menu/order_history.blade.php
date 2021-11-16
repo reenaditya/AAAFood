@@ -124,23 +124,23 @@
 
                             </div>
                             <br>
-                            <button class="btn btn-success btn-sm" data-toggle="collapse" href="#collapseExample{{$key}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$key}}">Send Message to Delivery Boy</button>
+                            <button class="btn btn-success btn-sm" data-toggle="collapse" href="#collapseExample{{$key}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$key}}">Send Message</button>
                         
                             <div class="collapse" id="collapseExample{{$key}}">
                               <div class="card card-body">
                                     <div class="row messaging">
                                         <div class="col-lg-12 col-md-12">
-                                            @if($value->delivery_user_id)
+                                            {{-- @if($value->delivery_user_id) --}}
                                             <div class="mesgs border m-1">
                                               <div class="msg_history">
                                                 <div class="incoming_msg">
                                                     @if($value->chats!=null && !$value->chats->isEmpty())
                                                     @foreach($value->chats as $key=>$vala)
-                                                        @if($vala->sender_id == $value->delivery_user_id)
+                                                        @if($vala->order_id == $value->id && Auth::id()!=$vala->sender_id)
                                                         <div class="incoming_msg_img"> <img src="assets/img/user/user.png" style="max-height: 50px;" alt="sunil"> </div>
                                                         <div class="received_msg m-1">
                                                             <div class="received_withd_msg">
-                                                              <p><strong>Delivery Boy</strong><br>{!! $vala->message ?? '' !!}</p>
+                                                              <p><strong>{{$vala->sender->name ?? ''}}</strong><br>{!! $vala->message ?? '' !!}</p>
                                                             </div>
                                                         </div>
                                                         @else
@@ -157,19 +157,17 @@
                                                     <form action="{{route('chat.message')}}" method="POST">
                                                     @csrf
                                                     <div class="input_msg_write">
-
                                                         <input type="hidden" name="sender_id" value="{{Auth::id() ?? ''}}">
                                                         <input type="hidden" name="reciver_id" value="{{$value->delivery_user_id ?? ''}}">
                                                         <input type="hidden" name="order_id" value="{{$value->id ?? ''}}">
-                                                        <input type="text" class="write_msg" placeholder="Type a message" name="message" >
+                                                        <input type="hidden" name="vendor_id" value="{{$value->vendor_id ?? ''}}">
+                                                        <input type="text" class="write_msg" placeholder="Type a message" name="message">
                                                         <button class="msg_send_btn"  type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                                                     </div>
                                                     </form>
                                                 </div>
                                             </div>
-                                            @else
-                                            <div class="text-danger">This feature will be enable when delivery boy is assiged.</div>
-                                            @endif
+                                            {{-- @endif --}}
                                         </div>
                                     </div>
                               </div>

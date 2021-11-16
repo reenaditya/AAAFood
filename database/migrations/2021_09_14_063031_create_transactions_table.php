@@ -20,8 +20,8 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('restaurant_id');
             $table->bigInteger('vendor_id');
-            $table->tinyInteger('pay_mode')->default(1)->comment("1=Cash, 2=Card");
-            $table->tinyInteger('type')->default(1)->comment("1=COD, 2=Online");
+            $table->tinyInteger('pay_mode')->default(1)->comment("1=Cod, 2=Card, 3=Pay on account");
+            $table->tinyInteger('type')->default(1)->comment("1=COD, 2=Online, 3=Pay on Account");
             $table->float('grand_total',12,2);
             $table->tinyInteger('trans_status')->default(1)->comment("1=Pending, 2=PAID, 3=Failed");
             

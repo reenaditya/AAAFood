@@ -17,11 +17,11 @@ class CreateChatsTable extends Migration
             $table->id();
             $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('sender_id')->unsigned();
-            $table->bigInteger('reciver_id')->unsigned();
+            $table->bigInteger('reciver_id')->nullable();
+            $table->bigInteger('vendor_id')->nullable();
             $table->text('message')->nullable();
             $table->tinyInteger('status')->default(1)->comment("1=active, 0=Inactive");
             $table->timestamps();
-            $table->foreign('reciver_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });

@@ -180,6 +180,7 @@ class MenuItemController extends Controller
         $this->data->estimated_time = $request->estimated_time;
         $this->data->discount = $request->discount;
         $this->data->discount_type = $request->discount_type;
+        $this->data->special = $request->special?true:false;
         $this->data->status = $request->status?true:false;
         return $this;
     }
@@ -191,7 +192,7 @@ class MenuItemController extends Controller
 
     private function menuQuantityPrice($menu_item_id,$request,$update){
         if ($update) {
-            MenuItemsPriceQuantity::whereIn('menu_quantity_group_id',$request->mqg_id)->delete();
+            MenuItemsPriceQuantity::whereIn('menu_quantity_group_id',$request->mqg_id)->where('menu_item_id',$menu_item_id)->delete();
         }
         $data = [];
         $counts = count($request->mqg_id);

@@ -300,10 +300,10 @@
 									</fieldset>
 									<div class="border-1 mb-3 d-none aaading_club_offer">
 										<input type="hidden" name="ac_offer_type" value="">
-										<div class="mb-3">
+										{{-- <div class="mb-3">
 											<label class="form-label w-100">Image</label>
 											<input type="file" name="ac_image" class="form-control">
-										</div>
+										</div> --}}
 
 										<div class="mb-3">
 											<label class="form-label w-100">Select Days</label>
@@ -381,13 +381,13 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-6">
+								{{-- <div class="mb-4 col-md-6">
 									<label class="form-label" >Participate Meal</label>
 									<input type="file" name="participate_file" class="form-control" >
 									@error('participate_file')
 										<span class="text-danger">{{$message}} </span>
 									@enderror
-								</div>
+								</div> --}}
 							</div>
 
 							<label class="form-label">Hours</label>

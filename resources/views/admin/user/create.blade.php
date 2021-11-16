@@ -46,6 +46,7 @@
 												<span class="text-danger">{{$message}} </span>
 											@enderror
 										</div>
+										<input type="hidden" name="password" class="form-control"  value="{{ old('password') }}" value="123@#food">
 										{{-- <div class="mb-4 col-md-12">
 											<label class="form-label">Password</label>
 											<input type="password" name="password" class="form-control"  value="{{ old('password') }}">

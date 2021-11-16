@@ -31,7 +31,7 @@ class RestaurantPolicy
      */
     public function view(User $user, Restaurant $restaurant)
     {
-        return false;
+        return true;
     }
 
     /**

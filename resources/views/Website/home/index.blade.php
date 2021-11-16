@@ -1,5 +1,8 @@
 @extends('Website.layouts.app')
 @section('content')
+@php
+    $now = date("Y-m-d H:i:s");
+@endphp
  <!-- Navigation -->
     <input type="hidden" class="user-id" value="{{Auth::id() ?? ''}}">
     <div class="inner-wrapper bg-image">
@@ -152,9 +155,9 @@
                             @if(!$data['1by2meal']->isEmpty())
                             @foreach($data['1by2meal'] as $val)
                             <div class="swiper-slide">
-                                <a @if(Auth::check() && Auth::user()->aaadiningPurchase!=null) href="{{route('webiste.menu.index',$val->slug)}}" @else href="{{route('stripe.buycard.post')}}" @endif class="categories">
-                                    <div class="icon icon-parent text-custom-white parent bg-light-green"> @if($val->participate_file) <img src="{{ asset('storage/'.$val->participate_file) }}" class="rounded-circle child" alt="categories"> @else<i class="fas fa-map-marker-alt"></i>@endif
-                                        <span>2for1 Meals</span>
+                                <a @if(Auth::check() && Auth::user()->aaadiningPurchase!=null && Auth::user()->aaadiningPurchase->end_at >= $now) href="{{route('webiste.menu.index',$val->restaurant->slug)}}" @elseif(!Auth::check()) href="{{route('login')}}" @else href="{{route('stripe.buycard.post')}}" @endif class="categories">
+                                    <div class="icon icon-parent text-custom-white parent bg-light-green"> @if($val->image) <img src="{{ asset('storage/'.$val->image) }}" class="rounded-circle child" alt="categories"> @else<i class="fas fa-map-marker-alt"></i>@endif
+                                        <span>2for1 {{$val->name}}</span>
                                     </div>
                                 </a>
                             </div>

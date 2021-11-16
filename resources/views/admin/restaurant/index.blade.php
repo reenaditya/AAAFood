@@ -14,9 +14,9 @@
 										<div class="col-md-10"></div>
 										
 										<div class="col-md-2">
-											@can('create')
+											
 											<a href="{{ route('admin.restaurant.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add Restaurant</a>
-											@endcan
+											
 										</div>
 
 									</div>			
@@ -51,6 +51,9 @@
 															@csrf
 															@method('DELETE')
 														</form>
+														@if($restaurant->user_id && $restaurant->user_id != Auth::id())
+														<a href="{{ route('admin.user.login',$restaurant->user_id) }}" class="btn btn-warning">Login</a>
+														@endif
 													</td>
 												</tr>
 											@endforeach

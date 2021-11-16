@@ -20,11 +20,16 @@ class MenuController extends Controller
     */
     public function index(Request $request)
     {
+        if (!Auth::check()) {
+            $url = url('menu/'.$request->slug);
+            Cache::put('redirect_url', $url);
+        }
         $restaurant = Restaurant::where('slug',$request->slug)->first();
         $data = MenuGroup::with('menuItems.menu_price')
             ->where('restaurant_id',$restaurant->id)
             ->where('status',1)
             ->get();
+
         return view('Website.menu.index',compact('data','restaurant'));
     }
 
@@ -125,7 +130,7 @@ class MenuController extends Controller
     {
         if (!Auth::check()) {
             $url = url('menu/'.$request->slug.'/checkout');
-            Cache::put('checkout_url', $url);
+            Cache::put('redirect_url', $url);
         }
         $restaurant = Restaurant::where('slug',$request->slug)->first();
         return view('Website.menu.checkout',compact('restaurant'));

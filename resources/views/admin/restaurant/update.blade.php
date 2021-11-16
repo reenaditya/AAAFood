@@ -320,7 +320,7 @@
 									</fieldset>
 									<div class="border-1 mb-3 @if($restaurant->aaadining_club!=1) d-none @endif aaading_club_offer">
 										<input type="hidden" name="ac_offer_type" value="{{$ac_offer_type ?? ''}}">
-										<div class="row">
+										{{-- <div class="row">
 											<div class="col-md-9">
 												<div class="mb-3">
 													<label class="form-label w-100">Image</label>
@@ -330,7 +330,7 @@
 											<div class="col-md-3">
 												<img class="img-fluid" src="{{asset('storage')}}/{{$ac_image ?? ''}}">
 											</div>
-										</div>
+										</div> --}}
 
 										<div class="mb-3">
 											<label class="form-label w-100">Select Days</label>
@@ -408,7 +408,7 @@
 										<span class="text-danger">{{$message}} </span>
 									@enderror
 								</div>
-								<div class="mb-4 col-md-6">
+								{{-- <div class="mb-4 col-md-6">
 									<label class="form-label" >Participate Meal</label>
 									<input type="file" name="participate_file" class="form-control" >
 									@error('participate_file')
@@ -419,7 +419,7 @@
 										<img style="width:auto;height: 100px" src="{{asset("storage/$restaurant->participate_file")}}">
 									</div>
 									@endif
-								</div>
+								</div> --}}
 							</div>
 
 							<label class="form-label h3">Hours</label>

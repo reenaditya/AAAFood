@@ -107,7 +107,7 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        $user = User::select('id','name')->get();
+        $user = User::where('role',1)->select('id','name')->get();
         $cuisine = Cuisine::select('id','name')->where('status',1)->get();
         return view('admin.restaurant.update',compact('restaurant','cuisine','user'));
     }
