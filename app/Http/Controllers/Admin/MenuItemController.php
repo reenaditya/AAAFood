@@ -149,9 +149,6 @@ class MenuItemController extends Controller
      */
     public function destroy(MenuItem $menu_item)
     {
-        if ($menu_item->image) {
-            unlink("storage/".$menu_item->image);
-        }
         $menu_item->delete();
         return back()->withSuccess('Menu item removed from database');
     }
@@ -164,7 +161,13 @@ class MenuItemController extends Controller
             'estimated_time' => ['required'],
             'discount' => ['required'],
             'discount_type' => ['required'],
+            'price.*' => ['required'],
         ]);
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => ['required'],
+            ]);
+        }
         return $this;
     }
     private function props(Request $request)
@@ -192,7 +195,7 @@ class MenuItemController extends Controller
 
     private function menuQuantityPrice($menu_item_id,$request,$update){
         if ($update) {
-            MenuItemsPriceQuantity::whereIn('menu_quantity_group_id',$request->mqg_id)->where('menu_item_id',$menu_item_id)->delete();
+            MenuItemsPriceQuantity::where('menu_item_id',$menu_item_id)->delete();
         }
         $data = [];
         $counts = count($request->mqg_id);

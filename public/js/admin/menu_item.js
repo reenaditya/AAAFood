@@ -16,6 +16,7 @@ $(function() {
 	        data: {'menu_group_id':menu_group_id},
 	        success: function(result)
 	        {
+	          	$(".append-menu-group-quantity-error").addClass('d-none');
 	          	$(".append-menu-group-quantity").html('');
 	        	if (result.status) {
 	            	var suggest = '';
@@ -24,6 +25,8 @@ $(function() {
 	              	suggest+= '<div class="mb-4 col-md-4"><input type="hidden" name="mqg_id[]" value="'+val.id+'"><label class="form-label">'+val.name+' price</label><input type="number" name="price[]" class="form-control"></div>';
 	            	});
 	          		$(".append-menu-group-quantity").html(suggest);
+	          		$(".append-menu-group-quantity-error").removeClass('d-none');
+
 	        	}
 	        	else{
 	          		$(".append-menu-group-quantity").html('');

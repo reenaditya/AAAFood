@@ -50,6 +50,10 @@ Route::post('stripe/buycard','StripeBuyAAACardController@stripePost');
 Route::post('chats/message','ChatController@chatMessage')->name('chat.message');
 /*END*/
 
+/*rating*/
+Route::post('rating','RatingController@rating')->name('front.rating.post');
+/*END*/
+
 Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 
 	Route::get('/','HomeController@index')->name('home.index');
@@ -63,6 +67,7 @@ Route::group(['namespace' => 'Website','as'=>'webiste.'],function(){
 	Route::post('/website/add-to-cart','MenuController@addToCart');
 	Route::get('/menu/{slug}/checkout','MenuController@checkout');
 	Route::get('/order/history','MenuController@orderHistory')->name('order.history');
+	Route::post('/order/rating','RatingController@orderRating')->name('order.rating');
 
 	Route::get('/bussiness-account','BussinessAccountController@create')->name('bussiness.account');
 	Route::post('/bussiness-account','BussinessAccountController@store');

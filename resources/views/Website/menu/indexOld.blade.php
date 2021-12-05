@@ -30,38 +30,29 @@
                     @else
                     <img src="assets/img/image_not_f.jpeg" class="img-fluid" alt="">
                     @endif
-                </div>
-                <div class="head-rating text-center">
-                    <div class="rating">
-                        @php
-                        $numrat = count($restaurant->rating);
-                        $totalrat = 0;
-                        foreach ($restaurant->rating as $kiii => $vall) {
-                            $totalrat = $totalrat+$vall->rating;
-                        }
-                        if ($numrat >=1) {
-                            $totalrat = $totalrat/$numrat;
-                        }
-                        @endphp
-                        @if($numrat)
-                        <div class="rating"> 
-                            <span>
-                                @for($i=0; $i<$totalrat; $i++)
-                                    <span class="fs-16 text-yellow">
-                                      <i class="fas fa-star"></i>
-                                    </span>    
-                                @endfor
-                                @for($i=0; $i<5-$totalrat; $i++)
-                                    <span class="fs-16 text-black">
-                                      <i class="fas fa-star"></i>
-                                    </span>
-                                @endfor
-                            </span>
+                 </div>
+                     <div class="head-rating text-center">
+                      <div class="rating"> 
+                        <span class="fs-16 text-yellow">
+                          <i class="fas fa-star"></i>
+                        </span>
+                        <span class="fs-16 text-yellow">
+                          <i class="fas fa-star"></i>
+                        </span>
+                       <span class="fs-16 text-yellow">
+                          <i class="fas fa-star"></i>
+                        </span>
+                        <span class="fs-16 text-yellow">
+                          <i class="fas fa-star"></i>
+                        </span>
+                        <span class="fs-16 text-yellow">
+                          <i class="fas fa-star"></i>
+                        </span>
+                           
                         </div>
-                        @endif
                         
                     </div>
-                </div>
+               
               </div>
             <div class="row mmt">
               <div class="col-md-2"></div>
@@ -98,26 +89,12 @@
                         <div class="row">
                         	@if(!$val->menuItems->isEmpty())
                         	@foreach($val->menuItems as $ki=>$vlu)
-                             @php
-                             	if (!$vlu->menu_price->isEmpty()) {
+                        	 @php
+                        		if (!$vlu->menu_price->isEmpty()) {
 	                        	 	$qunty = $vlu->menu_price[0];
                                 	$discountType = $vlu->discount_type;
                                 	$discount = $vlu->discount;
 	                        	}
-
-                                $numrat = count($vlu->rating);
-                                $totalrat = 0;
-                                foreach ($vlu->rating as $kiii => $vall) {
-                                    $totalrat = $totalrat+$vall->rating;
-                                }
-                                if ($numrat >=1) {
-                                    $totalrat = $totalrat/$numrat;
-                                }
-                                
-                                if (is_numeric( $totalrat ) && floor( $totalrat ) != $totalrat) {
-                                    $totalrat = $totalrat+0.5;    
-                                }
-
                             @endphp
 	                        <div class="col-lg-4 col-md-6 col-sm-6">
 	                            <div class="product-box mb-xl-20">
@@ -128,7 +105,7 @@
 	                                    <div class="overlay">
 	                                        <div class="product-tags padding-10"> <span class="circle-tag">
 						                      <img src="assets/img/svg/013-heart-1.svg" alt="tag">
-						                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">{{$discount ?? ''}}@if($discountType??false && $discountType==1)$ @else% @endif</span>
+						                      </span> <div class="custom-tag"> <span class="text-custom-white rectangle-tag bg-gradient-red">{{$discount}}@if($discountType==1)$ @else% @endif</span>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -138,10 +115,7 @@
 	                                	<input type="hidden" class="dish-price" value="{{ $qunty->pivot->price ?? '' }}">
 	                                    <div class="title-box">
 	                                        <h6 class="product-title"><a href="javascript:void(0)" class="text-light-black dish-name">{{ $vlu->name ?? '' }}</a></h6>
-	                                        <div class="tags">
-                                                @if($totalrat >=1)
-                                                <span class="text-custom-white rectangle-tag @if($totalrat ==5 || $totalrat ==4) bg-green @elseif($totalrat ==3) bg-yellow @else bg-red @endif">{{$totalrat ?? "NA"}}</span>
-                                                @endif
+	                                        <div class="tags"> <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
 	                                        </div>
 	                                    </div>
 	                                   
@@ -151,19 +125,15 @@
 	                                        <div class="price-time"> <span class="text-light-black time">30-40 min</span>
 	                                            <span class="text-light-white price">${{ $qunty->pivot->price ?? '' }} </span>
 	                                        </div>
-	                                        @if($numrat)
-                                            <div class="rating"> 
-                                                <span>
-                                                    @for($i=0; $i<$totalrat; $i++)
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                    @endfor
-                                                    @for($i=0; $i<5-$totalrat; $i++)
-                                                        <i class="fas fa-star"></i>
-                                                    @endfor
-                                                </span>
-                                                <span class="text-light-white text-right">{{$numrat ?? 0}} ratings</span>
-                                            </div>
-                                            @endif
+	                                        <div class="rating"> <span>
+	                                                <i class="fas fa-star text-yellow"></i>
+	                                                <i class="fas fa-star text-yellow"></i>
+	                                                <i class="fas fa-star text-yellow"></i>
+	                                                <i class="fas fa-star text-yellow"></i>
+	                                                <i class="fas fa-star text-yellow"></i>
+	                                              </span>
+	                                            <span class="text-light-white text-right">4225 ratings</span>
+	                                        </div>
 	                                    </div>
                                         {{-- Auth::check() && Auth::user()->aaadiningPurchase!=null && Auth::user()->aaadiningPurchase->end_at >= $now &&  --}}
                                         @if($vlu->special==1)

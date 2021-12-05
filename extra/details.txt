@@ -38,21 +38,22 @@ comleted
 3. if dine in billing details will hide 
 4. add new "total discount" option in checkout (cart total).
 5. redirect to retro page when click on "only for vip" from menu page.
-6. new payment option "Pay on account "
+6. new payment option "Pay on account"
 7. make separate panel for completed orders of pay on account for both vendor and admin.
 8. when subscribed user first time buy from retro so restro get 10$ make DB and listing
 9. pay to vendors -> change payment status.
 10. new panel from where you can add new vendor directly from admin panel. 
 11. option to add restro for vendor.
-12. in chat option vendor also message user and delivery boy.
 14. About us page admin setup at setting
 15. about us page make content dynamic at front.
-16. before expire one m add cron job to send email to membrs that there memebership expiored and also when membership expired send email.
+16. before expire one m add cron job to send email to membrs that there memebership expiored and also when membership expired send email.(i need to access DB)(completed)
 17. email template content are dynamic , we can change them from admin > setting page
 18. add restro name at aaadinnig members list
 19. when a member register generate unique code for user and send email and invoice. send 2 email welcom and invoice 
 
+12. in chat option vendor also message user and delivery boy.(need to update database but i dont have access i tell aaditya so he can do that)
 
 extra point
 1. pay to vendors -> change payment status -> need to send notification to user and vendor
 2. Need to mange all type of system user separate
+

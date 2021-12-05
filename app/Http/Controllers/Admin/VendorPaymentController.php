@@ -23,7 +23,7 @@ class VendorPaymentController extends Controller
     public function index()
     {
         $data = $this->data->latest()->get();
-        return view("admin.VendorPayment.index",compact('data'));
+        return view("admin.vendorPayment.index",compact('data'));
     }
 
     /**
@@ -57,7 +57,7 @@ class VendorPaymentController extends Controller
     {
         $data = $this->data->where('id',$id)->first();
         $allData = $this->data->where('vendor_id',$data->vendor_id)->latest()->get();
-        return view("admin.VendorPayment.view",compact('data','allData'));
+        return view("admin.vendorPayment.view",compact('data','allData'));
     }
 
     /**

@@ -5,6 +5,11 @@
 		<h1 class="h3 mb-3">Add Menu Item</h1>
 		<div class="row">
 			<div class="col-md-12">
+				@error('price')
+					<div class="alert alert-danger" role="alert">
+  						{{$message}}
+					</div>
+				@enderror
 				<div class="card">
 					<div class="card-body">
 						<form action="{{ route('admin.menu_item.store') }}" method="post" enctype="multipart/form-data">
@@ -67,6 +72,13 @@
 								</div>
 								<div class="row append-menu-group-quantity">
 									
+								</div>
+								<div class="row d-none append-menu-group-quantity-error">
+									<div class="col-md-4">
+									@error('price')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+									</div>
 								</div>
 
 								<div class="mb-4 col-md-4">

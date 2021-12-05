@@ -102,6 +102,48 @@
         })
     });
 </script>
+
+ <script>
+        $(document).ready(function() {
+          $(".st1").click(function() {
+                var thisData = $(this);
+                var val = thisData.attr("dataval");
+                thisData.parent().find("i.rating").css("color","black");
+                thisData.parent().find(".st1").css("color","#fcb71b");
+                thisData.parent().find("input.order_star_rating").val(val);
+          });
+          $(".st2").click(function() {
+                var thisData = $(this);
+                var val = thisData.attr("dataval");
+                thisData.parent().find("i.rating").css("color","black");
+                thisData.parent().find(".st1,.st2").css("color","#fcb71b");
+                thisData.parent().find("input.order_star_rating").val(val);
+
+          });
+          $(".st3").click(function() {
+                var thisData = $(this);
+                var val = thisData.attr("dataval");
+                thisData.parent().find("i.rating").css("color","black");
+                thisData.parent().find(".st1,.st2,.st3").css("color","#fcb71b");
+                thisData.parent().find("input.order_star_rating").val(val);
+
+          });
+          $(".st4").click(function() {
+                var thisData = $(this);
+                var val = thisData.attr("dataval");
+                thisData.parent().find("i.rating").css("color","black");
+                thisData.parent().find(".st1,.st2,.st3,.st4").css("color","#fcb71b");
+                thisData.parent().find("input.order_star_rating").val(val);
+          });
+          $(".st5").click(function() {
+                var thisData = $(this);
+                var val = thisData.attr("dataval");
+                thisData.parent().find("i.rating").css("color","black");
+                thisData.parent().find(".st1,.st2,.st3,.st4,.st5").css("color","#fcb71b");
+                thisData.parent().find("input.order_star_rating").val(val); 
+          });
+        });
+  </script>
 </body>
 
 </html>

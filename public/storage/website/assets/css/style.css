@@ -5010,8 +5010,8 @@ div.slide__pizza img {
     padding-bottom: 10px;
 }
 .restaurent-order .header-title {
-    margin-bottom: 0;
-    font-size: 24px!important;
+    margin: 10px 0;
+    font-size: 20px!important;
 }
 .pull-right {
     float: right;
@@ -5703,10 +5703,20 @@ ul.adext li.selectext h4 {
 }
 
 
-
-
-
-
+.con .fa-star {
+        font-size :18px;
+        align-content: center;
+        cursor: pointer;
+}
+.rtfd {
+    background: #f0f8ff;
+    padding: 20px 30px;
+    border-radius: 5px;
+    border: solid 1px #00000026;
+}
+.rtfd .form-control {
+    font-size: 14px;
+}
 
 
 

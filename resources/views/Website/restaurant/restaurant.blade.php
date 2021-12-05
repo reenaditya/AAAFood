@@ -42,6 +42,16 @@
                 <div class="row">
                     @if(!$data->isEmpty())
                     @foreach($data as $val)
+                    @php
+                        $numrat = count($val->rating);
+                        $totalrat = 0;
+                        foreach ($val->rating as $kiii => $vall) {
+                            $totalrat = $totalrat+$vall->rating;
+                        }
+                        if ($numrat >=1) {
+                            $totalrat = $totalrat/$numrat;
+                        }
+                    @endphp
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product-box mb-xl-20">
                             <div class="product-img">
@@ -71,7 +81,10 @@
                             <div class="product-caption">
                                 <div class="title-box">
                                     <h6 class="product-title"><a href="{{route('webiste.menu.index',$val->slug)}}" class="text-light-black"> {{ $val->name ?? '' }}</a></h6>
-                                    <div class="tags"> <span class="text-custom-white rectangle-tag bg-green">4.1</span>
+                                    <div class="tags">
+                                        @if($totalrat >=1)
+                                        <span class="text-custom-white rectangle-tag @if($totalrat ==5 || $totalrat ==4) bg-green @elseif($totalrat ==3) bg-yellow @else bg-red @endif">{{$totalrat ?? "NA"}}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <p class="text-light-white">
@@ -89,16 +102,19 @@
                                         <span class="text-light-white price">${{$val->meal_starting}} min price</span>
                                         @endif
                                     </div>
+                                    @if($numrat)
                                     <div class="rating"> 
                                         <span>
-                                        <i class="fas fa-star text-yellow"></i>
-                                        <i class="fas fa-star text-yellow"></i>
-                                        <i class="fas fa-star text-yellow"></i>
-                                        <i class="fas fa-star text-yellow"></i>
-                                        <i class="fas fa-star text-yellow"></i>
+                                            @for($i=0; $i<$totalrat; $i++)
+                                                <i class="fas fa-star text-yellow"></i>
+                                            @endfor
+                                            @for($i=0; $i<5-$totalrat; $i++)
+                                                <i class="fas fa-star"></i>
+                                            @endfor
                                         </span>
-                                        <span class="text-light-white text-right">4225 ratings</span>
+                                        <span class="text-light-white text-right">{{$numrat ?? 0}} ratings</span>
                                     </div>
+                                    @endif
                                 </div>
                                 
                             </div>

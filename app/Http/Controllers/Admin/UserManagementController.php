@@ -138,7 +138,7 @@ class UserManagementController extends Controller
         $request->validate([
             'role' => ["required"],
             'name' => ["required","min:2","max:100"],
-            'email' => ["required","regex:/^.+@.+$/i"],
+            'email' => ["required","regex:/^.+@.+$/i","unique:users"],
             /*'password' => ["required","confirmed","min:8"],*/
         ]);
         return $this;

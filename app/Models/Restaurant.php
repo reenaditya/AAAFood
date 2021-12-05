@@ -14,6 +14,11 @@ class Restaurant extends Model
         return $this->belongsToMany(Cuisine::class,'cuisine_restaurants');
     }
 
+    public function rating()
+    {
+        return $this->hasMany(Rating::class,'restro_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');

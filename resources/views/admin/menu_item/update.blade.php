@@ -93,7 +93,13 @@
 									@endforeach
 									@endif
 								</div>
-								
+								<div class="row d-none append-menu-group-quantity-error">
+									<div class="col-md-4">
+									@error('price')
+										<span class="text-danger">{{$message}} </span>
+									@enderror
+									</div>
+								</div>
 								<div class="mb-4 col-md-4">
 									<label class="form-label" >Image</label>
 									<input type="file" class="form-control" name="image" old="{{ old('image')  }}">

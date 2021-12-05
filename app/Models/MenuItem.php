@@ -14,6 +14,11 @@ class MenuItem extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function rating()
+    {
+        return $this->hasMany(Rating::class,'item_id');
+    }
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id');

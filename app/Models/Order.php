@@ -16,6 +16,10 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class,'order_id')->with('menuItem');
     }
 
+    public function rating()
+    {
+        return $this->hasMany(Rating::class,'order_id');
+    }
 
     public function user()
     {

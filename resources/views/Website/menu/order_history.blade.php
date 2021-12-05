@@ -51,8 +51,9 @@
                             <p>{{ Session::get('success') }}</p>
                         </div>
                     @endif
-                    @forelse($data as $key=>$value)
-                    <div class="row">
+                   
+                    <div class="row"> 
+                       @forelse($data as $key=>$value)
                         <div class="col-lg-12 mt-4 restaurent-det">
                             <div class="section-header-left mb-2">
                                 <h3 class="text-light-black header-title ">#{{$value->order_number ?? ''}} | &nbsp;&nbsp; {{ $value->restaurant->name ?? '' }} | &nbsp;&nbsp; Total: ${{$value->grand_total ?? ''}} |&nbsp;&nbsp; {{Date("D d-M-Y",strtotime($value->created_at))}}</h3>
@@ -61,24 +62,42 @@
                             <div class="row">
                                 @foreach($value->orderItem as $kii=>$val)
                                  @php
-                                    if (!$val->menuItem->menu_price->isEmpty()) {
+                                    $discountType = 0;
+                                    $estimate = 0;
+                                    if ($val->menuItem && !$val->menuItem->menu_price->isEmpty()) {
                                         
                                         $qunty = $val->menuItem->menu_price[0];
                                         $discountType = $val->menuItem->discount_type;
                                         $discount = $val->menuItem->discount;
                                         $estimate = $val->menuItem->estimated_time;
                                     }
+                                    $rate = $val->menuItem->rating??false;
+                                    $numrat = $rate?count($rate):0;
+                                    $totalrat = 0;
+                                    if ($rate) {
+                                        
+                                        foreach ($rate as $kiii => $vall) {
+                                            $totalrat = $totalrat+$vall->rating;
+                                        }
+                                        if ($numrat >=1) {
+                                            $totalrat = $totalrat/$numrat;
+                                        }
+                                        
+                                        if (is_numeric( $totalrat ) && floor( $totalrat ) != $totalrat) {
+                                            $totalrat = $totalrat+0.5;    
+                                        }
+                                    }
                                 @endphp
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product-box mb-xl-20">
                                         <div class="product-img">
                                             <a href="#">
-                                                <img src="{{ asset('storage/'.$val->menuItem->image) }}" class="img-fluid full-width" alt="product-img" style="height:200px;">
+                                                <img src="{{ asset('storage') }}/{{$val->menuItem->image ?? ''}}" class="img-fluid full-width" alt="product-img" style="height:200px;">
                                             </a>
                                             <div class="overlay">
                                                 <div class="product-tags padding-10"> 
                                                     <div class="custom-tag"> 
-                                                        <span class="text-custom-white rectangle-tag bg-gradient-red">{{$discount}}@if($discountType==1)$ @else% @endif</span>
+                                                        <span class="text-custom-white rectangle-tag bg-gradient-red">{{$discount ?? ''}}@if($discountType==1)$ @else% @endif</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,25 +106,30 @@
                                             <div class="title-box">
                                                 <h6 class="product-title"><a href="javascript:void(0)" class="text-light-black dish-name">{{ $val->menuItem->name ?? '' }}</a></h6>
                                                 <div class="tags"> 
-                                                    <span class="text-custom-white rectangle-tag bg-green">4.1</span>
+                                                    @if($totalrat >=1)
+                                                    <span class="text-custom-white rectangle-tag @if($totalrat ==5 || $totalrat ==4) bg-green @elseif($totalrat ==3) bg-yellow @else bg-red @endif">{{$totalrat ?? "NA"}}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <p class="text-light-white">Quantity: <span class="dish-qunt">{{ $qunty->name ?? '' }}</span></p>
                                             <div class="product-details">
                                                 <div class="price-time"> 
-                                                    <span class="text-light-black time">{{$estimate}}-{{$estimate+10}} min</span>
+                                                    <span class="text-light-black time">{{$estimate ?? ''}}-{{$estimate+10}} min</span>
                                                     <span class="text-light-white price">${{ $qunty->pivot->price ?? '' }} </span>
                                                 </div>
+                                                @if($numrat)
                                                 <div class="rating"> 
                                                     <span>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
-                                                        <i class="fas fa-star text-yellow"></i>
+                                                        @for($i=0; $i<$totalrat; $i++)
+                                                            <i class="fas fa-star text-yellow"></i>
+                                                        @endfor
+                                                        @for($i=0; $i<5-$totalrat; $i++)
+                                                            <i class="fas fa-star"></i>
+                                                        @endfor
                                                     </span>
-                                                    <span class="text-light-white text-right">4225 ratings</span>
+                                                    <span class="text-light-white text-right">{{$numrat ?? 0}} ratings</span>
                                                 </div>
+                                                @endif
                                             </div>
                                             @if($value->order_status===7)
                                             <a href="{{route('webiste.menu.index',$value->restaurant->slug)}}" class="btn44 mt-4">Order Again</a>
@@ -124,10 +148,43 @@
 
                             </div>
                             <br>
-                            <button class="btn btn-success btn-sm" data-toggle="collapse" href="#collapseExample{{$key}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$key}}">Send Message</button>
+                            {{-- RATING --}}
+                            @if($value->order_status==7 && $value->rating->isEmpty())
+                                <div class="rtfd mb-4"> 
+                                 <form action="{{route("webiste.order.rating")}}" method="POST">
+                                    @csrf
+                                    @foreach($value->orderItem as $kii=>$val)
+                                      <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="con">
+                                                <h3 style="color: green;font-size: 20px;margin-bottom: 10px;">Rate {{ $val->menuItem->name ?? 'NA' }} :-</h3>
+                                                <i class="fa fa-star rating st1" dataval="1"></i>
+                                                <i class="fa fa-star rating st2" dataval="2"></i>
+                                                <i class="fa fa-star rating st3" dataval="3"></i>
+                                                <i class="fa fa-star rating st4" dataval="4"></i>
+                                                <i class="fa fa-star rating st5" dataval="5"></i>
+                                                <input type="hidden" name="order_star_rating[]" class="order_star_rating" value="1">
+                                                <input type="hidden" name="user_id[]" value="{{Auth::id()}}">
+                                                <input type="hidden" name="item_id[]" value="{{$val->item_id}}">
+                                                <input type="hidden" name="restaurant_id[]" value="{{$val->menuItem->restaurant_id??''}}">
+                                                <input type="hidden" name="order_id[]" value="{{$value->id}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <textarea name="message[]" id="message" cols="30" rows="3" class="form-control mb-3" placeholder="Write your feedback..."></textarea>
+                                        </div>
+                                       </div>
+                                    @endforeach
+                                    <button class="btn btn-success" type="submit">Submit</button>
+                                </form>
+                                </div>
+                            @endif
+                            {{-- END --}}
+
+                            <button class="btn btn-success mb-4" data-toggle="collapse" href="#collapseExample{{$key}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$key}}">Send Message</button>
                         
                             <div class="collapse" id="collapseExample{{$key}}">
-                              <div class="card card-body">
+                               <div class="card card-body">
                                     <div class="row messaging">
                                         <div class="col-lg-12 col-md-12">
                                             {{-- @if($value->delivery_user_id) --}}
@@ -175,7 +232,7 @@
 
                         </div>
                     </div>
-                    @empty
+                      @empty
                     <div class="">
                         <h3 class="text-danger header-title title">No order found!</h3>
                         <a href="{{url('/')}}" class="btn44 mt-4" style="width: 10em;">Order Now</a>
