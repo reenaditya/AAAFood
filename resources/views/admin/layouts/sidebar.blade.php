@@ -63,9 +63,6 @@
 							<li class="sidebar-item {{Request::routeIs('admin.menu_quantity_group.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_quantity_group.index')}}">Menu quantity group</a></li>
 							
 							<li class="sidebar-item {{Request::routeIs('admin.menu_item.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item.index')}}">Menu item</a></li>
-							
-							
-							{{-- <li class="sidebar-item {{Request::routeIs('admin.menu_item_price_quantity.*')?'active':''}}"><a class="sidebar-link" href="{{route('admin.menu_item_price_quantity.index')}}">Menu item price on quantity group</a></li> --}}
 
 						</ul>
 					</li>
@@ -115,11 +112,36 @@
 
 					@endif
 
-					@if(Auth::check() && Auth::user()->role===2 || Auth::user()->role===1)
+					@if(Auth::check() && Auth::user()->role===1)
+					<li class="sidebar-item {{Request::routeIs('admin.customer_detail.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.customer_detail.*')?'':'collapsed'}}" href="{{ route('admin.customer_detail.index') }}">
+              	<i class="align-middle" data-feather="users"></i> <span class="align-middle">Customer Detail</span>
+            </a>
+					</li>
+					@endif
+
+					@if(Auth::user()->role===2)
 					<li class="sidebar-item {{Request::routeIs('admin.aaadining_memeber.*')?'active':''}}">
 						<a class="sidebar-link {{Request::routeIs('admin.aaadining_memeber.*')?'':'collapsed'}}" href="{{ route('admin.aaadining_memeber.index') }}">
               	<i class="align-middle" data-feather="users"></i> <span class="align-middle">AAAdining Members</span>
             </a>
+					</li>
+					@endif
+					
+					@if(Auth::user()->role===1)
+					<li class="sidebar-item {{Request::routeIs('admin.vendorMember.list')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.vendorMember.list')?'':'collapsed'}}" href="{{ route('admin.vendorMember.list') }}">
+              	<i class="align-middle" data-feather="users"></i> <span class="align-middle">AAAdining Members</span>
+            </a>
+					</li>
+					@endif
+
+					@if(Auth::check() && Auth::user()->role===2)
+					<li class="sidebar-item {{Request::routeIs('admin.catering.*')?'active':''}}">
+						<a class="sidebar-link {{Request::routeIs('admin.catering.*')?'':'collapsed'}}" href="{{ route('admin.catering.index') }}">
+              			<i class="align-middle" data-feather="save"></i> <span class="align-middle">Catering</span>
+              	
+            			</a>
 					</li>
 					@endif
 

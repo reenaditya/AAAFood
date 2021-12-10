@@ -34,6 +34,7 @@ class CreateNewUser implements CreatesNewUsers
         $role = isset($input['role'])? $input['role']:4;
         $city = isset($input['city'])? $input['city']:'';
         $mobile = isset($input['mobile']) ? $input['mobile'] : null;
+        $code = date("Ymd").rand(1,999);
         
         if ($role==3) {
             Validator::make($input, [
@@ -47,8 +48,8 @@ class CreateNewUser implements CreatesNewUsers
                 'mobile' => ['required'],
             ])->validate();
         }
-
         $user = User::create([
+            'user_code' => $code,
             'name' => $input['name'],
             'email' => $input['email'],
             'vip' => $vip,

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\MemberFirstPurchase;
 use App\Models\AaadiningPurchase;
+use Auth;
 
 class AAADiningMemberController extends Controller
 {
@@ -24,6 +26,18 @@ class AAADiningMemberController extends Controller
         $users = $this->data->get();
         return view('admin.aaadining_memeber.index',compact('users'));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function vendorMember()
+    {
+        $joinedMem = MemberFirstPurchase::where('vendor_id',Auth::id())->get();
+        return view('admin.aaadining_memeber.joinedMemList',compact('joinedMem'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

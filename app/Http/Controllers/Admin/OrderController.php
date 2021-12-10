@@ -27,11 +27,58 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->data->filterOrder()->latest()->get();
+        $data = $this->data->filterOrder($request)->latest()->get();
         return view('admin.orders.index',compact('data'));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function newOrder(Request $request)
+    {
+        $data = $this->data->filterNewOrder($request)->latest()->get();
+        return view('admin.orders.new',compact('data'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function completedOrder(Request $request)
+    {
+        $data = $this->data->filterCompletedOrder($request)->latest()->get();
+        return view('admin.orders.completed',compact('data'));
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function payonaccOrders(Request $request)
+    {
+        $data = $this->data->filterCompletedOrder($request)->latest()->get();
+        return view('admin.orders.completed',compact('data'));
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function deliveryBoyOrderHistory()
+    {
+        $data = DeliveryBoyHistory::filter()->latest()->get();
+        return view('admin.orders.deliveryBoyHistory',compact('data'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -208,52 +255,7 @@ class OrderController extends Controller
         return $this;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function newOrder()
-    {
-        $data = $this->data->filterNewOrder()->latest()->get();
-        return view('admin.orders.new',compact('data'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function completedOrder(Request $request)
-    {
-        $data = $this->data->filterCompletedOrder($request)->latest()->get();
-        return view('admin.orders.completed',compact('data'));
-    }
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function payonaccOrders(Request $request)
-    {
-        $data = $this->data->filterCompletedOrder($request)->latest()->get();
-        return view('admin.orders.completed',compact('data'));
-    }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function deliveryBoyOrderHistory()
-    {
-        $data = DeliveryBoyHistory::filter()->latest()->get();
-        return view('admin.orders.deliveryBoyHistory',compact('data'));
-    }
-
-
     /**
      * change of the resource.
      *

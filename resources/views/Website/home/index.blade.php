@@ -19,7 +19,7 @@
                          <h1 class="text-light-black fw-700">{{ Settings::get('general_setting_header_title') }}</h1>
                          <a href="{{route('webiste.restaurant.list.categ')}}?category=dine-in" class="btn11">{{ Settings::get('general_setting_top_header_dine_in') }}</a>
                          <a href="{{route('webiste.restaurant.list.categ')}}?category=delivery" class="btn22">{{ Settings::get('general_setting_top_header_delivery') }}</a>
-                         <a href="{{route('webiste.restaurant.list.categ')}}?category=catering" class="btn23">{{ Settings::get('general_setting_top_header_catering') }}</a>
+                         <a href="{{route('webiste.catering.index')}}" class="btn23">{{ Settings::get('general_setting_top_header_catering') }}</a>
                          <a href="{{route('webiste.restaurant.list.categ')}}?category=pickup" class="btn24">{{ Settings::get('general_setting_top_header_pickup') }}</a>
 
                         <div class="section-header-center text-center mt-5">

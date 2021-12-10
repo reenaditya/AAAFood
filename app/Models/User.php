@@ -24,6 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'user_code',
         'name',
         'email',
         'password',
@@ -75,5 +76,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(AaadiningPurchase::class,'user_id')->latest('purchase_at');
     }
+
+    public function restaurant()
+    {
+        return $this->hasOne(Restaurant::class,'user_id','id');
+    }
+
 
 }

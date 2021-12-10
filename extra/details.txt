@@ -56,4 +56,3 @@ comleted
 extra point
 1. pay to vendors -> change payment status -> need to send notification to user and vendor
 2. Need to mange all type of system user separate
-

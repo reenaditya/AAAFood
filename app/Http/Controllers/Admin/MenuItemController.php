@@ -111,7 +111,8 @@ class MenuItemController extends Controller
      */
     public function update(Request $request, MenuItem $menu_item)
     {
-        $this->validation($request);
+        $update = true;
+        $this->validation($request,$update);
 
         DB::beginTransaction();
         try {
@@ -121,7 +122,6 @@ class MenuItemController extends Controller
             if ($request->hasFile('image')) {
                 unlink("storage/".$menu_item->image);
             }
-              
             $this->props($request)
             ->save();   
 
@@ -153,21 +153,32 @@ class MenuItemController extends Controller
         return back()->withSuccess('Menu item removed from database');
     }
 
-    private function validation(Request $request)
+    private function validation(Request $request,$update='')
     {
-        $request->validate([
-            'name' => ["required","min:2","max:100"],
-            'menu_group_id' => ['required'],
-            'estimated_time' => ['required'],
-            'discount' => ['required'],
-            'discount_type' => ['required'],
-            'price.*' => ['required'],
-        ]);
-        if ($request->hasFile('image')) {
+        if ($update) 
+        {
             $request->validate([
-                'image' => ['required'],
+                'name' => ["required","min:2","max:100"],
+                'menu_group_id' => ['required'],
+                'estimated_time' => ['required'],
+                'discount' => ['required'],
+                'discount_type' => ['required'],
+                'price.*' => ['required'],
             ]);
         }
+        else
+        {
+            $request->validate([
+                'image' => ['required'],
+                'name' => ["required","min:2","max:100"],
+                'menu_group_id' => ['required'],
+                'estimated_time' => ['required'],
+                'discount' => ['required'],
+                'discount_type' => ['required'],
+                'price.*' => ['required'],
+            ]);
+        }
+            
         return $this;
     }
     private function props(Request $request)

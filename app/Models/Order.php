@@ -52,7 +52,22 @@ class Order extends Model
         return $this->hasOne(Transaction::class,'order_id');
     }
 
-    public function scopeFilterOrder($query)
+    public function scopeOnlyPayonAcc($query){
+        $query->whereHas('transaction',function ($query)
+        {
+            $query->where('type',3)->where('pay_mode',3);
+        });   
+    } 
+
+    public function scopeIsearch($query,$search)
+    {
+        $query->whereHas('user',function ($query) use($search)
+        {
+            where('user_code','LIKE','%'.$search.'%');
+        });
+    }
+
+    public function scopeFilterOrder($query,$request='')
     {
         //role==3 will be delivery
         $user_id = Auth::id();
@@ -64,9 +79,12 @@ class Order extends Model
         {
             $query->where('vendor_id',Auth::id());
         }
+        if ($request->user_id) {
+            $query->where('user_id',$request->user_id);
+        }
     }
 
-    public function scopeFilterNewOrder($query)
+    public function scopeFilterNewOrder($query,$request='')
     {
         //role==3 will be delivery
         if (Auth::user()->role===3) 
@@ -95,9 +113,13 @@ class Order extends Model
         {
             $query->whereIn('order_status',[1,2,3,4]);
         }
+
+        if ($request->user_id) {
+            $query->where('user_id',$request->user_id);
+        }
     }
 
-    public function scopeFilterCompletedOrder($query,$request)
+    public function scopeFilterCompletedOrder($query,$request='')
     {
         if (Auth::user()->role===3) 
         {
@@ -116,6 +138,9 @@ class Order extends Model
             {
                 $query->where('pay_mode',3)->where('type',3);   
             });
+        }
+        if ($request->user_id) {
+            $query->where('user_id',$request->user_id);
         }
     }
 }

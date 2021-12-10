@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Models\Cuisine;
 use App\Models\MenuItem;
 use App\Models\Restaurant;
-use Illuminate\Support\Collection;
-
+use App\Models\Catering;
+use App\Models\User;
 use Auth;
 
 class HomeController extends Controller
@@ -102,6 +103,35 @@ class HomeController extends Controller
     public function deliveryAcc()
     {
         return view('auth.delivery_account');
+    }
+
+    /*
+    * view caterings single 
+    */
+    public function catering()
+    {
+        $data = Catering::whereStatus(1)->get();
+        return view('Website.catering.index',compact('data'));
+    }
+
+    /*
+    * view caterings list
+    */
+    public function cateringView($catering)
+    {   
+        $catering = Catering::where('id',$catering)->first();
+        return view('Website.catering.view',compact('catering'));
+    }
+
+
+    public function usercode()
+    {
+        $usercode = User::whereNull('user_code')->get();
+        foreach ($usercode as $key => $value) {
+            $code = date("Ym").rand(1,999).$value->id;
+            User::where("id",$value->id)->update(['user_code'=>$code]);
+        }
+        return 'done';
     }
 }
 

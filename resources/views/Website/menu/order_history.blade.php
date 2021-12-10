@@ -24,7 +24,7 @@
                         <div class="col-md-6">
                             <div class="heading padding-tb-10">
                                 <h3 class="text-light-black title fw-700 no-margin">{{ Auth::user()->name ?? '' }}</h3>
-                                <p class="text-light-black sub-title no-margin"></p>
+                                <p class="text-light-black sub-title no-margin">Your Code:  &nbsp;&nbsp;&nbsp;<strong>{{ Auth::user()->user_code ?? '' }} </strong></p>
                                
                             </div>
                         </div> 

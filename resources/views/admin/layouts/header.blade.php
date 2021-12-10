@@ -4,19 +4,13 @@
 			<i class="hamburger align-self-center"></i>
 		</a>
 
-		<form class="d-none d-sm-inline-block">
-			<div class="input-group input-group-navbar">
-				<input type="text" class="form-control" placeholder="Search projects…" aria-label="Search">
-				<button class="btn" type="button">
-					<i class="align-middle" data-feather="search"></i>
-				</button>
-			</div>
-		</form>
-
-
 		<div class="navbar-collapse collapse">
 			<ul class="navbar-nav navbar-align">
-				
+				@if(Auth::user()->role==1)
+					<li class="nav-item dropdown" style="margin-right: 20px;">
+						<button type="button" class="btn btn-info">{{Auth::user()->restaurant->name ?? ''}}</button>
+					</li>
+				@endif
 				@if(Auth::check() && Auth::user()->role==3 && Auth::user()->email_verified_at==null)
 				<li class="nav-item dropdown" style="margin-right: 20px;">
 					<button class="btn btn-danger delivery-verify-email" data-userid="{{Auth::id()}}" type="button">
