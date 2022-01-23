@@ -62,21 +62,21 @@
 												@endforeach
 											</select>
 										</td>
-										@if(Auth::check() && Auth::user()->role===3)
-										<td>
-											@if($value->delivery_user_id==null)
-											<button class="btn btn-success order-accept-status" data-userid="{{Auth::id()}}" data-orderid="{{$value->id}}" type="button">
-												Accept
-											</button>
-											@else
-											<button class="btn btn-success" type="button">
-												Accepted
-											</button>
-											@endif
-										</td>
-										@endif
 										
 										<td>
+											@if(Auth::check() && Auth::user()->role===3)
+											
+												@if($value->delivery_user_id==null)
+												<button class="btn btn-success order-accept-status" data-userid="{{Auth::id()}}" data-orderid="{{$value->id}}" type="button">
+													Accept
+												</button>
+												@else
+												<button class="btn btn-success" type="button">
+													Accepted
+												</button>
+												@endif
+											
+											@endif
 											<a href="{{url('admin/order-details/'.$value->id)}}" class="btn btn-info">Details</a>
 											
 										</td>

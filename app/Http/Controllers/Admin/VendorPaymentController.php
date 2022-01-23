@@ -91,7 +91,7 @@ class VendorPaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 
 

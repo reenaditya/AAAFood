@@ -82,10 +82,11 @@
                                         if ($numrat >=1) {
                                             $totalrat = $totalrat/$numrat;
                                         }
+                                        $totalrat = number_format($totalrat);
                                         
-                                        if (is_numeric( $totalrat ) && floor( $totalrat ) != $totalrat) {
+                                        /*if (is_numeric( $totalrat ) && floor( $totalrat ) != $totalrat) {
                                             $totalrat = $totalrat+0.5;    
-                                        }
+                                        }*/
                                     }
                                 @endphp
                                 <div class="col-lg-4 col-md-6 col-sm-6">

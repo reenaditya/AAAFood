@@ -373,7 +373,7 @@ class OrderController extends Controller
         if ($request['token']) 
         {
             $checkToken = User::where('remember_token',$request->token)->first();
-            dd($checkToken);
+            
             if (!$checkToken==null) 
             {
                 $checkToken->email_verified_at = date("Y-m-d H:i:s");

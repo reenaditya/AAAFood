@@ -7,6 +7,8 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\MemberFirstPurchase;
+use App\Models\AaadiningPurchase;
+use Carbon\Carbon;
 use Session;
 use Stripe;
 use DB;
@@ -224,7 +226,10 @@ class StripeController extends Controller
 
     private function createMemberFisrtPurchase($request,$orderId)
     {
-        if (MemberFirstPurchase::where('user_id',Auth::id())->count() == 0) {
+        $now = Carbon::today();
+        $aaadiningPurchase = AaadiningPurchase::where('user_id',Auth::id())->whereStatus(1)->whereDate('end_at','>=',$now)->count();
+        $memPurchase = MemberFirstPurchase::where('user_id',Auth::id())->where('status',1)->count();
+        if ($aaadiningPurchase >=1 && $memPurchase <=0 ) {
             $data = new MemberFirstPurchase;
             $data->user_id = Auth::id();
             $data->order_id = $orderId;

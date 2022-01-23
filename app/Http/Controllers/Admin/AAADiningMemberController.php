@@ -23,7 +23,7 @@ class AAADiningMemberController extends Controller
      */
     public function index()
     {
-        $users = $this->data->get();
+        $users = $this->data->orderBy('id','DESC')->get();
         return view('admin.aaadining_memeber.index',compact('users'));
     }
 
